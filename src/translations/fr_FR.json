@@ -1,0 +1,19 @@
+{
+  "form.generic.input.required": "Ce champ est requis",
+  "form.generic.error.not_number": "Un nombre est requis",
+  "form.login.submit.text": "Connection",
+  "form.input.email.label": "E-mail",
+  "form.input.email.placeholder": "Tape ton e-mail",
+  "form.input.email.required": "L'e-mail est obligatoire",
+  "form.input.email.type": "Cet email n'est pas valide",
+  "form.input.password.label": "Mot de passe",
+  "form.input.password.placeholder": "Tape ton mot de passe",
+  "form.input.password.required": "Le mot de passe est obligatoire",
+  "form.input.space.label": "Quota :",
+  "form.input.space.placeholder": "Quota",
+
+  "header.profile.quota": "Quota :",
+  "side_menu.title.profile": "Profil",
+  "side_menu.profile.details": "Détails",
+  "route.profile.details.h1": "Détails"
+}

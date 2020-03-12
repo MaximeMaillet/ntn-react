@@ -1,0 +1,23 @@
+$fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import "~@fortawesome/fontawesome-free/scss/brands";
+@import "~@fortawesome/fontawesome-free/scss/regular";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+
+// Color
+$black: #1F2421;
+$white: #DCE1DE;
+
+$primary: #216869;
+$primary-light: lighten($primary, 10%);
+
+$secondary: #49A078;
+$secondary-light: lighten($secondary, 10%);
+
+$green: #9CC5A1;
+
+
+// Sizes
+$height-header: 60px;
+$height-profile-picture: 40px;
+$width-left-menu: 200px;

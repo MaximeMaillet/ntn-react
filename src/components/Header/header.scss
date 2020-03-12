@@ -1,0 +1,52 @@
+header.global-header {
+  background-color: $primary;
+  display: flex;
+  align-items: center;
+  padding: 0.5em;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.5), -2px 0px 5px rgba(0,0,0,0.5);
+  z-index: 2;
+
+  .logo {
+    background-color: $white;
+    border-radius: 50%;
+    height: $height-header;
+    padding: 0.7em;
+
+    img {
+      height: 100%;
+      width: auto;
+    }
+  }
+
+  .titles {
+    margin-left: 0.5em;
+
+    h3, h2 {
+      color: $white;
+      margin: 0;
+      padding: 0;
+    }
+
+    h2 {
+      font-size: 1.2em;
+    }
+
+    h3 {
+      font-size: 0.8em;
+    }
+  }
+
+  .profile {
+    margin-left: auto;
+
+    .email {
+      margin-right: 1em;
+      color: $white;
+      font-size: 0.8em;
+
+      &:hover {
+        color: $primary-light;
+      }
+    }
+  }
+}

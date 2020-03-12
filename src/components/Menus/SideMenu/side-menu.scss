@@ -1,0 +1,36 @@
+nav.menu.profile-menu {
+  padding-top: 1em;
+
+  .category {
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+    background-color: $white;
+    padding: 0.5em;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+
+    .title {
+      text-indent: 0.2em;
+      font-size: 1.2em;
+      border-bottom: 1px dashed $black;
+      margin-bottom: 0.5em;
+
+      &:before {
+        @extend %fa-icon;
+        @extend .fas;
+        content: fa-content($fa-var-angle-double-right);
+        margin-right: 0.5em;
+      }
+    }
+
+    .links {
+      font-size: 1em;
+      text-indent: 0.5em;
+
+      a {
+
+
+      }
+    }
+  }
+}

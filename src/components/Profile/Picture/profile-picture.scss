@@ -1,0 +1,11 @@
+div.profile-picture {
+  height: $height-profile-picture;
+  width: $height-profile-picture;
+  border-radius: 50%;
+  overflow: hidden;
+
+  img {
+    height: 100%;
+    width: auto;
+  }
+}
