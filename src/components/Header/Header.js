@@ -20,7 +20,7 @@ class Header extends Component {
           <h3>Download & upload</h3>
         </div>
         <div className="profile">
-          <Link to="/profile" className="d-flex flex-row align-items-center justify-content-center ">
+          <Link to="/profile" className="d-flex flex-row align-items-center justify-content-center">
             <div className="email">
               {this.props.user.email}<br />
               <FormattedMessage id="header.profile.quota" /> <strong>{this.props.user.space}</strong> Go

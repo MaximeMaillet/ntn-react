@@ -6,13 +6,30 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 
 // Color
 $black: #1F2421;
-$white: #DCE1DE;
+@function blackAlpha($alpha) {
+  @return rgba(31,36,33,$alpha);
+}
+
+$white: #ffffff;
+$white-light: #DCE1DE;
+
+$red: #F26659;
+@function redAlpha($alpha) {
+  @return rgba(242,102,89, $alpha);
+}
+$green: #25CA8F;
 
 $primary: #216869;
 $primary-light: lighten($primary, 10%);
+@function primaryAlpha($alpha) {
+  @return rgba(33,104,105, $alpha);
+}
 
 $secondary: #49A078;
 $secondary-light: lighten($secondary, 10%);
+@function secondaryAlpha($alpha) {
+  @return rgba(51,134,100,$alpha);
+}
 
 $green: #9CC5A1;
 

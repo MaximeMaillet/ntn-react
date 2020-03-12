@@ -5,9 +5,10 @@ import messages from '../translations';
 import {getLocale, getLanguage} from '../libraries/locale';
 
 import Home from "./Home/Home";
+import Profile from "./Profile/Profile";
+import Notifications from "../components/Notifications/Notifications";
 
 import './app.scss';
-import Profile from "./Profile/Profile";
 
 function App() {
   const language = getLanguage();
@@ -15,6 +16,7 @@ function App() {
   return (
     <IntlProvider locale={locale} messages={messages[language]}>
       <Router>
+        <Notifications/>
         <Switch>
           <Route path="/profile"><Profile/></Route>
           <Route path="/"><Home/></Route>

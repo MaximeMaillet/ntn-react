@@ -1,5 +1,60 @@
+@function getShadow($shadow-size, $firstColor, $secondColor) {
+  @return (-1 * $shadow-size) (-1 * $shadow-size) 0 $firstColor,
+          (-1 * $shadow-size) $shadow-size 0 $firstColor,
+          ($shadow-size) ($shadow-size) 0 $firstColor,
+          ($shadow-size) (-1 * $shadow-size) 0 $firstColor,
+          ($shadow-size + 2px) ($shadow-size + 2px) $secondColor;
+}
+
 .main-form {
   .form-group {
+    .form-control {
+      border-color: $primary;
+
+      &:focus {
+        border-color: $secondary;
+        box-shadow: 0 0 0 0.2rem secondaryAlpha(0.2);
+      }
+
+      &.is-invalid {
+        border-color: $red;
+      }
+
+      &.is-valid {
+        border-color: $green;
+      }
+    }
+
+    .form-select-control {
+      .form-select-control__value-container {
+        outline: none;
+      }
+
+      .form-select-control__control {
+        border-color: $primary;
+
+        &:focus, &:hover, &.form-select-control__control--menu-is-open, &.form-select-control__control--is-focused {
+          border-color: $secondary;
+          box-shadow: 0 0 0 0.2rem secondaryAlpha(0.2);
+        }
+
+        .form-select-control__multi-value {
+          background-color: primaryAlpha(0.2);
+        }
+
+        .form-select-control__multi-value__remove:hover {
+          background-color: redAlpha(0.2);
+          color: $red;
+        }
+      }
+
+      .form-select-control__option {
+        &:focus, &:hover, &.form-select-control__option--is-focused {
+          background-color: primaryAlpha(0.2);
+        }
+      }
+    }
+
     .invalid-feedback {
       span {
         display: block;
@@ -7,17 +62,95 @@
     }
   }
 
-  .input-file {
+  .form-input-file {
+    display: flex;
+    flex-direction: column;
+
     .image {
-      height: 100px;
-      width: 100px;
+      $size: 150px;
+      height: $size;
+      width: $size;
       border-radius: 50%;
       overflow: hidden;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: $white;
+      $shadow-size: 4px;
+      box-shadow: getShadow($shadow-size, $white, blackAlpha(0.2));
+      cursor: pointer;
+      position: relative;
+      animation: 2s linear 0s infinite blink-animation;
+      -webkit-animation: 2s linear 0s infinite blink-animation;
 
-      img {
+      @keyframes blink-animation {
+        0% {border-color: $white;}
+        50% {border-color: blackAlpha(0.2)}
+        100% {border-color: $white;}
+      }
+
+      @-webkit-keyframes blink-animation {
+        0% {border-color: $white;}
+        50% {border-color: blackAlpha(0.2)}
+        100% {border-color: $white;}
+      }
+
+      input[type=file] {
+        opacity: 0;
         height: 100%;
-        width: auto;
+        width:100%;
+        cursor: pointer;
+      }
+
+
+      &:before {
+        position: absolute;
+        top: $size;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: blackAlpha(0.8);
+        color: $white-light;
+        font-size: 3em;
+        @extend %fa-icon;
+        @extend .fas;
+        content: fa-content($fa-var-upload);
+        transition: top 700ms;
+        width: 100%;
+        height: 100%;
+      }
+
+      &:hover {
+        &:before {
+          top: 0;
+        }
+      }
+
+      &.is-valid {
+        background-color: $green;
+        background-image: url('../../styles/medias/check.svg');
+      }
+
+      &.is-invalid {
+        background-image: url('../../styles/medias/error.svg') !important;
       }
     }
+
+    .invalid-feedback {
+      text-align: center;
+    }
+  }
+
+  &.form-input-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .invalid-feedback {
+    color: $red;
   }
 }

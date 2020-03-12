@@ -15,22 +15,20 @@ class ImageInput extends Component {
         {
           ({ input: { value, onChange, ...input }, meta }) => {
             return (
-              <div className="input-file">
-                <div className="image">
-                  <img src={value} alt="upload" />
+              <div className="form-group form-input-file">
+                <div className={`image ${meta.touched && (meta.valid ? 'is-valid' : 'is-invalid')}`} style={{backgroundImage: `url("${value}")`}}>
+                  <input
+                    {...input}
+                    id={this.props.name}
+                    accept="image/jpg, image/jpeg, image/png"
+                    placeholder={this.props.placeholder}
+                    className={`form-control ${meta.touched && (meta.valid ? 'is-valid' : 'is-invalid')}`}
+                    onChange={({target}) => {
+                      onChange(target.files);
+                      this.props.onLoad(target.files);
+                    }}
+                  />
                 </div>
-                <input
-                  {...input}
-                  id={this.props.name}
-                  placeholder={this.props.placeholder}
-                  className={`form-control ${meta.touched && (meta.valid ? 'is-valid' : 'is-invalid')}`}
-                  onChange={({target}) => {
-                    onChange(target.files);
-                    this.props.onLoad(target.files);
-                  }}
-                />
-
-
                 {
                   (meta.touched && (meta.error || meta.submitError)) &&
                   <div className="invalid-feedback">

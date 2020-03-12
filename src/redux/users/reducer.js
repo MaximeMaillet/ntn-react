@@ -1,4 +1,5 @@
 import {TYPE} from './actions';
+import {ROLES} from '../../libraries/roles';
 
 const initialState = {
   loading: false,
@@ -24,7 +25,9 @@ export default function(state = initialState, actions) {
     case TYPE.LOADED:
       return {
         ...state,
+        action: actions.action,
         user: actions.user,
+        isAdmin: actions.user ? !!(actions.user.roles & ROLES.ADMIN) : false,
       };
     default:
       return state;

@@ -1,16 +1,25 @@
 {
+  "roles.user": "Utilisateur",
+  "roles.bot": "Robot",
+  "roles.admin": "Administrateur",
   "form.generic.input.required": "Ce champ est requis",
   "form.generic.error.not_number": "Un nombre est requis",
+  "form.generic.button.submit": "Envoyer",
+  "form.generic.update.success": "Modification réussie",
+
   "form.login.submit.text": "Connection",
-  "form.input.email.label": "E-mail",
+  "form.input.email.label": "E-mail :",
   "form.input.email.placeholder": "Tape ton e-mail",
   "form.input.email.required": "L'e-mail est obligatoire",
   "form.input.email.type": "Cet email n'est pas valide",
-  "form.input.password.label": "Mot de passe",
+  "form.input.password.label": "Mot de passe :",
   "form.input.password.placeholder": "Tape ton mot de passe",
   "form.input.password.required": "Le mot de passe est obligatoire",
+  "form.input.password.not_same": "Le mot de passe n'est pas identique",
   "form.input.space.label": "Quota :",
   "form.input.space.placeholder": "Quota",
+  "form.input.file.required": "Un fichier est requis",
+
 
   "header.profile.quota": "Quota :",
   "side_menu.title.profile": "Profil",

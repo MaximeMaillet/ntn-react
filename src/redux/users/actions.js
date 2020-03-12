@@ -21,8 +21,9 @@ export const fail = (errors) => ({
   errors,
 });
 
-export const loaded = (user) => ({
+export const loaded = (action, user) => ({
   type: TYPE.LOADED,
+  action,
   user,
 });
 
@@ -45,35 +46,7 @@ export const get = (userId) => {
     try {
       dispatch(startLoading());
       const user = (await api('GET', `/users/${userId}`)).data;
-      dispatch(loaded(user));
-    } catch(e) {
-      dispatch(fail(e));
-    } finally {
-      dispatch(stopLoading());
-    }
-  };
-};
-
-export const update = (userId, data) => {
-  return async(dispatch) => {
-    try {
-      dispatch(startLoading());
-      const user = (await api('PATCH', `/users/${userId}`, data)).data;
-      dispatch(loaded(user));
-    } catch(e) {
-      dispatch(fail(e));
-    } finally {
-      dispatch(stopLoading());
-    }
-  };
-};
-
-export const updatePicture = (userId, picture) => {
-  return async(dispatch) => {
-    try {
-      dispatch(startLoading());
-      const user = (await api('PATCH', `/users/${userId}/picture`, picture, {'Content-Type': ''})).data;
-      dispatch(loaded(user));
+      dispatch(loaded('get', user));
     } catch(e) {
       dispatch(fail(e));
     } finally {
@@ -85,6 +58,8 @@ export const updatePicture = (userId, picture) => {
 export default {
   login,
   logout,
-  update,
-  updatePicture,
+  startLoading,
+  stopLoading,
+  fail,
+  loaded,
 }

@@ -1,33 +1,36 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Form} from "react-final-form";
-import EmailInput from "../Inputs/EmailInput";
 import {connect} from "react-redux";
 import {FormattedMessage, injectIntl} from "react-intl";
-import PasswordInput from "../Inputs/PasswordInput";
-import userActions from '../../../redux/users/actions';
 import api from '../../../libraries/api';
+import userActions from '../../../redux/users/actions';
+import ImageInput from "../Inputs/ImageInput";
 
 import '../forms.scss';
-import ImageInput from "../Inputs/ImageInput";
 
 class ProfilePictureForm extends Component {
 
-  onSubmit = (data) => {
-
-  };
-
-  onLoad = async(files) => {
+  onSubmit = async(data) => {
     try {
+      this.props.startLoading();
+
+      if(!data || !data.picture || !data.picture[0]) {
+        return {picture: <FormattedMessage id="form.input.file.required" />}
+      }
+
       const payload = new FormData();
-      payload.append('picture', files[0], files[0].name);
-      await this.props.updatePicture(this.props.user.id, payload);
+      payload.append('picture', data.picture[0], data.picture[0].name);
+      const user = (await api('PATCH', `/users/${this.props.user.id}/picture`, payload, {'Content-Type': ''})).data;
+      this.props.loaded('update', user);
     } catch(e) {
       console.warn(e);
-      // popup
+      this.props.fail(e);
       if(e.data && e.data.fields) {
         return e.data.fields;
       }
+    } finally {
+      this.props.stopLoading();
     }
   };
 
@@ -39,14 +42,14 @@ class ProfilePictureForm extends Component {
           picture: this.props.user.picture,
         }}
       >
-        {props =>
-          <form className="main-form" onSubmit={props.handleSubmit} noValidate>
+        {props => (
+          <form id="profile-picture-form" className={`main-form ${this.props.className}`} onSubmit={props.handleSubmit} noValidate>
             <ImageInput
               name="picture"
-              onLoad={this.onLoad}
+              onLoad={() => props.form.submit()}
             />
           </form>
-        }
+        )}
       </Form>
     );
   }
@@ -59,7 +62,10 @@ ProfilePictureForm.propTypes = {
 export default connect(
   () => ({}),
   (dispatch) => ({
-    updatePicture: (userId, picture) => dispatch(userActions.updatePicture(userId, picture))
+    startLoading: () => dispatch(userActions.startLoading()),
+    stopLoading: () => dispatch(userActions.stopLoading()),
+    fail: (e) => dispatch(userActions.fail(e)),
+    loaded: (action, user) => dispatch(userActions.loaded(action, user)),
   })
 )
 (injectIntl(ProfilePictureForm));

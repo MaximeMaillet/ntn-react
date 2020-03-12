@@ -7,7 +7,7 @@ header.global-header {
   z-index: 2;
 
   .logo {
-    background-color: $white;
+    background-color: $white-light;
     border-radius: 50%;
     height: $height-header;
     padding: 0.7em;
@@ -22,7 +22,7 @@ header.global-header {
     margin-left: 0.5em;
 
     h3, h2 {
-      color: $white;
+      color: $white-light;
       margin: 0;
       padding: 0;
     }
@@ -39,12 +39,17 @@ header.global-header {
   .profile {
     margin-left: auto;
 
+    a, a:hover {
+      text-decoration: none;
+    }
+
     .email {
       margin-right: 1em;
-      color: $white;
+      color: $white-light;
       font-size: 0.8em;
 
       &:hover {
+        text-decoration: none;
         color: $primary-light;
       }
     }
