@@ -11,15 +11,13 @@ import get from 'lodash.get';
 import PasswordInput from "../Inputs/PasswordInput";
 import {ROLES} from '../../../libraries/roles';
 import BitwiseInput from "../Inputs/BitwiseInput";
+import loadingActions from "../../../redux/loading/actions";
 
 import '../forms.scss';
 
 class ProfileDetailForm extends Component {
-
   onSubmit = async(data) => {
     try {
-      console.log('sub')
-      console.log(data);
       this.props.startLoading();
       const user = (await api('PATCH', `/users/${this.props.user.id}`, data)).data;
       this.props.loaded('update', user);
@@ -126,8 +124,8 @@ export default connect(
     isAdmin: state.user.isAdmin,
   }),
   (dispatch) => ({
-    startLoading: () => dispatch(userActions.startLoading()),
-    stopLoading: () => dispatch(userActions.stopLoading()),
+    startLoading: () => dispatch(loadingActions.startLoading()),
+    stopLoading: () => dispatch(loadingActions.stopLoading()),
     fail: (e) => dispatch(userActions.fail(e)),
     loaded: (action, user) => dispatch(userActions.loaded(action, user)),
   })

@@ -2,12 +2,13 @@
   "roles.user": "Utilisateur",
   "roles.bot": "Robot",
   "roles.admin": "Administrateur",
+  "form.generic.success": "Succès",
   "form.generic.input.required": "Ce champ est requis",
   "form.generic.error.not_number": "Un nombre est requis",
   "form.generic.button.submit": "Envoyer",
   "form.generic.update.success": "Modification réussie",
+  "form.validator.required": "Ce champ est requis",
 
-  "form.login.submit.text": "Connection",
   "form.input.email.label": "E-mail :",
   "form.input.email.placeholder": "Tape ton e-mail",
   "form.input.email.required": "L'e-mail est obligatoire",
@@ -19,10 +20,31 @@
   "form.input.space.label": "Quota :",
   "form.input.space.placeholder": "Quota",
   "form.input.file.required": "Un fichier est requis",
+  "form.input.file.accept_fail": "L'extension n'est pas accetée",
 
+  "form.login.submit.text": "Connection",
+  "form.torrent.submit.text": "Envoyer",
 
   "header.profile.quota": "Quota :",
   "side_menu.title.profile": "Profil",
   "side_menu.profile.details": "Détails",
-  "route.profile.details.h1": "Détails"
+  "side_menu.profile.torrents": "Torrents",
+  "side_menu.title.users": "Utilisateurs",
+  "side_menu.users.list": "Liste",
+
+  "route.profile.details.h1": "Détails",
+  "route.profile.torrents.h1": "Torrents",
+  "route.home.actions.add": "Ajouter",
+
+  "torrents.list.item.title.state": "État",
+  "torrents.list.item.title.name": "Nom",
+  "torrents.list.item.title.download": "Download",
+  "torrents.list.item.title.upload": "Upload",
+  "torrents.list.item.title.total": "Total",
+  "torrents.list.item.title.ratio": "Ratio",
+  "torrents.list.item.title.files": "Fichiers",
+  "torrents.list.item.title.actions": "Actions",
+  "torrents.list.item.files.show": "Voir",
+  "torrents.list.item.is_finished": "Terminé",
+  "torrents.list.item.is_active": "Actif"
 }

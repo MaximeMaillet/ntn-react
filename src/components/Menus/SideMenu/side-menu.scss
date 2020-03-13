@@ -8,6 +8,7 @@ nav.menu.profile-menu {
     padding: 0.5em;
     margin-left: 0.5em;
     margin-right: 0.5em;
+    margin-top: 1em;
 
     .title {
       text-indent: 0.2em;
@@ -28,8 +29,7 @@ nav.menu.profile-menu {
       text-indent: 0.5em;
 
       a {
-
-
+        display: block;
       }
     }
   }

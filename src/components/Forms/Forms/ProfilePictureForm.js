@@ -4,13 +4,14 @@ import {Form} from "react-final-form";
 import {connect} from "react-redux";
 import {FormattedMessage, injectIntl} from "react-intl";
 import api from '../../../libraries/api';
+import get from 'lodash.get';
 import userActions from '../../../redux/users/actions';
-import ImageInput from "../Inputs/ImageInput";
+import loadingActions from "../../../redux/loading/actions";
 
 import '../forms.scss';
+import FileInput from "../Inputs/FileInput";
 
 class ProfilePictureForm extends Component {
-
   onSubmit = async(data) => {
     try {
       this.props.startLoading();
@@ -39,13 +40,14 @@ class ProfilePictureForm extends Component {
       <Form
         onSubmit={this.onSubmit}
         initialValues={{
-          picture: this.props.user.picture,
+          picture: get(this.props, 'user.picture', null),
         }}
       >
         {props => (
           <form id="profile-picture-form" className={`main-form ${this.props.className}`} onSubmit={props.handleSubmit} noValidate>
-            <ImageInput
+            <FileInput
               name="picture"
+              accept="image/jpg, image/jpeg, image/png"
               onLoad={() => props.form.submit()}
             />
           </form>
@@ -57,13 +59,17 @@ class ProfilePictureForm extends Component {
 
 ProfilePictureForm.propTypes = {
   onSubmit: PropTypes.func,
+  startLoading: PropTypes.func,
+  stopLoading: PropTypes.func,
+  fail: PropTypes.func,
+  loaded: PropTypes.func,
 };
 
 export default connect(
   () => ({}),
   (dispatch) => ({
-    startLoading: () => dispatch(userActions.startLoading()),
-    stopLoading: () => dispatch(userActions.stopLoading()),
+    startLoading: () => dispatch(loadingActions.startLoading()),
+    stopLoading: () => dispatch(loadingActions.stopLoading()),
     fail: (e) => dispatch(userActions.fail(e)),
     loaded: (action, user) => dispatch(userActions.loaded(action, user)),
   })

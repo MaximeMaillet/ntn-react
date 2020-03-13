@@ -6,7 +6,169 @@
           ($shadow-size + 2px) ($shadow-size + 2px) $secondColor;
 }
 
+$sizeFormFile: 120px;
+
+.form-main {
+  display: flex;
+  flex-direction: column;
+
+ .form-input {
+   display: flex;
+   flex-direction: column;
+   margin-bottom: 1rem;
+   position: relative;
+
+   .form-group {
+     display: flex;
+     flex-direction: column;
+     margin-bottom: 0;
+   }
+
+   .invalid-feedback {
+     position: absolute;
+     top: 100%;
+     text-align: center;
+     span {
+       display: block;
+     }
+   }
+
+   &.input-select {
+     .form-select-control {
+       .form-select-control__value-container {
+         outline: none;
+       }
+
+       .form-select-control__control {
+         border-color: $primary;
+
+         &:focus, &:hover, &.form-select-control__control--menu-is-open, &.form-select-control__control--is-focused {
+           border-color: $secondary;
+           box-shadow: 0 0 0 0.2rem secondaryAlpha(0.2);
+         }
+
+         .form-select-control__multi-value {
+           background-color: primaryAlpha(0.2);
+         }
+
+         .form-select-control__multi-value__remove:hover {
+           background-color: redAlpha(0.2);
+           color: $red;
+         }
+       }
+
+       .form-select-control__option {
+         &:focus, &:hover, &.form-select-control__option--is-focused {
+           background-color: primaryAlpha(0.2);
+         }
+       }
+     }
+   }
+
+   &.input-file {
+     .form-file {
+       height: $sizeFormFile;
+       width: $sizeFormFile;
+       border-radius: 25%;
+       overflow: hidden;
+       border: 2px solid $white;
+       box-shadow: 2px 2px 2px blackAlpha(0.2);
+       background-color: blackAlpha(0.8);
+       cursor: pointer;
+       position: relative;
+
+       &:before {
+         @extend %fa-icon;
+         @extend .fas;
+         content: fa-content($fa-var-upload);
+         color: $white-light;
+         font-size: 3em;
+         position: absolute;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         top: 0;
+         left: 0;
+         right: 0;
+         bottom: 0;
+       }
+
+       &:hover {
+         background-color: blackAlpha(0.7);
+       }
+
+       input[type=file] {
+         opacity: 0;
+         height: 100%;
+         width:100%;
+         cursor: pointer;
+       }
+
+       &.is-valid {
+         background-color: $green;
+         background-image: url('../../styles/medias/check.svg');
+
+         &:before {
+           display: none;
+         }
+       }
+
+       &.is-invalid {
+         background-color: $red;
+         background-image: url('../../styles/medias/error.svg');
+
+         &:before {
+           display: none;
+         }
+       }
+
+       .file-name {
+         position: absolute;
+         bottom: 0.2em;
+         right: 0.5em;
+         font-size: 1.5em;
+         color: $white;
+         white-space: nowrap;
+         text-overflow: ellipsis;
+       }
+     }
+   }
+
+   &.form-input-align {
+     .form-group {
+       flex-direction: row;
+       align-items: center;
+
+       .form-label {
+         white-space: nowrap;
+         flex-basis: 20%;
+         margin-bottom: 0;
+       }
+
+       .form-label+* {
+         flex-grow: 1;
+       }
+     }
+
+     .invalid-feedback {
+       text-align: right;
+     }
+   }
+ }
+
+  button[type=submit] {
+    margin-left: auto;
+  }
+}
+
+
+
+
 .main-form {
+  .form-input-align
+
+
+
   .form-group {
     .form-control {
       border-color: $primary;
@@ -65,6 +227,75 @@
   .form-input-file {
     display: flex;
     flex-direction: column;
+    align-items: center;
+
+    .image {
+      $size: 150px;
+      height: $size;
+      width: $size;
+      border-radius: 25%;
+      overflow: hidden;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: $white;
+      border: 2px solid $white;
+      box-shadow: 2px 2px 2px blackAlpha(0.2);
+      cursor: pointer;
+      position: relative;
+
+      input[type=file] {
+        opacity: 0;
+        height: 100%;
+        width:100%;
+        cursor: pointer;
+      }
+
+      &:before {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: blackAlpha(0.8);
+        color: $white-light;
+        font-size: 3em;
+        @extend %fa-icon;
+        @extend .fas;
+        content: fa-content($fa-var-upload);
+        transition: top 700ms;
+        width: 100%;
+        height: 100%;
+      }
+
+      &.is-valid {
+        background-color: $green;
+        background-image: url('../../styles/medias/check.svg');
+      }
+
+      &.is-invalid {
+        background-image: url('../../styles/medias/error.svg');
+      }
+
+      &.is-valid, .si-invalid {
+        &:before {
+          display: none;
+        }
+      }
+    }
+
+    .invalid-feedback {
+      text-align: center;
+    }
+  }
+
+  .form-input-file-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     .image {
       $size: 150px;
@@ -131,7 +362,7 @@
 
       &.is-valid {
         background-color: $green;
-        background-image: url('../../styles/medias/check.svg');
+        background-image: url('../../styles/medias/check.svg') !important;
       }
 
       &.is-invalid {
@@ -141,6 +372,15 @@
 
     .invalid-feedback {
       text-align: center;
+    }
+  }
+
+  .form-group-input-align {
+    display: flex;
+    flex-direction: column;
+
+    *:not(label) {
+      flex-grow: 1;
     }
   }
 

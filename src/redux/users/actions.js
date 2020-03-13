@@ -1,20 +1,11 @@
 import api from '../../libraries/api';
+import loadingActions from '../loading/actions';
+import serverActions from '../server/actions';
 
 export const TYPE = {
-  LOADING: 'userReducer::loading',
   FAIL: 'userReducer::fail',
   LOADED: 'userReducer::loaded',
 };
-
-export const startLoading = () => ({
-  type: TYPE.LOADING,
-  loading: true,
-});
-
-export const stopLoading = () => ({
-  type: TYPE.LOADING,
-  loading: false,
-});
 
 export const fail = (errors) => ({
   type: TYPE.FAIL,
@@ -31,6 +22,7 @@ export const login = (token, user) => {
   return async(dispatch) => {
     localStorage.setItem('token', token);
     await dispatch(get(user.id));
+    await dispatch(serverActions.get())
   };
 };
 
@@ -44,13 +36,13 @@ export const logout = () => {
 export const get = (userId) => {
   return async(dispatch) => {
     try {
-      dispatch(startLoading());
+      dispatch(loadingActions.startLoading());
       const user = (await api('GET', `/users/${userId}`)).data;
       dispatch(loaded('get', user));
     } catch(e) {
       dispatch(fail(e));
     } finally {
-      dispatch(stopLoading());
+      dispatch(loadingActions.stopLoading());
     }
   };
 };
@@ -58,8 +50,6 @@ export const get = (userId) => {
 export default {
   login,
   logout,
-  startLoading,
-  stopLoading,
   fail,
   loaded,
 }

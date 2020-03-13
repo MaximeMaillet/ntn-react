@@ -1,0 +1,16 @@
+.torrent-form {
+  .input-file {
+    flex-basis: 20%;
+  }
+
+  .form-select-torrent {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-left: 1em;
+
+    .input-select {
+      margin-top: auto;
+    }
+  }
+}

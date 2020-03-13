@@ -6,8 +6,8 @@ import SideMenu from "../../components/Menus/SideMenu/SideMenu";
 import {FormattedMessage, injectIntl} from "react-intl";
 import ProfileDetailForm from "../../components/Forms/Forms/ProfileDetailForm";
 import ProfilePictureForm from "../../components/Forms/Forms/ProfilePictureForm";
-
 import notificationsActions from '../../redux/notifications/actions'
+import loadingActions from "../../redux/loading/actions";
 
 class Profile extends Component {
   constructor(props) {
@@ -61,11 +61,13 @@ class Profile extends Component {
 export default withAuth(connect(
   (state) => ({
     user: state.user.user,
-    loading: state.user.loading,
+    loading: state.loading.loading,
     errors: state.user.errors,
     action: state.user.action,
   }),
   (dispatch) => ({
-    startNotif: (data) => dispatch(notificationsActions.start(data))
+    startNotif: (data) => dispatch(notificationsActions.start(data)),
+    startLoading: () => dispatch(loadingActions.startLoading()),
+    stopLoading: () => dispatch(loadingActions.stopLoading()),
   })
 )(injectIntl(Profile)));

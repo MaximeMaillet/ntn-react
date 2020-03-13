@@ -1,0 +1,85 @@
+.torrents-list {
+  border: 1px solid blackAlpha(0.5);
+  border-radius: 2px;
+  box-shadow: 2px 2px 5px blackAlpha(0.2);
+  overflow: hidden;
+
+  .torrent-item {
+    align-items: flex-start;
+    justify-content: space-between;
+    border-bottom: 1px solid blackAlpha(0.5);
+
+    &:last-child {
+      border: none;
+    }
+
+    &:nth-child(2n+1) {
+      background-color: secondaryAlpha(0.2);
+    }
+
+    .item {
+      padding: 0.5em;
+      text-align: left;
+    }
+
+    .state {flex-basis: 5%;}
+    .name {flex-basis: 50%;}
+    .octet {flex-basis: 10%;}
+    .ratio, .files {flex-basis: 10%;}
+    .actions {flex-basis: 15%;}
+
+
+    &.title-item {
+      background-color: $secondary;
+
+      & > div {
+        color: $black;
+        font-weight: 700;
+      }
+    }
+
+    &.content-item {
+      font-size: 0.8em;
+
+      .state {
+        color: $primary;
+        display: flex;
+        justify-content: space-around;
+      }
+
+      .name {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+
+        strong {
+          font-size: 1.2em;
+        }
+
+        span {
+          display: block;
+        }
+      }
+
+      .octet {
+        text-align: center;
+      }
+
+      .files > span {
+        margin-left: 1em;
+        cursor: pointer;
+        color: $primary;
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
+
+      .actions {
+        button {
+          margin-right: 0.5em;
+        }
+      }
+    }
+  }
+}
