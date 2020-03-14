@@ -51,6 +51,7 @@
   "route.home.actions.add": "Ajouter",
   "route.login.title": "Connection",
   "route.profile.show.edit_button": "Éditer",
+  "route.profile.section_link.create": "Créer un utilisateur",
 
   "torrents.list.item.title.state": "État",
   "torrents.list.item.title.name": "Nom",

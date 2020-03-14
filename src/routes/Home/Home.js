@@ -18,6 +18,9 @@ class Home extends Component {
                 <FormattedMessage id="route.home.actions.add" />
               </Link>
             </div>
+            <video id="videoPlayer" controls>
+              <source src={`${process.env.REACT_APP_API_URL}/stream`} type="video/mp4" />
+            </video>
           </section>
         </div>
       </React.Fragment>

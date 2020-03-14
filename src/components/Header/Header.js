@@ -21,7 +21,7 @@ class Header extends Component {
           <h3>Download & upload</h3>
         </div>
         <div className="profile">
-          <Link to="/profile/edit" className="d-flex flex-row align-items-center justify-content-center">
+          <Link to={`/profiles/${get(this.props, 'user.id', 0)}edit`} className="d-flex flex-row align-items-center justify-content-center">
             <div className="email">
               {get(this.props, 'user.email', null)}<br />
               <FormattedMessage id="header.profile.quota" /> <strong>{get(this.props, 'user.space', 0)}</strong> Go

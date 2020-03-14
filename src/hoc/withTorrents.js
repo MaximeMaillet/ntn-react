@@ -13,7 +13,7 @@ export default function withTorrents(BaseComponent) {
       this.state = {
         error: null,
         torrents: null,
-        loading: true,
+        torrent: null,
       };
     }
 
@@ -24,11 +24,6 @@ export default function withTorrents(BaseComponent) {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-      if(prevProps.loading !== this.props.loading) {
-        // console.log('Change loading');
-        // console.log(this.props.loading);
-      }
-
       if((prevProps.loading & LOADING.TORRENTS) !== 0 && (this.props.loading & LOADING.TORRENTS) === 0) {
         console.log('done loading');
       }
@@ -46,7 +41,20 @@ export default function withTorrents(BaseComponent) {
       return state;
     }
 
-    loadTorrent = async() => {
+    loadTorrent = async(id) => {
+      try {
+        this.props.startLoading();
+        const torrent = (await api('GET', `/torrents/${id}`)).data;
+        this.setState({torrent});
+      } catch(e) {
+        this.setState({error: e.data});
+      } finally {
+        this.props.stopLoading();
+        this.setState({error: null});
+      }
+    };
+
+    loadTorrents = async() => {
       try {
         this.props.startLoading();
         const torrents = (await api('GET', `/torrents`)).data;
@@ -122,12 +130,12 @@ export default function withTorrents(BaseComponent) {
     };
 
     render() {
-      console.log('WT :: render');
-      console.log(this.state.torrents);
       return <BaseComponent
         {...this.props}
         torrents={this.state.torrents}
+        torrent={this.state.torrent}
         torrentError={this.state.error}
+        loadTorrents={this.loadTorrents}
         loadTorrent={this.loadTorrent}
         loadTorrentUser={this.loadTorrentUser}
         resumeTorrent={this.resume}

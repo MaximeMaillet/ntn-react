@@ -1,0 +1,14 @@
+.content-stream {
+  margin-left: 1em;
+  margin-right: 1em;
+
+  .block-stream-menu {
+    flex-basis: 15%;
+    flex-grow: 0 !important;
+  }
+
+  .block-stream-video {
+    flex-grow: 1;
+    margin-left: 1em;
+  }
+}

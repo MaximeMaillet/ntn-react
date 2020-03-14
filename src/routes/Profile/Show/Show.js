@@ -18,7 +18,6 @@ class Show extends Component {
     return (
       <section className="main-block block-content block-profile-show">
         <h1><FormattedMessage id="route.profile.show.h1" /></h1>
-
         <div className="d-flex flex-row profile-content">
           <div className="d-flex flex-column picture-details">
             <div className="d-flex flex-row">

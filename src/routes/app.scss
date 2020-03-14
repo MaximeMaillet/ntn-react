@@ -1,6 +1,7 @@
 @import '../../node_modules/bootstrap/scss/bootstrap';
 @import "../../node_modules/toasted-notes/src/styles.css";
 @import '../styles/list';
+@import '../styles/modal';
 
 body, html, #root {
   background-color: $white-light;

@@ -22,7 +22,7 @@ class SideMenu extends Component {
           <div className="category">
             <div className="title"><FormattedMessage id="side_menu.title.users" /></div>
             <div className="links">
-              <Link to="/profile"><FormattedMessage id="side_menu.users.list" /></Link>
+              <Link to="/profiles"><FormattedMessage id="side_menu.users.list" /></Link>
             </div>
           </div>
         }
@@ -31,8 +31,8 @@ class SideMenu extends Component {
           <div className="category">
             <div className="title"><FormattedMessage id="side_menu.title.profile" /></div>
             <div className="links">
-              <Link to={`/profile/${this.props.user.id}`}><FormattedMessage id="side_menu.profile.profile" /></Link>
-              <Link to={`/profile/${this.props.user.id}/edit`}><FormattedMessage id="side_menu.profile.edit" /></Link>
+              <Link to={`/profiles/${this.props.user.id}`}><FormattedMessage id="side_menu.profile.profile" /></Link>
+              <Link to={`/profiles/${this.props.user.id}/edit`}><FormattedMessage id="side_menu.profile.edit" /></Link>
             </div>
           </div>
         }
