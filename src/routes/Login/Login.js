@@ -4,34 +4,39 @@ import LoginForm from "../../components/Forms/Forms/LoginForm";
 import OfflineHeader from "../../components/Header/OfflineHeader";
 import notificationsActions from "../../redux/notifications/actions";
 
+import './login.scss'
+import {FormattedMessage} from "react-intl";
+
 class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: false,
-    };
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if(!prevProps.loading && this.props.loading) {
-      this.setState({loading: true});
-    }
-
-    if(prevProps.loading && !this.props.loading) {
-      if(prevProps.errors) {
-        this.props.startNotif(this.props.errors);
-      }
-
-      this.setState({loading: false});
-    }
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     loading: false,
+  //   };
+  // }
+  //
+  // componentDidUpdate(prevProps, prevState, snapshot) {
+  //   if(!prevProps.loading && this.props.loading) {
+  //     this.setState({loading: true});
+  //   }
+  //
+  //   if(prevProps.loading && !this.props.loading) {
+  //     if(prevProps.errors) {
+  //       this.props.startNotif(this.props.errors);
+  //     }
+  //
+  //     this.setState({loading: false});
+  //   }
+  // }
 
   render() {
+    const {globalLoading} = this.props;
     return (
-      <div className={`parent ${this.state.loading ? 'is-loading' : ''}`}>
+      <div className={`parent ${globalLoading ? 'is-loading': ''}`}>
         <OfflineHeader />
-        <div className="container">
-          <section className="main-block">
+        <div className="container-main">
+          <section className="main-block block-login">
+            <h2><FormattedMessage id="route.login.title" /></h2>
             <LoginForm />
           </section>
         </div>
@@ -42,10 +47,8 @@ class Login extends Component {
 
 export default connect(
   (state) => ({
-    loading: state.loading.loading,
-    errors: state.user.errors,
   }),
   (dispatch) => ({
-    startNotif: (data) => dispatch(notificationsActions.start(data))
+    startToaster: (data) => dispatch(notificationsActions.start(data))
   })
 )(Login);

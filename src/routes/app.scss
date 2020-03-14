@@ -1,5 +1,6 @@
-@import '~bootstrap/scss/bootstrap.scss';
-@import "~toasted-notes/src/styles.css";
+@import '../../node_modules/bootstrap/scss/bootstrap';
+@import "../../node_modules/toasted-notes/src/styles.css";
+@import '../styles/list';
 
 body, html, #root {
   background-color: $white-light;
@@ -16,12 +17,14 @@ body, html, #root {
 .parent {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex-grow: 1;
   z-index: 1;
   background-image: url('../styles/medias/background-ntn.svg');
+  position: relative;
+  @include is-loading();
 
   a {
-    color: $primary;
+    color: $white;
 
     &:hover {
       color: $primary-light;
@@ -29,63 +32,47 @@ body, html, #root {
     }
   }
 
-  .container-side-menu {
-    flex-grow: 1;
+  .container-main {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    flex-grow: 1;
 
-    nav.menu-left {
-      width: $width-left-menu;
-      background-color: $primary-light;
-    }
+    &.container-side-menu {
+      flex-direction: row;
 
-    div.content {
-      flex-grow: 1;
+      nav.menu-side {
+        flex-shrink: 0;
+        overflow: hidden;
+      }
 
-      &.is-loading {
-        position: relative;
+      div.content {
+        overflow: hidden;
+        max-width: 100%;
+        flex-grow: 1;
+        @include is-loading();
 
-        &:before {
-          content: '';
-          z-index: 900;
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background-color: blackAlpha(0.8);;
-        }
-
-        &:after {
-          z-index: 901;
+        section.main-block {
+          min-height: 15rem;
+          margin-top: 1em;
+          margin-bottom: 1em;
+          background-color: $white-light;
+          box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+          border-radius: 5px;
           display: flex;
-          align-items: center;
-          justify-content: center;
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          @extend %fa-icon;
-          @extend .fas;
-          @extend .fa-spin;
-          content: fa-content($fa-var-spinner);
-          color: $white;
-          width: 50px;
-          height: 50px;
-          font-size: 5em;
+          flex-direction: column;
+          flex-grow: 1;
+
+          h1 {
+            font-size: 1.5em;
+          }
+
+          &.block-content {
+            margin-left: 1em;
+            margin-right: 1em;
+            padding: 1em;
+          }
         }
       }
-    }
-  }
-
-  section.main-block {
-    margin-top: 1em;
-    margin-bottom: 1em;
-    background-color: $white-light;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-    border-radius: 5px;
-
-    h1 {
-      font-size: 1.5em;
     }
   }
 }

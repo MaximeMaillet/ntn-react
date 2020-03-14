@@ -44,15 +44,17 @@ class LoginForm extends Component {
         {props =>
           <form className="form-main" onSubmit={props.handleSubmit} noValidate>
             <EmailInput
-              required
               className="form-input-align"
+              name="email"
+              required
               label={this.props.intl.messages['form.input.email.label']}
               placeholder={this.props.intl.messages['form.input.email.placeholder']}
             />
 
             <PasswordInput
-              required
               className="form-input-align"
+              name="password"
+              required
               label={this.props.intl.messages['form.input.password.label']}
               placeholder={this.props.intl.messages['form.input.password.placeholder']}
             />

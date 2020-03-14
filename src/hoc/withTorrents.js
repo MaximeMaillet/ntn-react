@@ -4,6 +4,7 @@ import {withRouter} from "react-router-dom";
 import {connect} from 'react-redux';
 import loadingActions from "../redux/loading/actions";
 import api from '../libraries/api';
+import {LOADING} from '../config/const';
 
 export default function withTorrents(BaseComponent) {
   class withTorrentsComponent extends React.PureComponent {
@@ -12,7 +13,37 @@ export default function withTorrents(BaseComponent) {
       this.state = {
         error: null,
         torrents: null,
+        loading: true,
       };
+    }
+
+    componentDidMount() {
+      if(this.props.torrents) {
+        this.setState({torrents: this.props.torrents, loading: false});
+      }
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+      if(prevProps.loading !== this.props.loading) {
+        // console.log('Change loading');
+        // console.log(this.props.loading);
+      }
+
+      if((prevProps.loading & LOADING.TORRENTS) !== 0 && (this.props.loading & LOADING.TORRENTS) === 0) {
+        console.log('done loading');
+      }
+
+      if(!prevProps.torrents && this.props.torrents) {
+        this.setState({torrents: this.props.torrents})
+      }
+    }
+
+    static getDerivedStateFromProps(props, state) {
+      if(!state.torrents && props.torrents) {
+        return {torrents: props.torrents, loading: props.loading};
+      }
+
+      return state;
     }
 
     loadTorrent = async() => {
@@ -91,12 +122,14 @@ export default function withTorrents(BaseComponent) {
     };
 
     render() {
+      console.log('WT :: render');
+      console.log(this.state.torrents);
       return <BaseComponent
         {...this.props}
         torrents={this.state.torrents}
+        torrentError={this.state.error}
         loadTorrent={this.loadTorrent}
         loadTorrentUser={this.loadTorrentUser}
-        torrentError={this.state.error}
         resumeTorrent={this.resume}
         pauseTorrent={this.pause}
         removeTorrent={this.remove}

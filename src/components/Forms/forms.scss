@@ -22,12 +22,14 @@ $sizeFormFile: 120px;
      display: flex;
      flex-direction: column;
      margin-bottom: 0;
+
+     .form-control {
+       border-color: $primary;
+       width: auto;
+     }
    }
 
    .invalid-feedback {
-     position: absolute;
-     top: 100%;
-     text-align: center;
      span {
        display: block;
      }
@@ -65,19 +67,16 @@ $sizeFormFile: 120px;
      }
    }
 
-   &.input-file {
+   &.input-file, &.input-image {
      .form-file {
        height: $sizeFormFile;
        width: $sizeFormFile;
-       border-radius: 25%;
        overflow: hidden;
-       border: 2px solid $white;
-       box-shadow: 2px 2px 2px blackAlpha(0.2);
-       background-color: blackAlpha(0.8);
        cursor: pointer;
        position: relative;
 
        &:before {
+         transition: top 500ms, background-color 500ms;
          @extend %fa-icon;
          @extend .fas;
          content: fa-content($fa-var-upload);
@@ -99,6 +98,7 @@ $sizeFormFile: 120px;
 
        input[type=file] {
          opacity: 0;
+         padding: 0;
          height: 100%;
          width:100%;
          cursor: pointer;
@@ -115,12 +115,21 @@ $sizeFormFile: 120px;
 
        &.is-invalid {
          background-color: $red;
-         background-image: url('../../styles/medias/error.svg');
+         background-image: url('../../styles/medias/error.svg') !important;
 
          &:before {
            display: none;
          }
        }
+     }
+   }
+
+   &.input-file {
+     .form-file {
+       border-radius: 25%;
+       border: 2px solid $white;
+       box-shadow: 2px 2px 2px blackAlpha(0.2);
+       background-color: blackAlpha(0.8);
 
        .file-name {
          position: absolute;
@@ -130,6 +139,27 @@ $sizeFormFile: 120px;
          color: $white;
          white-space: nowrap;
          text-overflow: ellipsis;
+       }
+     }
+   }
+
+   &.input-image {
+     .form-file {
+       border-radius: 50%;
+       border: 2px solid $white;
+       box-shadow: 2px 2px 2px blackAlpha(0.2);
+       background-color: blackAlpha(0.8);
+       background-size: contain;
+       background-position: center;
+
+       &:before {
+         background-color: blackAlpha(0.8);
+       }
+
+       &:hover {
+         &:before {
+           background-color: blackAlpha(0.6);
+         }
        }
      }
    }
@@ -153,6 +183,16 @@ $sizeFormFile: 120px;
      .invalid-feedback {
        text-align: right;
      }
+
+     &.input-image {
+       .form-group {
+         justify-content: center;
+       }
+
+       .invalid-feedback {
+         text-align: center;
+       }
+     }
    }
  }
 
@@ -163,234 +203,234 @@ $sizeFormFile: 120px;
 
 
 
-
-.main-form {
-  .form-input-align
-
-
-
-  .form-group {
-    .form-control {
-      border-color: $primary;
-
-      &:focus {
-        border-color: $secondary;
-        box-shadow: 0 0 0 0.2rem secondaryAlpha(0.2);
-      }
-
-      &.is-invalid {
-        border-color: $red;
-      }
-
-      &.is-valid {
-        border-color: $green;
-      }
-    }
-
-    .form-select-control {
-      .form-select-control__value-container {
-        outline: none;
-      }
-
-      .form-select-control__control {
-        border-color: $primary;
-
-        &:focus, &:hover, &.form-select-control__control--menu-is-open, &.form-select-control__control--is-focused {
-          border-color: $secondary;
-          box-shadow: 0 0 0 0.2rem secondaryAlpha(0.2);
-        }
-
-        .form-select-control__multi-value {
-          background-color: primaryAlpha(0.2);
-        }
-
-        .form-select-control__multi-value__remove:hover {
-          background-color: redAlpha(0.2);
-          color: $red;
-        }
-      }
-
-      .form-select-control__option {
-        &:focus, &:hover, &.form-select-control__option--is-focused {
-          background-color: primaryAlpha(0.2);
-        }
-      }
-    }
-
-    .invalid-feedback {
-      span {
-        display: block;
-      }
-    }
-  }
-
-  .form-input-file {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    .image {
-      $size: 150px;
-      height: $size;
-      width: $size;
-      border-radius: 25%;
-      overflow: hidden;
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-color: $white;
-      border: 2px solid $white;
-      box-shadow: 2px 2px 2px blackAlpha(0.2);
-      cursor: pointer;
-      position: relative;
-
-      input[type=file] {
-        opacity: 0;
-        height: 100%;
-        width:100%;
-        cursor: pointer;
-      }
-
-      &:before {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        right: 0;
-        left: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: blackAlpha(0.8);
-        color: $white-light;
-        font-size: 3em;
-        @extend %fa-icon;
-        @extend .fas;
-        content: fa-content($fa-var-upload);
-        transition: top 700ms;
-        width: 100%;
-        height: 100%;
-      }
-
-      &.is-valid {
-        background-color: $green;
-        background-image: url('../../styles/medias/check.svg');
-      }
-
-      &.is-invalid {
-        background-image: url('../../styles/medias/error.svg');
-      }
-
-      &.is-valid, .si-invalid {
-        &:before {
-          display: none;
-        }
-      }
-    }
-
-    .invalid-feedback {
-      text-align: center;
-    }
-  }
-
-  .form-input-file-image {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    .image {
-      $size: 150px;
-      height: $size;
-      width: $size;
-      border-radius: 50%;
-      overflow: hidden;
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-color: $white;
-      $shadow-size: 4px;
-      box-shadow: getShadow($shadow-size, $white, blackAlpha(0.2));
-      cursor: pointer;
-      position: relative;
-      animation: 2s linear 0s infinite blink-animation;
-      -webkit-animation: 2s linear 0s infinite blink-animation;
-
-      @keyframes blink-animation {
-        0% {border-color: $white;}
-        50% {border-color: blackAlpha(0.2)}
-        100% {border-color: $white;}
-      }
-
-      @-webkit-keyframes blink-animation {
-        0% {border-color: $white;}
-        50% {border-color: blackAlpha(0.2)}
-        100% {border-color: $white;}
-      }
-
-      input[type=file] {
-        opacity: 0;
-        height: 100%;
-        width:100%;
-        cursor: pointer;
-      }
-
-
-      &:before {
-        position: absolute;
-        top: $size;
-        bottom: 0;
-        right: 0;
-        left: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: blackAlpha(0.8);
-        color: $white-light;
-        font-size: 3em;
-        @extend %fa-icon;
-        @extend .fas;
-        content: fa-content($fa-var-upload);
-        transition: top 700ms;
-        width: 100%;
-        height: 100%;
-      }
-
-      &:hover {
-        &:before {
-          top: 0;
-        }
-      }
-
-      &.is-valid {
-        background-color: $green;
-        background-image: url('../../styles/medias/check.svg') !important;
-      }
-
-      &.is-invalid {
-        background-image: url('../../styles/medias/error.svg') !important;
-      }
-    }
-
-    .invalid-feedback {
-      text-align: center;
-    }
-  }
-
-  .form-group-input-align {
-    display: flex;
-    flex-direction: column;
-
-    *:not(label) {
-      flex-grow: 1;
-    }
-  }
-
-  &.form-input-center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .invalid-feedback {
-    color: $red;
-  }
-}
+//
+//.main-form {
+//  .form-input-align
+//
+//
+//
+//  .form-group {
+//    .form-control {
+//      border-color: $primary;
+//
+//      &:focus {
+//        border-color: $secondary;
+//        box-shadow: 0 0 0 0.2rem secondaryAlpha(0.2);
+//      }
+//
+//      &.is-invalid {
+//        border-color: $red;
+//      }
+//
+//      &.is-valid {
+//        border-color: $green;
+//      }
+//    }
+//
+//    .form-select-control {
+//      .form-select-control__value-container {
+//        outline: none;
+//      }
+//
+//      .form-select-control__control {
+//        border-color: $primary;
+//
+//        &:focus, &:hover, &.form-select-control__control--menu-is-open, &.form-select-control__control--is-focused {
+//          border-color: $secondary;
+//          box-shadow: 0 0 0 0.2rem secondaryAlpha(0.2);
+//        }
+//
+//        .form-select-control__multi-value {
+//          background-color: primaryAlpha(0.2);
+//        }
+//
+//        .form-select-control__multi-value__remove:hover {
+//          background-color: redAlpha(0.2);
+//          color: $red;
+//        }
+//      }
+//
+//      .form-select-control__option {
+//        &:focus, &:hover, &.form-select-control__option--is-focused {
+//          background-color: primaryAlpha(0.2);
+//        }
+//      }
+//    }
+//
+//    .invalid-feedback {
+//      span {
+//        display: block;
+//      }
+//    }
+//  }
+//
+//  .form-input-file {
+//    display: flex;
+//    flex-direction: column;
+//    align-items: center;
+//
+//    .image {
+//      $size: 150px;
+//      height: $size;
+//      width: $size;
+//      border-radius: 25%;
+//      overflow: hidden;
+//      background-size: cover;
+//      background-repeat: no-repeat;
+//      background-position: center;
+//      background-color: $white;
+//      border: 2px solid $white;
+//      box-shadow: 2px 2px 2px blackAlpha(0.2);
+//      cursor: pointer;
+//      position: relative;
+//
+//      input[type=file] {
+//        opacity: 0;
+//        height: 100%;
+//        width:100%;
+//        cursor: pointer;
+//      }
+//
+//      &:before {
+//        position: absolute;
+//        top: 0;
+//        bottom: 0;
+//        right: 0;
+//        left: 0;
+//        display: flex;
+//        align-items: center;
+//        justify-content: center;
+//        background-color: blackAlpha(0.8);
+//        color: $white-light;
+//        font-size: 3em;
+//        @extend %fa-icon;
+//        @extend .fas;
+//        content: fa-content($fa-var-upload);
+//        transition: top 700ms;
+//        width: 100%;
+//        height: 100%;
+//      }
+//
+//      &.is-valid {
+//        background-color: $green;
+//        background-image: url('../../styles/medias/check.svg');
+//      }
+//
+//      &.is-invalid {
+//        background-image: url('../../styles/medias/error.svg');
+//      }
+//
+//      &.is-valid, .si-invalid {
+//        &:before {
+//          display: none;
+//        }
+//      }
+//    }
+//
+//    .invalid-feedback {
+//      text-align: center;
+//    }
+//  }
+//
+//  .form-input-file-image {
+//    display: flex;
+//    flex-direction: column;
+//    align-items: center;
+//
+//    .image {
+//      $size: 150px;
+//      height: $size;
+//      width: $size;
+//      border-radius: 50%;
+//      overflow: hidden;
+//      background-size: cover;
+//      background-repeat: no-repeat;
+//      background-position: center;
+//      background-color: $white;
+//      $shadow-size: 4px;
+//      box-shadow: getShadow($shadow-size, $white, blackAlpha(0.2));
+//      cursor: pointer;
+//      position: relative;
+//      animation: 2s linear 0s infinite blink-animation;
+//      -webkit-animation: 2s linear 0s infinite blink-animation;
+//
+//      @keyframes blink-animation {
+//        0% {border-color: $white;}
+//        50% {border-color: blackAlpha(0.2)}
+//        100% {border-color: $white;}
+//      }
+//
+//      @-webkit-keyframes blink-animation {
+//        0% {border-color: $white;}
+//        50% {border-color: blackAlpha(0.2)}
+//        100% {border-color: $white;}
+//      }
+//
+//      input[type=file] {
+//        opacity: 0;
+//        height: 100%;
+//        width:100%;
+//        cursor: pointer;
+//      }
+//
+//
+//      &:before {
+//        position: absolute;
+//        top: $size;
+//        bottom: 0;
+//        right: 0;
+//        left: 0;
+//        display: flex;
+//        align-items: center;
+//        justify-content: center;
+//        background-color: blackAlpha(0.8);
+//        color: $white-light;
+//        font-size: 3em;
+//        @extend %fa-icon;
+//        @extend .fas;
+//        content: fa-content($fa-var-upload);
+//        transition: top 700ms;
+//        width: 100%;
+//        height: 100%;
+//      }
+//
+//      &:hover {
+//        &:before {
+//          top: 0;
+//        }
+//      }
+//
+//      &.is-valid {
+//        background-color: $green;
+//        background-image: url('../../styles/medias/check.svg') !important;
+//      }
+//
+//      &.is-invalid {
+//        background-image: url('../../styles/medias/error.svg') !important;
+//      }
+//    }
+//
+//    .invalid-feedback {
+//      text-align: center;
+//    }
+//  }
+//
+//  .form-group-input-align {
+//    display: flex;
+//    flex-direction: column;
+//
+//    *:not(label) {
+//      flex-grow: 1;
+//    }
+//  }
+//
+//  &.form-input-center {
+//    display: flex;
+//    align-items: center;
+//    justify-content: center;
+//  }
+//
+//  .invalid-feedback {
+//    color: $red;
+//  }
+//}

@@ -9,4 +9,14 @@ div.profile-picture {
   background-position: center;
   background-repeat: no-repeat;
   border: $borderSize solid $white-light;
+
+  &.sm {
+    height: $height-profile-picture-sm + ($borderSize * 2);
+    width: $height-profile-picture-sm + ($borderSize * 2);
+  }
+
+  &.xl {
+    height: $height-profile-picture-xl + ($borderSize * 2);
+    width: $height-profile-picture-xl + ($borderSize * 2);
+  }
 }

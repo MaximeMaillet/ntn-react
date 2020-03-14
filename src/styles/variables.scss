@@ -12,6 +12,9 @@ $black: #1F2421;
 
 $white: #ffffff;
 $white-light: #DCE1DE;
+@function whiteAlpha($alpha) {
+  @return rgba(255,255,255,$alpha);
+}
 
 $red: #F26659;
 @function redAlpha($alpha) {
@@ -37,4 +40,50 @@ $green: #9CC5A1;
 // Sizes
 $height-header: 60px;
 $height-profile-picture: 40px;
+$height-profile-picture-sm: 80px;
+$height-profile-picture-xl: 150px;
 $width-left-menu: 200px;
+
+// Mixins
+@mixin item-size($size) {
+  flex-basis: $size;
+  max-width: $size;
+  min-width: $size;
+}
+
+@mixin is-loading() {
+  &.is-loading {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    &:before {
+      content: '';
+      z-index: 900;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: blackAlpha(0.8);;
+    }
+
+    &:after {
+      z-index: 901;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      @extend %fa-icon;
+      @extend .fas;
+      @extend .fa-spin;
+      content: fa-content($fa-var-spinner);
+      color: $white;
+      width: 50px;
+      height: 50px;
+      font-size: 5em;
+    }
+  }
+}

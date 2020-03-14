@@ -7,17 +7,20 @@ import {Link} from "react-router-dom";
 
 class Home extends Component {
   render() {
+    console.log(this.props.user);
     return (
-      <div className="parent">
+      <React.Fragment>
         <Header />
-        <section className="d-flex flex-row main-block">
-          <div className="actions ml-auto">
-            <Link className="btn btn-primary" to="/torrents/add">
-              <FormattedMessage id="route.home.actions.add" />
-            </Link>
-          </div>
-        </section>
-      </div>
+        <div className="container-main">
+          <section className="d-flex flex-row main-block">
+            <div className="actions ml-auto">
+              <Link className="btn btn-primary" to="/torrents/add">
+                <FormattedMessage id="route.home.actions.add" />
+              </Link>
+            </div>
+          </section>
+        </div>
+      </React.Fragment>
     );
   }
 }

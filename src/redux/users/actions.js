@@ -5,6 +5,7 @@ import serverActions from '../server/actions';
 export const TYPE = {
   FAIL: 'userReducer::fail',
   LOADED: 'userReducer::loaded',
+  LOGIN: 'userReducer::login',
 };
 
 export const fail = (errors) => ({
@@ -12,17 +13,22 @@ export const fail = (errors) => ({
   errors,
 });
 
-export const loaded = (action, user) => ({
+export const loaded = (user) => ({
   type: TYPE.LOADED,
-  action,
   user,
+});
+
+export const doLogin = (isLogin) => ({
+  type: TYPE.LOGIN,
+  isLogin,
 });
 
 export const login = (token, user) => {
   return async(dispatch) => {
     localStorage.setItem('token', token);
+    dispatch(loaded(user));
     await dispatch(get(user.id));
-    await dispatch(serverActions.get())
+    await dispatch(serverActions.get());
   };
 };
 
@@ -30,6 +36,7 @@ export const logout = () => {
   return async(dispatch) => {
     localStorage.removeItem('token');
     await dispatch(loaded(null));
+    await dispatch(doLogin(false));
   };
 };
 
@@ -38,9 +45,11 @@ export const get = (userId) => {
     try {
       dispatch(loadingActions.startLoading());
       const user = (await api('GET', `/users/${userId}`)).data;
-      dispatch(loaded('get', user));
+      await dispatch(loaded(user));
+      await dispatch(doLogin(true));
     } catch(e) {
       dispatch(fail(e));
+      await dispatch(doLogin(false));
     } finally {
       dispatch(loadingActions.stopLoading());
     }
@@ -51,5 +60,4 @@ export default {
   login,
   logout,
   fail,
-  loaded,
 }

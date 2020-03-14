@@ -16,62 +16,74 @@ class SelectInput extends Component {
   };
 
   handleChange = (selectedOption, onChange) => {
-    onChange(selectedOption);
+    onChange(this.transformSelected(selectedOption));
     this.setState(
       { selectedOption },
     );
   };
 
+  transformValue = (value) => {
+    if(this.props.transformValue) {
+      return this.props.transformValue(value);
+    }
+
+    return value;
+  };
+
+  transformSelected = (selected) => {
+    if(this.props.transformSelected) {
+      return this.props.transformSelected(selected);
+    }
+
+    return selected;
+  };
+
   render() {
-    const {name, label, required} = this.props;
+    const {name, label, options, required, className, multiple} = this.props;
     return (
       <Field
         name={name}
         validate={validate(required ? requiredValidator() : null)}
       >
-        {(props) => {
+        {({input, meta}) => {
           return (
-            <div className={`form-input input-select ${this.props.className}`}>
-              <div className={`form-group ${props.meta.touched ? (props.meta.valid ? 'is-valid' : 'is-invalid') : ''}`}>
-                <Label name={name} label={label} />
+            <div className={`form-input input-select ${className}`}>
+              <div className={`form-group ${meta.touched ? (meta.valid ? 'is-valid' : 'is-invalid') : ''}`}>
+                <Label name={name} label={label} required={required} />
                 <Select
-                  className={`form-select-control ${props.meta.touched ? (props.meta.valid ? 'is-valid' : 'is-invalid') : ''}`}
+                  className={`form-select-control ${meta.touched ? (meta.valid ? 'is-valid' : 'is-invalid') : ''}`}
                   classNamePrefix="form-select-control"
-                  id={this.props.name}
-                  isMulti={this.props.multiple}
+                  id={name}
+                  name={name}
+                  isMulti={multiple}
                   required={true}
-                  value={this.state.selectedOption ? this.state.selectedOption : props.input.value}
-                  name={this.props.name}
-                  onChange={(selectedOption) => this.handleChange(selectedOption, props.input.onChange)}
-                  options={this.props.options}
+                  value={this.state.selectedOption ? this.state.selectedOption : this.transformValue(input.value)}
+                  onChange={(selectedOption) => this.handleChange(selectedOption, input.onChange)}
+                  options={options}
                 />
               </div>
-              <Errors meta={props.meta} />
+              <Errors meta={meta} />
             </div>
           );
         }}
-        {/*{props  => (*/}
-          {/**/}
-        {/*)}*/}
       </Field>
     );
   }
 }
 
 SelectInput.defaultProps = {
-  label: 'Select :',
-  name: 'select',
   multiple: false,
   required: false,
   className: '',
 };
 
 SelectInput.propTypes = {
-  name: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  options: PropTypes.array.isRequired,
   required: PropTypes.bool,
   multiple: PropTypes.bool,
-  label: PropTypes.string,
-  options: PropTypes.array.isRequired,
+  className: PropTypes.string,
 };
 
 export default SelectInput;

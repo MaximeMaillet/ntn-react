@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 import ProfilePicture from "../Profile/Picture/ProfilePicture";
 import userActions from '../../redux/users/actions';
+import get from 'lodash.get';
 
 import logo from '../../styles/medias/logo.svg'
 import './header.scss';
@@ -20,12 +21,12 @@ class Header extends Component {
           <h3>Download & upload</h3>
         </div>
         <div className="profile">
-          <Link to="/profile" className="d-flex flex-row align-items-center justify-content-center">
+          <Link to="/profile/edit" className="d-flex flex-row align-items-center justify-content-center">
             <div className="email">
-              {this.props.user.email}<br />
-              <FormattedMessage id="header.profile.quota" /> <strong>{this.props.user.space}</strong> Go
+              {get(this.props, 'user.email', null)}<br />
+              <FormattedMessage id="header.profile.quota" /> <strong>{get(this.props, 'user.space', 0)}</strong> Go
             </div>
-            <ProfilePicture profile={this.props.user} />
+            <ProfilePicture profile={get(this.props, 'user', null)} />
             <button className="ml-2 btn btn-secondary" onClick={this.props.logout}>
               <i className="fas fa-sign-out-alt"/>
             </button>

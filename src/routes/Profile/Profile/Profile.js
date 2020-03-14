@@ -1,13 +1,16 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import withAuth from "../../hoc/withAuth";
-import Header from "../../components/Header/Header";
-import SideMenu from "../../components/Menus/SideMenu/SideMenu";
+import withAuth from "../../../hoc/withAuth";
+import Header from "../../../components/Header/Header";
+import SideMenu from "../../../components/Menus/SideMenu/SideMenu";
 import {FormattedMessage, injectIntl} from "react-intl";
-import ProfileDetailForm from "../../components/Forms/Forms/ProfileDetailForm";
-import ProfilePictureForm from "../../components/Forms/Forms/ProfilePictureForm";
-import notificationsActions from '../../redux/notifications/actions'
-import loadingActions from "../../redux/loading/actions";
+import ProfileDetailForm from "../../../components/Forms/Forms/ProfileForm/ProfileDetailForm";
+import ProfilePictureForm from "../../../components/Forms/Forms/ProfileForm/ProfilePictureForm";
+import notificationsActions from '../../../redux/notifications/actions'
+import loadingActions from "../../../redux/loading/actions";
+
+import './profile.scss'
+import {withRouter} from "react-router-dom";
 
 class Profile extends Component {
   constructor(props) {
@@ -35,20 +38,23 @@ class Profile extends Component {
   }
 
   render() {
+    const {match: {params}, user} = this.props;
     return (
       <div className="parent">
         <Header />
         <div className="container-side-menu">
           <SideMenu/>
           <div className={`content ${this.state.loading ? 'is-loading' : ''}`}>
-            <section className="main-block">
-              <h1><FormattedMessage id="route.profile.details.h1" /></h1>
+            <section className="main-block block-profile">
+              <h1><FormattedMessage id={params.type === 'edit' ? 'route.profile.edit.h1' : 'route.profile.create.h1'} /></h1>
               <ProfilePictureForm
-                className="form-input-center"
-                user={this.props.user}
+                user={params.type === 'edit' ? user : null}
+                create={params.type === 'create'}
               />
               <ProfileDetailForm
-                user={this.props.user}
+                className="form-input-align"
+                user={params.type === 'edit' ? user : null}
+                create={params.type === 'create'}
               />
             </section>
           </div>
@@ -70,4 +76,4 @@ export default withAuth(connect(
     startLoading: () => dispatch(loadingActions.startLoading()),
     stopLoading: () => dispatch(loadingActions.stopLoading()),
   })
-)(injectIntl(Profile)));
+)(injectIntl(withRouter(Profile))));

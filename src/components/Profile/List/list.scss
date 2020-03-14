@@ -1,0 +1,31 @@
+.list-profile {
+  .item.picture {@include item-size(5%)}
+  .item.id {@include item-size(7%)}
+  .item.email {@include item-size(30%)}
+  .item.roles {@include item-size(20%)}
+  .item.space {@include item-size(10%)}
+  .item.validated {@include item-size(8%)}
+  .item.created {@include item-size(10%)}
+  .item.updated {@include item-size(10%)}
+
+  .content-item {
+    .item {
+      padding: 0.5em;
+    }
+    .item.id {
+      justify-content: center;
+      font-weight: 600;
+    }
+    .item.picture {
+      justify-content: center;
+    }
+    .item.created, .item.updated {
+      font-size: 0.7em;
+    }
+    .item.validated {
+      justify-content: center;
+      &.is-invalidated {color: $red;}
+      &.is-validated {color: $green;}
+    }
+  }
+}

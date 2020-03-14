@@ -6,11 +6,15 @@ class Label extends Component {
     const {name, label, required} = this.props;
     return (
       <label className="form-label" htmlFor={name}>
-        {label}{required ? '*' :''}
+        {label}{required ? '*' :''} :
       </label>
     );
   }
 }
+
+Label.defaultProps = {
+  required: false,
+};
 
 Label.propTypes = {
   name: PropTypes.string.isRequired,

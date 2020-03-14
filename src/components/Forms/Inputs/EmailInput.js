@@ -1,32 +1,32 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Field} from "react-final-form";
-
-import {required, email} from '../Validators/index';
-import {validate} from '../utils';
 import {injectIntl} from "react-intl";
+import {Field} from "react-final-form";
+import {required as requiredValidator, email} from '../Validators/index';
+import {validate} from '../utils';
 import Errors from "../Utils/Errors";
 import Label from "../Utils/Label";
 
 class EmailInput extends Component {
   render() {
+    const {className, placeholder, name, required, label} = this.props;
     return (
       <Field
-        name={this.props.name}
+        name={name}
         component="input"
         type="email"
-        validate={validate(this.props.required ? required(this.props.intl.messages['form.input.email.required']) : null, email)}
+        validate={validate(required ? requiredValidator(this.props.intl.messages['form.input.email.required']) : null, email)}
       >
         {
           ({ input, meta }) => {
             return (
-              <div className={`form-input input-email ${this.props.className}`}>
+              <div className={`form-input input-email ${className}`}>
                 <div className={`form-group ${meta.touched && (meta.valid ? 'is-valid' : 'is-invalid')}`}>
-                  <Label name={this.props.name} label={this.props.intl.messages['form.input.email.label']} />
+                  <Label name={name} label={label} required={required} />
                   <input
                     {...input}
-                    id={this.props.name}
-                    placeholder={this.props.placeholder}
+                    id={name}
+                    placeholder={placeholder}
                     className={`form-control ${meta.touched && (meta.valid ? 'is-valid' : 'is-invalid')}`}
                   />
                 </div>
@@ -42,15 +42,14 @@ class EmailInput extends Component {
 
 EmailInput.defaultProps = {
   className: '',
-  label: 'E-mail :',
-  name: 'email',
   placeholder: 'E-mail',
   required: false,
 };
 
 EmailInput.propTypes = {
-  label: PropTypes.string,
-  name: PropTypes.string,
+  label: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  className: PropTypes.string,
   placeholder: PropTypes.string,
   required: PropTypes.bool,
 };
