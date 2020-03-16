@@ -7,7 +7,7 @@ class Stream extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      file: null
+      file: props.torrent ? props.torrent.files[0] : null,
     };
   }
 
@@ -28,7 +28,7 @@ class Stream extends Component {
           }
         </section>
         <section className="d-flex flex-column main-block block-stream-video">
-          <Streamer file={file ? file : torrent.files.filter((f) => /\.mp4$/ig.exec(f.name))[0]} />
+          <Streamer file={file} torrent={torrent} />
         </section>
       </div>
     );

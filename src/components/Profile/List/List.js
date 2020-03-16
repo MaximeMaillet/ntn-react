@@ -5,7 +5,6 @@ import withAuth from "../../../hoc/withAuth";
 import loadingActions from '../../../redux/loading/actions';
 import {FormattedMessage, injectIntl} from "react-intl";
 import notificationsActions from "../../../redux/notifications/actions";
-import withProfiles from "../../../hoc/withProfiles";
 import ProfilePicture from "../Picture/ProfilePicture";
 import moment from 'moment';
 
@@ -13,10 +12,6 @@ import './list.scss';
 import {withRouter} from "react-router-dom";
 
 class ProfileList extends Component {
-  componentDidMount() {
-    // this.props.loadProfiles();
-  }
-
   componentDidUpdate(prevProps, prevState, snapshot) {
     if(!prevProps.profileError && this.props.profileError) {
       this.props.startToaster(this.props.profileError);
@@ -24,7 +19,7 @@ class ProfileList extends Component {
   }
 
   clickItem = (profile) => {
-    this.props.history.push(`/profile/${profile.id}`);
+    this.props.history.push(`/profiles/${profile.id}`);
   };
 
   render() {
