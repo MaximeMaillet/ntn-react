@@ -14,7 +14,7 @@ class Show extends Component {
   }
 
   render() {
-    const {profile, loading, torrents, isAdmin} = this.props;
+    const {profile, loading, torrents, isAdmin, user} = this.props;
     return (
       <section className="main-block block-content block-profile-show">
         <h1><FormattedMessage id="route.profile.show.h1" /></h1>
@@ -35,8 +35,8 @@ class Show extends Component {
             </div>
             <div className="d-flex align-items-center justify-content-center flex-grow-1">
               {
-                isAdmin ?
-                  <Link className="btn btn-primary" to={`/profile/${profile.id}/edit`}>
+                (isAdmin || user.id === profile.id) ?
+                  <Link className="btn btn-primary" to={`/profiles/${profile.id}/edit`}>
                     <FormattedMessage id="route.profile.show.edit_button" />
                   </Link>
                   :
@@ -61,11 +61,13 @@ Show.propTypes = {
   loading: PropTypes.number,
   LOADING_TYPE: PropTypes.object,
   profile: PropTypes.object.isRequired,
+  user: PropTypes.object,
   isAdmin: PropTypes.bool,
 };
 
 export default connect(
   (state) => ({
+    user: state.user.user,
     isAdmin: state.user.isAdmin,
   })
 )(Show);

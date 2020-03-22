@@ -1,9 +1,8 @@
 import React, {Component} from "react";
 import PropTypes from 'prop-types';
-import {Route, withRouter} from "react-router-dom";
-import {LOADING} from '../../config/const';
+import {Route} from "react-router-dom";
 import withTorrents from "../../hoc/withTorrents";
-import Stream from "../../routes/Stream/Stream";
+import TorrentOne from "../../routes/Torrents/One/TorrentOne";
 
 class TorrentIdContainer extends Component {
   componentDidMount() {
@@ -19,17 +18,14 @@ class TorrentIdContainer extends Component {
   }
 
   render() {
-    const {match, loading, torrent} = this.props;
+    const {match, torrent} = this.props;
     return (
       <div className={`content`}>
         {
           torrent &&
           <React.Fragment>
-            <Route exact path={`${match.url}/files`}>
-              <Stream torrent={torrent} />
-            </Route>
             <Route exact path={`${match.url}`}>
-              One torrent {torrent.name}
+              <TorrentOne torrent={torrent}/>
             </Route>
           </React.Fragment>
         }
@@ -42,4 +38,4 @@ TorrentIdContainer.propTypes = {
   profileNotFound: PropTypes.bool,
 };
 
-export default withRouter(withTorrents(TorrentIdContainer));
+export default withTorrents(TorrentIdContainer);

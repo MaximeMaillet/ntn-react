@@ -14,7 +14,11 @@ class StreamVideo extends Component {
   }
 
   componentDidMount() {
-    this.handleSubtitles();
+    // this.handleSubtitles();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    // this.handleSubtitles()
   }
 
   handleSubtitles = async() => {
@@ -37,7 +41,9 @@ class StreamVideo extends Component {
   convertTrack = async(file) => {
     try {
       const result = await fetch(file.path);
-      const value = await result.text();
+      const buffer = await result.arrayBuffer();
+      const decoder = new TextDecoder("iso-8859-1");
+      const value = decoder.decode(buffer);
       const vtt = stringifyVtt(parse(value));
       const blob = new Blob([vtt], {type : 'text/vtt'});
       return {
@@ -52,16 +58,21 @@ class StreamVideo extends Component {
     }
   };
 
-  render() {
-    const {url} = this.props;
-    if(this.state.loading) {
-      return null;
-    }
+  handleError = (e, o, i) => {
+    console.log('Player error');
+    console.log(e);
+    console.log(o);
+    console.log(i);
+  };
 
+  render() {
+    const {url, className} = this.props;
     return (
       <ReactPlayer
+        className={className}
         url={url}
         controls
+        onError={this.handleError}
         config={{
           file: {
             attributes: {
@@ -75,7 +86,12 @@ class StreamVideo extends Component {
   }
 }
 
+StreamVideo.defaultProps = {
+  className: '',
+};
+
 StreamVideo.propTypes = {
+  className: PropTypes.string,
   url: PropTypes.string.isRequired,
   torrent: PropTypes.object,
 };

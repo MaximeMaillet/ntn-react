@@ -1,6 +1,6 @@
 .torrents-list {
   .item.state {@include item-size(5%)}
-  .item.name {@include item-size(25%)}
+  .item.name {flex-grow: 1}
   .item.download {@include item-size(10%)}
   .item.upload {@include item-size(10%)}
   .item.total {@include item-size(10%)}
@@ -9,6 +9,17 @@
   .item.actions {@include item-size(15%)}
 
   .content-item {
+    .item.state {
+      justify-content: center;
+      a {
+        color: $black;
+
+        &:hover {
+          color: $primary;
+        }
+      }
+    }
+
     .item.octet, .item.ratio {
       font-size: 0.8em;
       justify-content: center;

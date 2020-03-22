@@ -29,6 +29,7 @@
   "form.input.file.required": "Un fichier est requis",
   "form.input.roles.label": "Rôles",
   "form.input.roles.placeholder": "Rôles",
+  "form.input.is_validated.label": "Validé ?",
 
   "form.login.submit.text": "Connection",
   "form.torrent.submit.text": "Envoyer",
@@ -65,6 +66,7 @@
   "torrents.list.item.is_finished": "Terminé",
   "torrents.list.item.is_active": "Actif",
   "torrents.list.no_item": "Aucun torrents",
+  "torrents.one.stream.download": "Télécharger",
 
   "profile.errors.not_found.title": "Utilisateur inconnu",
   "profile.errors.not_found.message": "Cet utilisateur n'existe pas ou est supprimé",

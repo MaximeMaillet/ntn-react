@@ -1,6 +1,6 @@
 import {getLanguage} from './locale';
 
-export default async(method, endpoint, parameters, headers) => {
+export default async(method, endpoint, parameters, headers, response) => {
   const params = new URLSearchParams();
 
   if(method === 'GET' && parameters) {
@@ -46,6 +46,16 @@ export default async(method, endpoint, parameters, headers) => {
       result.data = await result.json();
     } else if(result.headers.get('content-type').match(/^application\/pdf/i)) {
       result.data = await result.blob();
+    } else if(result.headers.get('content-type').match(/^video/i)) {
+      const blob = await result.blob();
+      const url = window.URL.createObjectURL(new Blob([blob]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `${response.name}${response.extension}`);
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
+
     } else {
       result.data = await result.text();
     }

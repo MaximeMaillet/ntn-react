@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {Route, withRouter} from "react-router-dom";
 import Header from "../../components/Header/Header";
-import TorrentList from '../../routes/Torrents/List/List';
 import SideMenu from "../../components/Menus/SideMenu/SideMenu";
 import TorrentIdContainer from "./TorrentIdContainer";
+import TorrentList from '../../routes/Torrents/List/List';
+import TorrentsAdd from '../../routes/Torrents/Add/TorrentsAdd';
 
 class TorrentContainer extends Component {
   render() {
@@ -13,7 +14,8 @@ class TorrentContainer extends Component {
         <Header />
         <div className="container-main container-side-menu">
           <SideMenu/>
-          <Route path={`${match.url}/:torrentId`}><TorrentIdContainer/></Route>
+          <Route path={`${match.url}/:torrentId([0-9]+)`}><TorrentIdContainer/></Route>
+          <Route exact path={`${match.url}/add`}><TorrentsAdd /></Route>
           <Route exact path={`${match.url}`}><TorrentList /></Route>
         </div>
       </React.Fragment>

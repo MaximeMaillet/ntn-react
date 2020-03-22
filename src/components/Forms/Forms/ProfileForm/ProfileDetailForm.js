@@ -5,15 +5,14 @@ import EmailInput from "../../Inputs/EmailInput";
 import {connect} from "react-redux";
 import {FormattedMessage, injectIntl} from "react-intl";
 import NumberInput from "../../Inputs/NumberInput";
-import userActions from '../../../../redux/users/actions';
 import api from "../../../../libraries/api";
 import get from 'lodash.get';
 import PasswordInput from "../../Inputs/PasswordInput";
 import {ROLES} from '../../../../libraries/roles';
-import loadingActions from "../../../../redux/loading/actions";
 
 import '../../forms.scss';
 import SelectInput from "../../Inputs/SelectInput";
+import CheckBoxInput from "../../Inputs/CheckBoxInput";
 
 const bitwiseOptions = [
   {value: ROLES.USER, label: <FormattedMessage id="roles.user"/>},
@@ -83,6 +82,7 @@ class ProfileDetailForm extends Component {
           email: get(this.props, 'profile.email', null),
           space: get(this.props, 'profile.space', null),
           roles: get(this.props, 'profile.roles', null),
+          is_validated: get(this.props, 'profile.is_validated', false),
         }}
       >
         {props =>
@@ -122,7 +122,14 @@ class ProfileDetailForm extends Component {
                 required
               />
             }
-
+            {
+              isAdmin &&
+              <CheckBoxInput
+                className="form-input-align"
+                name="is_validated"
+                label={this.props.intl.messages['form.input.is_validated.label']}
+              />
+            }
             <PasswordInput
               className="form-input-align"
               name="password"

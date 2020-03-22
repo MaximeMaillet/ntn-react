@@ -56,7 +56,6 @@ class TorrentForm extends Component {
                 multiple
                 accept={['application/x-bittorrent']}
               />
-
               <div className="form-select-torrent">
                 <h3>Uploader un torrent :</h3>
                 <SelectInput
@@ -71,7 +70,6 @@ class TorrentForm extends Component {
                 />
               </div>
             </div>
-
             <button className="btn btn-primary" type="submit"><FormattedMessage id="form.torrent.submit.text"/></button>
           </form>
         )}

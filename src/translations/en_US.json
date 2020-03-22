@@ -29,6 +29,7 @@
   "form.input.file.required": "File is required",
   "form.input.roles.label": "Roles",
   "form.input.roles.placeholder": "Roles",
+  "form.input.is_validated.label": "Is validated ?",
 
   "form.login.submit.text": "Connexion",
   "form.torrent.submit.text": "Upload",
@@ -65,6 +66,7 @@
   "torrents.list.item.is_finished": "Finished",
   "torrents.list.item.is_active": "Active",
   "torrents.list.no_item": "No torrents",
+  "torrents.one.stream.download": "Download",
 
   "profile.errors.not_found.title": "Unknown user",
   "profile.errors.not_found.message": "This user does not exists or is removed",

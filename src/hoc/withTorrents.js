@@ -45,7 +45,12 @@ export default function withTorrents(BaseComponent) {
       try {
         this.props.startLoading();
         const torrent = (await api('GET', `/torrents/${id}`)).data;
-        this.setState({torrent});
+        this.setState({
+          torrent: {
+            ...torrent,
+            total: `${Math.floor(torrent.total/1024/1024)}Mo`
+          }
+        });
       } catch(e) {
         this.setState({error: e.data});
       } finally {

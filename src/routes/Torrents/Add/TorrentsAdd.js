@@ -1,23 +1,19 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import withAuth from "../../../hoc/withAuth";
-import Header from "../../../components/Header/Header";
-import {FormattedMessage, injectIntl} from "react-intl";
+import {injectIntl} from "react-intl";
 import notificationsActions from '../../../redux/notifications/actions'
 import TorrentForm from "../../../components/Forms/Forms/TorrentForm/TorrentForm";
-
-import './torrent-add.scss'
+import {LOADING} from "../../../config/const";
 
 class TorrentsAdd extends Component {
   render() {
+    const {loading} = this.props;
     return (
-      <div className="parent">
-        <Header />
-        <div className="d-flex flex-row">
-          <section className="main-block bloc-torrent-add">
-            <TorrentForm />
-          </section>
-        </div>
+      <div className={`content ${(loading & LOADING.TORRENTS) !== 0 ? 'is-loading' : ''}`}>
+        <section className="main-block block-content">
+          <TorrentForm />
+        </section>
       </div>
     );
   }

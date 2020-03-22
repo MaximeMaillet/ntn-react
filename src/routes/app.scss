@@ -1,7 +1,8 @@
-@import '../../node_modules/bootstrap/scss/bootstrap';
-@import "../../node_modules/toasted-notes/src/styles.css";
-@import '../styles/list';
-@import '../styles/modal';
+@import "~bootstrap/scss/bootstrap";
+@import "~toasted-notes/src/styles.css";
+@import "~pretty-checkbox/src/pretty-checkbox";
+
+@import "../styles/list";
 
 body, html, #root {
   background-color: $white-light;
