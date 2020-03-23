@@ -6,6 +6,15 @@
     flex-basis: 60%;
     flex-grow: 0 !important;
     padding: 1em;
+
+    .medias {
+      a {
+        color: $black;
+        &:hover {
+          color: $secondary;
+        }
+      }
+    }
   }
 
   .block-stream-video {

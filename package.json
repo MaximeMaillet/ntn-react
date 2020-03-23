@@ -16,6 +16,7 @@
     "parse-torrent": "^7.0.1",
     "pretty-checkbox": "^3.0.3",
     "prop-types": "^15.7.2",
+    "rc-slider": "^9.2.4",
     "react": "^16.13.0",
     "react-app-rewired": "^2.1.5",
     "react-bootstrap": "^1.0.0-beta.17",
@@ -31,6 +32,7 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "sass-resources-loader": "^2.0.1",
+    "screenfull": "^5.0.2",
     "srt-webvtt": "^1.0.1",
     "subtitle": "^2.0.3",
     "toasted-notes": "^3.2.0"

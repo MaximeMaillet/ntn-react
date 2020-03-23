@@ -24,10 +24,6 @@ export default function withTorrents(BaseComponent) {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-      if((prevProps.loading & LOADING.TORRENTS) !== 0 && (this.props.loading & LOADING.TORRENTS) === 0) {
-        console.log('done loading');
-      }
-
       if(!prevProps.torrents && this.props.torrents) {
         this.setState({torrents: this.props.torrents})
       }

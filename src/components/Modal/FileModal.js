@@ -9,7 +9,6 @@ class FileModal extends React.PureComponent {
     return (
       <ul>
         {torrent.files.map((file, key) => {
-          console.log(file);
           return (
             <li key={key}>
               <Link className="btn btn-primary" to={`/torrents/${torrent.id}/files/${file.id}`}>{file.name}</Link>

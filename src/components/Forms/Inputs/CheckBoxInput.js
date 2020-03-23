@@ -16,7 +16,6 @@ class CheckBoxInput extends Component {
       >
         {
           ({ input, meta }) => {
-            console.log(input);
             return (
               <div className={`form-input input-checkbox ${className}`}>
                 <div className="form-check pretty p-icon p-round p-pulse">

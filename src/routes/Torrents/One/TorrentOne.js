@@ -12,12 +12,13 @@ class TorrentOne extends Component {
     super(props);
     this.state = {
       medias: get(props, 'torrent.medias', []),
-      media: get(props, 'torrent.medias[0]', null),
+      index: 0,
+      playing: false,
     };
   }
 
-  selectFile = (media) => {
-    this.setState({media});
+  selectFile = (index) => {
+    this.setState({index});
   };
 
   download = async() => {
@@ -33,20 +34,37 @@ class TorrentOne extends Component {
 
   render() {
     const {torrent} = this.props;
-    const {media} = this.state;
+    const {index, medias} = this.state;
     return (
       <div className="d-flex flex-row content content-stream">
-        <section className="main-block d-flex block-stream-menu">
-          Name: {torrent.name}<br />
-          Size : {torrent.total}<br />
-          <br />
-          <button className="btn btn-primary" onClick={this.download}>
-            <i className="fa fa-download" />&nbsp;
-            <FormattedMessage id="torrents.one.stream.download" />
-          </button>
+        <section className="main-block d-flex flex-column block-stream-menu">
+          <div className="details">
+            Name: {torrent.name}<br />
+            Size : {torrent.total}<br />
+          </div>
+          <div className="links">
+            <button className="btn btn-primary" onClick={this.download}>
+              <i className="fa fa-download" />&nbsp;
+              <FormattedMessage id="torrents.one.stream.download" />
+            </button>
+          </div>
+          <div className="medias">
+            {
+              medias.map((media, key) => {
+                return (
+                  <div key={key} className="media">
+                    <a href="#" onClick={() => this.selectFile(key)}>{media.name}</a>
+                  </div>
+                );
+              })
+            }
+          </div>
         </section>
         <section className="main-block d-flex block-stream-video">
-          <Streamer media={media} torrent={this.props.torrent} />
+          <Streamer
+            medias={medias}
+            index={index}
+          />
         </section>
       </div>
     );
