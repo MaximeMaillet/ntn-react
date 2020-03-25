@@ -3,7 +3,8 @@
   margin-right: 1em;
 
   .block-stream-menu {
-    flex-basis: 60%;
+    flex-basis: 40%;
+    flex-shrink: 1;
     flex-grow: 0 !important;
     padding: 1em;
 

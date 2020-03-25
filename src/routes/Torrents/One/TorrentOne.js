@@ -12,13 +12,13 @@ class TorrentOne extends Component {
     super(props);
     this.state = {
       medias: get(props, 'torrent.medias', []),
-      index: 0,
+      streamIndex: 0,
       playing: false,
     };
   }
 
-  selectFile = (index) => {
-    this.setState({index});
+  selectStream = (index) => {
+    this.setState({streamIndex: index});
   };
 
   download = async() => {
@@ -34,7 +34,7 @@ class TorrentOne extends Component {
 
   render() {
     const {torrent} = this.props;
-    const {index, medias} = this.state;
+    const {streamIndex, medias} = this.state;
     return (
       <div className="d-flex flex-row content content-stream">
         <section className="main-block d-flex flex-column block-stream-menu">
@@ -53,7 +53,7 @@ class TorrentOne extends Component {
               medias.map((media, key) => {
                 return (
                   <div key={key} className="media">
-                    <a href="#" onClick={() => this.selectFile(key)}>{media.name}</a>
+                    <a href="#" onClick={() => this.selectStream(key)}>{media.name}</a>
                   </div>
                 );
               })
@@ -63,7 +63,7 @@ class TorrentOne extends Component {
         <section className="main-block d-flex block-stream-video">
           <Streamer
             medias={medias}
-            index={index}
+            index={streamIndex}
           />
         </section>
       </div>

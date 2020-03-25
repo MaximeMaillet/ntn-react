@@ -56,8 +56,6 @@ class List extends Component {
                       (torrent.finished && torrent.isStreamable) &&
                       <Link to={`/torrents/${torrent.id}`}><i className="fa fa-tv"/></Link>
                     }
-                    {/*{torrent.finished && <i className="fas fa-hourglass" title={this.props.intl.messages['torrents.list.item.is_finished']} />}*/}
-                    {/*{torrent.active && <i className="fas fa-cog" title={this.props.intl.messages['torrents.list.item.is_active']} />}*/}
                   </div>
                   <div className="item name">
                     <span>{torrent.name}</span>

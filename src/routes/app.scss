@@ -53,28 +53,28 @@ body, html, #root {
         max-width: 100%;
         flex-grow: 1;
         @include is-loading();
+      }
+    }
 
-        section.main-block {
-          min-height: 15rem;
-          margin-top: 1em;
-          margin-bottom: 1em;
-          background-color: $white-light;
-          box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-          border-radius: 5px;
-          display: flex;
-          flex-direction: column;
-          flex-grow: 1;
+    section.main-block {
+      min-height: 15rem;
+      margin-top: 1em;
+      margin-bottom: 1em;
+      background-color: $white-light;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
 
-          h1 {
-            font-size: 1.5em;
-          }
+      h1 {
+        font-size: 1.5em;
+      }
 
-          &.block-content {
-            margin-left: 1em;
-            margin-right: 1em;
-            padding: 1em;
-          }
-        }
+      &.block-content {
+        margin-left: 1em;
+        margin-right: 1em;
+        padding: 1em;
       }
     }
   }

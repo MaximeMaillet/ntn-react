@@ -19,7 +19,7 @@ class List extends Component {
     return (
       <div className={`content ${(loading & LOADING.PROFILE) !== 0 ? 'is-loading' : ''}`}>
         <section className="d-flex flex-column main-block block-profile-list">
-          <Link className="btn btn-primary ml-auto" to="/profile/create">
+          <Link className="btn btn-primary ml-auto" to="/profiles/create">
             <FormattedMessage id="route.profile.section_link.create" />
           </Link>
           <h1><FormattedMessage id="route.profile.create.h1" /></h1>

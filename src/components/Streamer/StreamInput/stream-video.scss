@@ -40,13 +40,70 @@
     flex-direction: column;
     margin-left: 1em;
     margin-right: 1em;
-    height: 100%;
 
     .buttons {
       display: flex;
       flex-direction: row;
       align-items: flex-end;
       height: 100%;
+
+      .wrapper-btn {
+        position: relative;
+        width: 40px;
+        height: 40px;
+
+        &:hover {
+          .wrapper {
+            opacity: 1;
+          }
+        }
+
+        .wrapper {
+          transition: opacity 500ms;
+          position: absolute;
+          opacity: 0;
+          left: 0;
+          right: 0;
+          bottom: 45px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          border-radius: 5px;
+          background-color: primaryAlpha(0.5);
+          color: $white;
+          font-size: 14px;
+          height: 120px;
+          overflow-y: scroll;
+
+          .wrapper-line {
+            font-weight: 200;
+            padding: 0.5em;
+            text-transform: uppercase;
+            color: $white;
+            width: 100%;
+
+            &.enabled {
+              background-color: whiteAlpha(0.5);
+              font-weight: 600;
+            }
+
+            &:hover {
+              cursor: pointer;
+              color: $black;
+              background-color: whiteAlpha(0.5);
+            }
+          }
+        }
+
+        .wrapper::-webkit-scrollbar {
+          display: none;
+        }
+
+        .btn-wrapped {
+          position: absolute;
+          bottom: 0;
+        }
+      }
 
       .play-pause {
         display: flex;
@@ -61,43 +118,8 @@
         }
       }
 
-      .volume {
-        width: 40px;
-        margin-left: auto;
-        margin-right: 0.5em;
-        position: relative;
-        overflow: hidden;
-        height: 100%;
-
-        .btn-volume {
-          position: absolute;
-          bottom: 0;
-          z-index: 6;
-        }
-
-        .wrapper-volume {
-          z-index: 0;
-          transition: opacity 500ms;
-          position: absolute;
-          opacity: 0;
-          left: 0;
-          right: 0;
-          bottom: 50px;
-          height: 50px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        &:hover {
-          .wrapper-volume {
-            opacity: 1;
-          }
-        }
-      }
-
-      .fullscreen {
-        margin-right: 0.5em;
+      .captions, .audios, .prev-next, .volume, .fullscreen {
+        margin-left: 0.5em;
       }
 
       .prev-next {
@@ -105,54 +127,48 @@
         flex-direction: row;
       }
 
-      .captions {
-        margin-left: 0.5em;
-        position: relative;
-        overflow: hidden;
-        width: 40px;
-        height: 100%;
-
-        .btn-caption {
-          position: absolute;
-          bottom: 0;
-          z-index: 5;
-        }
-
-        &:hover {
-          .wrapper-captions {
-            bottom: 45px;
-          }
-        }
-
-        .wrapper-captions {
-          transition: bottom 500ms;
-          position: absolute;
-          bottom: -160px;
-          margin-bottom: 0.5em;
-          border-radius: 5px;
-          overflow: hidden;
-          background-color: primaryAlpha(0.5);
-          color: $white;
-          font-size: 14px;
-          height: 150px;
-
-          .track {
-            font-weight: 200;
-            padding: 0.5em;
-
-            &.enabled {
-              background-color: whiteAlpha(0.5);
-              font-weight: 600;
-            }
-
-            &:hover {
-              cursor: pointer;
-              color: $black;
-              background-color: whiteAlpha(0.5);
-            }
-          }
+      .volume {
+        .wrapper {
+          background-color: transparent;
+          height: 80px;
+          padding-top: 10px;
+          padding-bottom: 10px;
         }
       }
+
+      .fullscreen {
+        margin-right: 0.5em;
+      }
+
+      //.volume {
+      //  margin-left: 0.5em;
+      //
+      //  .btn-volume {
+      //    position: absolute;
+      //    bottom: 0;
+      //    z-index: 6;
+      //  }
+      //
+      //  .wrapper-volume {
+      //    z-index: 0;
+      //    transition: opacity 500ms;
+      //    position: absolute;
+      //    opacity: 0;
+      //    left: 0;
+      //    right: 0;
+      //    bottom: 50px;
+      //    height: 50px;
+      //    display: flex;
+      //    justify-content: center;
+      //    align-items: center;
+      //  }
+      //
+      //  &:hover {
+      //    .wrapper-volume {
+      //      opacity: 1;
+      //    }
+      //  }
+      //}
     }
 
     .progress-media {
@@ -184,6 +200,7 @@
 
     &:focus, &:active, &:hover {
       outline: none;
+      background-color: primaryAlpha(0.7);
     }
   }
 

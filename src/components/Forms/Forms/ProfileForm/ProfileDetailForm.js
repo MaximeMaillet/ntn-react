@@ -175,6 +175,9 @@ ProfileDetailForm.defaultProps = {
 export default connect(
   (state) => ({
     isAdmin: state.user.isAdmin,
+  }),
+  (dispatch) => ({
+
   })
 )
 (injectIntl(ProfileDetailForm));

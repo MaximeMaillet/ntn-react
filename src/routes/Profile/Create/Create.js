@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {FormattedMessage, injectIntl} from "react-intl";
 import ProfileDetailForm from "../../../components/Forms/Forms/ProfileForm/ProfileDetailForm";
-import ProfilePictureForm from "../../../components/Forms/Forms/ProfileForm/ProfilePictureForm";
 import notificationActions from '../../../redux/notifications/actions';
+import {LOADING} from "../../../config/const";
+import loadingActions from "../../../redux/loading/actions";
+import withProfiles from "../../../hoc/withProfiles";
 
-class Edit extends Component {
+class Create extends Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
     if(!prevProps.error && this.props.error) {
       this.props.startToaster(this.props.error);
@@ -19,31 +21,26 @@ class Edit extends Component {
   };
 
   render() {
-    const {profile} = this.props;
+    const {profile, loading} = this.props;
     return (
-      <section className="main-block block-content block-profile-edit">
-        <h1><FormattedMessage id="route.profile.edit.h1" /></h1>
-        <ProfilePictureForm
-          startLoading={this.props.startLoading}
-          stopLoading={this.props.stopLoading}
-          profile={profile}
-          onSubmit={this.onSubmit}
-          onError={this.props.handleError}
-        />
-        <ProfileDetailForm
-          className="form-input-align"
-          startLoading={this.props.startLoading}
-          stopLoading={this.props.stopLoading}
-          profile={profile}
-          onSubmit={this.onSubmit}
-          onError={this.props.handleError}
-        />
-      </section>
+      <div className={`content ${(loading & LOADING.PROFILE) !== 0 ? 'is-loading' : ''}`}>
+        <section className="main-block block-content block-profile-create">
+          <h1><FormattedMessage id="route.profile.edit.h1" /></h1>
+          <ProfileDetailForm
+            className="form-input-align"
+            startLoading={this.props.startLoading}
+            stopLoading={this.props.stopLoading}
+            profile={profile}
+            onSubmit={this.onSubmit}
+            onError={this.props.handleError}
+          />
+        </section>
+      </div>
     );
   }
 }
 
-Edit.propTypes = {
+Create.propTypes = {
   startLoading: PropTypes.func.isRequired,
   stopLoading: PropTypes.func.isRequired,
   refresh: PropTypes.func.isRequired,
@@ -53,8 +50,12 @@ Edit.propTypes = {
 };
 
 export default connect(
-  () => ({}),
+  (state) => ({
+    loading: state.loading.loading,
+  }),
   (dispatch) => ({
     startToaster: (message) => dispatch(notificationActions.start(message)),
+    startLoading: () => dispatch(loadingActions.startLoading()),
+    stopLoading: () => dispatch(loadingActions.stopLoading()),
   })
-)(injectIntl(Edit));
+)(injectIntl(withProfiles(Create)));

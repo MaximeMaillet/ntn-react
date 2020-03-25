@@ -9,28 +9,33 @@ class Streamer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      media: props.medias[props.index],
       loading: true,
-      tracks: null,
-      src: null,
+      video: null,
+      audios: null,
+      playing: false,
+      index: props.index,
     };
   }
 
   componentDidMount() {
-    this.loadStream();
+    this.loadStream(this.props.medias[this.state.index].stream, false);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if(prevProps.index !== this.props.index || prevProps.medias !== this.props.medias) {
-      this.loadStream();
+    if(prevProps.index !== this.props.index) {
+      this.setState({index: this.props.index});
+    }
+
+    if(prevState.index !== this.state.index) {
+      this.loadStream(this.props.medias[this.state.index].stream, true);
     }
   }
 
-  loadStream = async() => {
+  loadStream = async(url, autoplay) => {
     try {
       this.setState({loading: true});
       const token = localStorage.getItem('token');
-      const result = await fetch(this.state.media.stream, {
+      const result = await fetch(url, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -39,8 +44,17 @@ class Streamer extends Component {
       });
       const data = await result.json();
       this.setState({
-        src: data.video,
-        tracks: data.subtitles.map((s) => {
+        playing: autoplay,
+        video: data.video,
+        audios:data.audios.map((a) => {
+          return {
+            src: a.src,
+            type: 'audio/mpeg',
+            srcLang: a.lang,
+            default: a.default,
+          }
+        }),
+        subtitles: data.subtitles.map((s) => {
           return {
             kind: 'subtitles',
             srcLang: s.lang,
@@ -50,7 +64,6 @@ class Streamer extends Component {
           }
         })
       });
-
     } catch(e) {
       console.warn(e);
     } finally {
@@ -58,19 +71,44 @@ class Streamer extends Component {
     }
   };
 
+  previous = () => {
+    let newIndex = this.state.index-1;
+    if(newIndex < 0) {
+      newIndex = 0;
+    }
+
+    this.setState({index: newIndex});
+  };
+
+  next = () => {
+    let newIndex = this.state.index+1;
+    if(newIndex >= this.props.medias.length-1) {
+      newIndex = this.props.medias.length-1;
+    }
+
+    this.setState({index: newIndex});
+  };
+
+  onPlayerError = (e) => {
+    console.log('Player error');
+    console.log(e);
+  };
+
   render() {
-    const {medias, index} = this.props;
-    const {loading, src, tracks} = this.state;
+    const {loading, subtitles, video, audios} = this.state;
     return (
       <div className="d-flex flex-column streamer">
         {
-          (!loading && src) &&
+          (!loading && video && audios) &&
             <StreamVideo
               className="video"
-              src={src}
-              tracks={tracks}
-              medias={medias}
-              index={index}
+              video={video}
+              audios={audios}
+              subtitles={subtitles}
+              playing={this.state.playing}
+              next={this.next}
+              previous={this.previous}
+              onError={this.onPlayerError}
             />
         }
       </div>
