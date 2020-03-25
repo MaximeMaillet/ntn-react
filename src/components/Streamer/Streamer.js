@@ -1,84 +1,90 @@
 import React, {Component} from 'react';
-import path from 'path';
+import PropTypes from 'prop-types';
 import StreamVideo from "./StreamInput/StreamVideo";
+import {getLanguage} from "../../libraries/locale";
 
 import './streamer.scss'
-import {parse, stringifyVtt} from "subtitle";
 
 class Streamer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      media: null,
+      media: props.medias[props.index],
+      loading: true,
+      tracks: null,
+      src: null,
+    };
+  }
+
+  componentDidMount() {
+    this.loadStream();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if(prevProps.index !== this.props.index || prevProps.medias !== this.props.medias) {
+      this.loadStream();
     }
   }
-//
-// componentDidMount() {
-//   // this.handleSubtitles();
-// }
-//
-// componentDidUpdate(prevProps, prevState, snapshot) {
-//   // this.handleSubtitles()
-// }
-//
-// handleSubtitles = async() => {
-//   const {torrent} = this.props;
-//   const tracks = [];
-//   if(torrent && torrent.files && torrent.files.length > 0) {
-//     for(let i=0; i<torrent.files.length; i++) {
-//       if(path.extname(torrent.files[i].path) === '.srt') {
-//         const sub = await this.convertTrack(torrent.files[i]);
-//         if(sub) {
-//           tracks.push(sub);
-//         }
-//       }
-//     }
-//   }
-//
-//   this.setState({tracks, loading: false});
-// };
-//
-// convertTrack = async(file) => {
-//   try {
-//     const result = await fetch(file.path);
-//     const buffer = await result.arrayBuffer();
-//     const decoder = new TextDecoder("iso-8859-1");
-//     const value = decoder.decode(buffer);
-//     const vtt = stringifyVtt(parse(value));
-//     const blob = new Blob([vtt], {type : 'text/vtt'});
-//     return {
-//       kind: 'subtitles',
-//       src: URL.createObjectURL(blob),
-//       default: file.default,
-//       srcLang: file.lang,
-//       label: file.label,
-//     };
-//   } catch(e) {
-//     console.log(e);
-//   }
-// };
-//
-//   static getDerivedStateFromProps(props, state) {
-//
-//     if(Array.isArray(props.medias)) {
-//       return {media: props.medias[0]}
-//     }
-//
-//     return {media: props.media};
-//   }
+
+  loadStream = async() => {
+    try {
+      this.setState({loading: true});
+      const token = localStorage.getItem('token');
+      const result = await fetch(this.state.media.stream, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Accept-Language': getLanguage(),
+        }
+      });
+      const data = await result.json();
+      this.setState({
+        src: data.video,
+        tracks: data.subtitles.map((s) => {
+          return {
+            kind: 'subtitles',
+            srcLang: s.lang,
+            src: s.src,
+            default: !!s.default,
+            active: s.default ? 1 : 0
+          }
+        })
+      });
+
+    } catch(e) {
+      console.warn(e);
+    } finally {
+      this.setState({loading: false});
+    }
+  };
 
   render() {
     const {medias, index} = this.props;
+    const {loading, src, tracks} = this.state;
     return (
       <div className="d-flex flex-column streamer">
-        <StreamVideo
-          className="video"
-          medias={medias}
-          index={index}
-        />
+        {
+          (!loading && src) &&
+            <StreamVideo
+              className="video"
+              src={src}
+              tracks={tracks}
+              medias={medias}
+              index={index}
+            />
+        }
       </div>
     );
   }
 }
+
+Streamer.defaultProps = {
+  index: 0,
+};
+
+Streamer.propTypes = {
+  medias: PropTypes.array.isRequired,
+  index: PropTypes.number,
+};
 
 export default Streamer

@@ -1,6 +1,6 @@
 .wrapper-player {
   position: relative;
-  height: 350px;
+  height: 100%;
   width: 100%;
   overflow: hidden;
 
@@ -16,12 +16,14 @@
   }
 
   &.fullscreen, &.fullscreen:hover {
+    cursor: none;
     .controls {
       bottom: -80px;
     }
   }
 
   &.fullscreen.active {
+    cursor: auto;
     .controls {
       bottom: 5px;
     }
@@ -38,7 +40,7 @@
     flex-direction: column;
     margin-left: 1em;
     margin-right: 1em;
-    height: 150px;
+    height: 100%;
 
     .buttons {
       display: flex;
@@ -101,6 +103,55 @@
       .prev-next {
         display: flex;
         flex-direction: row;
+      }
+
+      .captions {
+        margin-left: 0.5em;
+        position: relative;
+        overflow: hidden;
+        width: 40px;
+        height: 100%;
+
+        .btn-caption {
+          position: absolute;
+          bottom: 0;
+          z-index: 5;
+        }
+
+        &:hover {
+          .wrapper-captions {
+            bottom: 45px;
+          }
+        }
+
+        .wrapper-captions {
+          transition: bottom 500ms;
+          position: absolute;
+          bottom: -160px;
+          margin-bottom: 0.5em;
+          border-radius: 5px;
+          overflow: hidden;
+          background-color: primaryAlpha(0.5);
+          color: $white;
+          font-size: 14px;
+          height: 150px;
+
+          .track {
+            font-weight: 200;
+            padding: 0.5em;
+
+            &.enabled {
+              background-color: whiteAlpha(0.5);
+              font-weight: 600;
+            }
+
+            &:hover {
+              cursor: pointer;
+              color: $black;
+              background-color: whiteAlpha(0.5);
+            }
+          }
+        }
       }
     }
 

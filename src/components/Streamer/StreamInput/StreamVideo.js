@@ -14,6 +14,7 @@ class StreamVideo extends Component {
       playing: props.playing,
       index: props.index,
       media: Array.isArray(props.medias) ? props.medias[props.index] : props.medias,
+      tracks: props.tracks,
       progress: 0,
       volume: 1,
       mute: false,
@@ -28,7 +29,6 @@ class StreamVideo extends Component {
     screenfull.on('change', () => {
       this.setState({fullscreen: screenfull.isFullscreen});
     });
-
     document.addEventListener("keydown", event => {
       console.log(`Key code event : ${event.keyCode}`);
       if (event.isComposing || event.keyCode === 229) {
@@ -185,6 +185,23 @@ class StreamVideo extends Component {
     }
   };
 
+  tracksChange = (srcLang) => {
+    const vid = document.getElementsByTagName('video')[0];
+    const stateTracks = this.state.tracks;
+    const tracks = vid.textTracks;
+    for(let i = 0; i<tracks.length; i++) {
+      if (tracks[i].language === srcLang) {
+        stateTracks[i].active = 1;
+        tracks[i].mode = 'showing';
+      } else {
+        stateTracks[i].active = 0;
+        tracks[i].mode = 'disabled';
+      }
+    }
+
+    this.setState({tracks: stateTracks});
+  };
+
   onPlay = () => {
     this.setState({playing: true});
   };
@@ -227,24 +244,27 @@ class StreamVideo extends Component {
           this.setState({active: true});
           setTimeout(() => {
             this.setState({active: false});
-          }, 1000);
+          }, 3000);
         }
       });
     }
   };
 
   render() {
-    const {className} = this.props;
-    const {media, playedSeconds, totalSeconds, fullscreen, playing, active, volume, mute} = this.state;
+    const {className, src} = this.props;
+    const {media, tracks, playedSeconds, totalSeconds, fullscreen, playing, active, volume, mute} = this.state;
     return (
-      <div className={`wrapper-player ${className} ${fullscreen ? 'fullscreen' : ''} ${active ? 'active' : ''}`} ref={this.wrapperRef}>
+      <div
+        className={`wrapper-player ${className} ${fullscreen ? 'fullscreen' : ''} ${active ? 'active' : ''}`}
+        ref={this.wrapperRef}
+      >
         <ReactPlayer
           ref={this.ref}
           className="player"
           width="100%"
           height="100%"
           controls={false}
-          url={media.stream}
+          url={src}
           volume={mute ? 0 : volume}
           playing={playing}
           progressInterval={500}
@@ -253,8 +273,10 @@ class StreamVideo extends Component {
           onPause={this.onPause}
           onPlay={this.onPlay}
           onDuration={this.onDuration}
+          onClick={this.playPause}
           config={{
             file: {
+              tracks,
               attributes: {
                 crossOrigin: "anonymous"
               },
@@ -299,6 +321,29 @@ class StreamVideo extends Component {
               <button className="btn-media" onClick={this.previous}><i className="fa fa-step-backward" /></button>
               <button className="btn-media" onClick={this.next}><i className="fa fa-step-forward"/></button>
             </div>
+            {
+              tracks.length > 0 &&
+              <div className="captions">
+                <div className="wrapper-captions">
+                  <div className={`track ${tracks.filter((c) => c.active === 1).length === 0 ? 'enabled' : ''}`} onClick={() => this.tracksChange(null)}>
+                    Off
+                  </div>
+                  {
+                    tracks.map((track, key) => {
+                      console.log(track)
+                      return <div
+                        key={key}
+                        className={`track ${track.active ? 'enabled': ''}`}
+                        onClick={() => this.tracksChange(track.srcLang)}
+                      >
+                        {track.srcLang}
+                      </div>
+                    })
+                  }
+                </div>
+                <button className="btn-media btn-caption"><i className="fa fa-closed-captioning"/></button>
+              </div>
+            }
           </div>
           <div className="progress-media">
             <Slider
