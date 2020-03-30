@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import PropTypes from 'prop-types';
-import withAuth from "../../../hoc/withAuth";
+import shouldAuth from "../../../hoc/withAuth";
 import loadingActions from '../../../redux/loading/actions';
 import {FormattedMessage, injectIntl} from "react-intl";
 import notificationsActions from "../../../redux/notifications/actions";
@@ -81,4 +81,4 @@ export default connect(
     stopLoading: () => dispatch(loadingActions.stopLoading()),
     startToaster: (data) => dispatch(notificationsActions.start(data)),
   })
-)(withRouter(withAuth(injectIntl(ProfileList))));
+)(withRouter(shouldAuth(injectIntl(ProfileList))));

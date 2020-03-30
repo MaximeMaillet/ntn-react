@@ -1,0 +1,49 @@
+.torrents-list {
+
+  .torrents-list-item {
+    .poster {
+      height: 300px;
+      min-width: 200px;
+
+      img {
+        height: 100%;
+        width: auto;
+      }
+    }
+
+    .details {
+      display: flex;
+      flex-direction: column;
+      margin-left: 1em;
+      flex-grow: 1;
+
+      .info {
+        h3 {
+          font-size: 1.2em;
+        }
+
+        .date {
+          font-size: 0.8em;
+        }
+      }
+
+      .overview {
+        font-size: 0.9em;
+        flex-grow: 1;
+      }
+
+      .actions {
+        display: flex;
+        flex-direction: row;
+        button.btn-download {
+          margin-left: 1em;
+        }
+      }
+
+      .footer {
+        font-size: 0.6em;
+        margin-left: auto;
+      }
+    }
+  }
+}

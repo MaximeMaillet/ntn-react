@@ -5,6 +5,7 @@ import SideMenu from "../../components/Menus/SideMenu/SideMenu";
 import TorrentIdContainer from "./TorrentIdContainer";
 import TorrentList from '../../routes/Torrents/List/List';
 import TorrentsAdd from '../../routes/Torrents/Add/TorrentsAdd';
+import shouldAuth from "../../hoc/shouldAuth";
 
 class TorrentContainer extends Component {
   render() {
@@ -12,15 +13,19 @@ class TorrentContainer extends Component {
     return (
       <React.Fragment>
         <Header />
-        <div className="container-main container-side-menu">
-          <SideMenu/>
-          <Route path={`${match.url}/:torrentId([0-9]+)`}><TorrentIdContainer/></Route>
-          <Route exact path={`${match.url}/add`}><TorrentsAdd /></Route>
-          <Route exact path={`${match.url}`}><TorrentList /></Route>
-        </div>
+        <Route exact path={`${match.url}(\/?[a-z]*)`}>
+          <div className="content content-side">
+            <SideMenu/>
+            <Route exact path={`${match.url}/add`}><TorrentsAdd /></Route>
+            <Route exact path={`${match.url}`}><TorrentList /></Route>
+          </div>
+        </Route>
+        <Route exact path={`${match.url}/:torrentId([0-9]+)`}>
+          <TorrentIdContainer/>
+        </Route>
       </React.Fragment>
     );
   }
 }
 
-export default withRouter(TorrentContainer);
+export default shouldAuth(withRouter(TorrentContainer));

@@ -2,6 +2,7 @@
 @import "~toasted-notes/src/styles.css";
 @import "~pretty-checkbox/src/pretty-checkbox";
 @import "~rc-slider/assets/index.css";
+@import "~react-datepicker/src/stylesheets/datepicker";
 
 @import "../styles/list";
 
@@ -17,23 +18,65 @@ body, html, #root {
   flex-direction: column;
 }
 
-.parent {
+.main-container {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  z-index: 1;
   background-image: url('../styles/medias/background-ntn.svg');
-  position: relative;
   @include is-loading();
 
   a {
     color: $white;
-
     &:hover {
       color: $primary-light;
       text-decoration: none;
     }
   }
+
+  .content {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    @include is-loading();
+
+    &.content-side {
+      flex-direction: row;
+
+      section.block-side {
+        flex-grow: 1;
+      }
+    }
+
+    section.main-block {
+      margin-top: 1em;
+      margin-bottom: 1em;
+      background-color: $white-light;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+      @include is-loading();
+
+      h1 {
+        font-size: 1.5em;
+      }
+
+      &.block-content {
+        margin-left: 1em;
+        margin-right: 1em;
+        padding: 1em;
+      }
+    }
+  }
+}
+
+
+
+.parent {
+  position: relative;
+  @include is-loading();
+
+
 
   .container-main {
     display: flex;

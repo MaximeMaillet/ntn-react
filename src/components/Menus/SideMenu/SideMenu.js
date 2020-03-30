@@ -11,12 +11,16 @@ class SideMenu extends Component {
     const {isAdmin, user, position} = this.props;
     return (
       <nav className={`menu-side profile-menu menu-${position}`}>
-        <div className="category">
-          <div className="title"><FormattedMessage id="side_menu.title.torrents" /></div>
-          <div className="links">
-            <Link to="/torrents"><FormattedMessage id="side_menu.torrents.list" /></Link>
-          </div>
-        </div>
+        {
+          isAdmin &&
+            <div className="category">
+              <div className="title"><FormattedMessage id="side_menu.title.torrents" /></div>
+              <div className="links">
+                <Link to="/torrents/add"><FormattedMessage id="side_menu.torrents.add" /></Link>
+                <Link to="/torrents"><FormattedMessage id="side_menu.torrents.list" /></Link>
+              </div>
+            </div>
+        }
         {
           isAdmin &&
           <div className="category">
@@ -47,7 +51,7 @@ SideMenu.propsType = {
 
 export default connect(
   (state) => ({
-    user: state.user.user,
-    isAdmin: state.user.isAdmin,
+    user: state.auth.user,
+    isAdmin: state.auth.isAdmin,
   })
 )(SideMenu);

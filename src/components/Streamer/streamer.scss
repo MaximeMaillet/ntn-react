@@ -1,5 +1,10 @@
 .streamer {
-  .video {
+  &.streamer-empty {
     width: 100%;
+    height: 100%;
+    background-color: $gray-500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }

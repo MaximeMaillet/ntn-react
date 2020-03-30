@@ -5,34 +5,32 @@ import EmailInput from "../Inputs/EmailInput";
 import {connect} from "react-redux";
 import {FormattedMessage, injectIntl} from "react-intl";
 import PasswordInput from "../Inputs/PasswordInput";
-import userActions from '../../../redux/users/actions';
+import authActions from '../../../redux/auth/actions';
 import api from '../../../libraries/api';
+import {LOADING} from '../../../config/const';
+import loadingActions from "../../../redux/loading/actions";
+import notificationsActions from "../../../redux/notifications/actions";
 
 import '../forms.scss';
-import loadingActions from "../../../redux/loading/actions";
 
 class LoginForm extends Component {
 
   onSubmit = async(data) => {
     try {
-      this.props.startLoading();
+      this.props.startLoading(LOADING.LOGIN);
       const result = (await api('POST', `/authentication/login`, {
         email: data.email,
         password: data.password
       })).data;
 
-      this.props.login(result.token, result.user);
-      if(this.props.onSubmit) {
-        return this.props.onSubmit(result);
-      }
+      this.props.login(result.token);
     } catch(e) {
-      console.warn(e);
-      this.props.fail(e.data);
+      this.props.startToaster({message: e.data.message});
       if(e.data && e.data.fields) {
         return e.data.fields;
       }
     } finally {
-      this.props.stopLoading();
+      this.props.stopLoading(LOADING.LOGIN);
     }
   };
 
@@ -69,7 +67,6 @@ class LoginForm extends Component {
 
 LoginForm.propTypes = {
   onSubmit: PropTypes.func,
-  login: PropTypes.func,
   startLoading: PropTypes.func,
   stopLoading: PropTypes.func,
 };
@@ -77,10 +74,10 @@ LoginForm.propTypes = {
 export default connect(
   () => ({}),
   (dispatch) => ({
-    login: (token, user) => dispatch(userActions.login(token, user)),
-    fail: (e) => dispatch(userActions.fail(e)),
-    startLoading: () => dispatch(loadingActions.startLoading()),
-    stopLoading: () => dispatch(loadingActions.stopLoading()),
+    login: (token) => dispatch(authActions.login(token)),
+    startLoading: (type) => dispatch(loadingActions.startLoading(type)),
+    stopLoading: (type) => dispatch(loadingActions.stopLoading(type)),
+    startToaster: (data) => dispatch(notificationsActions.start(data))
   })
 )
 (injectIntl(LoginForm));

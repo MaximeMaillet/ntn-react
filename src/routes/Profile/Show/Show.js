@@ -4,7 +4,7 @@ import {FormattedMessage} from "react-intl";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import ProfilePicture from "../../../components/Profile/Picture/ProfilePicture";
-import TorrentList from '../../../components/Torrents/List/List';
+import TorrentList from '../../../components/Torrents/Table/Table';
 
 import './show.scss'
 

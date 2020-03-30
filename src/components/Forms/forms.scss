@@ -168,6 +168,113 @@ $sizeFormFile: 120px;
      margin-left: 20%;
    }
 
+   &.input-meta {
+     display: flex;
+     flex-direction: row;
+     justify-content: space-between;
+
+     .input-meta-item {
+       flex-basis: 32%;
+       border: 1px solid $primary;
+       $boxShadowSize: 2px;
+       box-shadow: $boxShadowSize $boxShadowSize 2px blackAlpha(0.2),
+       $boxShadowSize * -1 $boxShadowSize 2px blackAlpha(0.2),
+       $boxShadowSize $boxShadowSize * -1 2px blackAlpha(0.2),
+       $boxShadowSize * -1 $boxShadowSize * -1 2px blackAlpha(0.2);
+
+       &.active {
+         background-color: secondaryAlpha(0.3);
+       }
+
+       &.item-thumbnail {
+         display: flex;
+         flex-direction: column;
+
+         .meta-details {
+           flex-grow: 1;
+
+           .meta-poster {
+             float: left;
+             margin-right: 0.5em;
+             margin-bottom: 0.5em;
+             height: 250px;
+             width: 170px;
+             background-size: contain;
+             background-repeat: no-repeat;
+           }
+
+           .data {
+             padding: 0.5em;
+           }
+
+           .header {
+             display: flex;
+             flex-direction: row;
+
+             .media-type-badge {
+               flex-grow: 1;
+               font-weight: 400;
+               font-size: 1em;
+               align-items: center;
+               justify-content: center;
+               display: flex;
+               box-shadow: 2px 2px 2px blackAlpha(0.2);
+               border-radius: 3px;
+
+               &.tv {
+                 background-color: blueAlpha(0.5);
+               }
+
+               &.movie {
+                 background-color: yellowAlpha(0.5);
+               }
+             }
+
+             button {
+               margin-left: 0.5em;
+             }
+           }
+
+           .title {
+             font-weight: 600;
+             text-align: center;
+             font-size: 1.2em;
+             margin-top: 0.5em;
+           }
+
+           .details {
+             display: flex;
+             flex-direction: row;
+             justify-content: space-between;
+             font-size: 0.8em;
+           }
+
+           .genres {
+             text-align: center;
+           }
+
+           .overview {
+             margin-top: 0.5em;
+             font-size: 0.8em;
+             text-align: justify;
+           }
+         }
+
+         .btn-choose {
+           margin: 0.5em;
+
+           button {
+             width: 100%;
+           }
+         }
+       }
+
+       &.item-edit {
+         padding: 0.5em;
+       }
+     }
+   }
+
    &.form-input-align {
      .form-group {
        flex-direction: row;

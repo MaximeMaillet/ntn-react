@@ -4,6 +4,7 @@ import StreamVideo from "./StreamInput/StreamVideo";
 import {getLanguage} from "../../libraries/locale";
 
 import './streamer.scss'
+import {FormattedMessage} from "react-intl";
 
 class Streamer extends Component {
   constructor(props) {
@@ -18,7 +19,9 @@ class Streamer extends Component {
   }
 
   componentDidMount() {
-    this.loadStream(this.props.medias[this.state.index].stream, false);
+    if(this.props.medias && this.props.medias.length > 0) {
+      this.loadStream(this.props.medias[this.state.index].stream, false);
+    }
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -26,7 +29,7 @@ class Streamer extends Component {
       this.setState({index: this.props.index});
     }
 
-    if(prevState.index !== this.state.index) {
+    if(prevState.index !== this.state.index && this.props.medias && this.props.medias.length > 0) {
       this.loadStream(this.props.medias[this.state.index].stream, true);
     }
   }
@@ -96,6 +99,13 @@ class Streamer extends Component {
 
   render() {
     const {loading, subtitles, video, audios} = this.state;
+    if(!this.props.medias || this.props.medias.length === 0) {
+      return (
+        <div className="streamer streamer-empty">
+          <FormattedMessage id="component.streamer.no_medias" />
+        </div>
+      );
+    }
     return (
       <div className="d-flex flex-column streamer">
         {

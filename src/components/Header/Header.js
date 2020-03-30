@@ -3,8 +3,8 @@ import {FormattedMessage} from "react-intl";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 import ProfilePicture from "../Profile/Picture/ProfilePicture";
-import userActions from '../../redux/users/actions';
 import get from 'lodash.get';
+import authActions from "../../redux/auth/actions";
 
 import logo from '../../styles/medias/logo.svg'
 import './header.scss';
@@ -27,10 +27,10 @@ class Header extends Component {
               <FormattedMessage id="header.profile.quota" /> <strong>{get(this.props, 'user.space', 0)}</strong> Go
             </div>
             <ProfilePicture profile={get(this.props, 'user', null)} />
-            <button className="ml-2 btn btn-secondary" onClick={this.props.logout}>
-              <i className="fas fa-sign-out-alt"/>
-            </button>
           </Link>
+          <button className="ml-2 btn btn-secondary" onClick={this.props.logout}>
+            <i className="fas fa-sign-out-alt"/>
+          </button>
         </div>
       </header>
     );
@@ -39,9 +39,9 @@ class Header extends Component {
 
 export default connect(
   (state) => ({
-    user: state.user.user,
+    user: state.auth.user,
   }),
   (dispatch) => ({
-    logout: () => dispatch(userActions.logout()),
+    logout: () => dispatch(authActions.logout()),
   })
 )(Header);

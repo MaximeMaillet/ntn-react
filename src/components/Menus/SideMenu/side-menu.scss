@@ -3,6 +3,7 @@ nav.menu-side.profile-menu {
   background-color: $primary-light;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
+  flex-shrink: 0;
 
   .category {
     border-radius: 5px;

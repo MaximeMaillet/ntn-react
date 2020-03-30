@@ -38,6 +38,8 @@ header.global-header {
 
   .profile {
     margin-left: auto;
+    display: flex;
+    flex-direction: row;
 
     a, a:hover {
       text-decoration: none;

@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Field} from "react-final-form";
-import Select from 'react-select';
+import AsyncCreatableSelect from 'react-select/async-creatable';
 import {validate} from '../utils';
 import {required as requiredValidator} from '../Validators'
 import Label from "../Utils/Label";
 import Errors from "../Utils/Errors";
 
-class SelectInput extends Component {
+class SelectCreatableInput extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,8 +27,6 @@ class SelectInput extends Component {
       return this.props.transformValue(value);
     }
 
-    console.log('trans value');
-    console.log(value);
     return value;
   };
 
@@ -37,9 +35,15 @@ class SelectInput extends Component {
       return this.props.transformSelected(selected);
     }
 
-    console.log('transform');
-    console.log(selected);
     return selected;
+  };
+
+  loadOptions = async(inputValue) => {
+    if(this.props.loadOptions) {
+      return this.props.loadOptions(inputValue);
+    }
+
+    return this.props.options.filter(o => o.label.toLowerCase().includes(inputValue.toLowerCase()));
   };
 
   render() {
@@ -53,14 +57,16 @@ class SelectInput extends Component {
           return (
             <div className={`form-input input-select ${className}`}>
               <div className={`form-group ${meta.touched ? (meta.valid ? 'is-valid' : 'is-invalid') : ''}`}>
-                <Label name={name} label={label} required={required} />
-                <Select
+                {label && <Label name={name} label={label} required={required} />}
+                <AsyncCreatableSelect
                   className={`form-select-control ${meta.touched ? (meta.valid ? 'is-valid' : 'is-invalid') : ''}`}
                   classNamePrefix="form-select-control"
                   id={name}
                   name={name}
                   isMulti={multiple}
                   required={true}
+                  defaultOptions={options}
+                  loadOptions={this.loadOptions}
                   value={this.state.selectedOption ? this.state.selectedOption : this.transformValue(input.value)}
                   onChange={(selectedOption) => this.handleChange(selectedOption, input.onChange)}
                   options={options}
@@ -75,19 +81,19 @@ class SelectInput extends Component {
   }
 }
 
-SelectInput.defaultProps = {
+SelectCreatableInput.defaultProps = {
   multiple: false,
   required: false,
   className: '',
 };
 
-SelectInput.propTypes = {
+SelectCreatableInput.propTypes = {
   name: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  options: PropTypes.array.isRequired,
+  options: PropTypes.array,
+  loadOptions: PropTypes.func,
   required: PropTypes.bool,
   multiple: PropTypes.bool,
   className: PropTypes.string,
 };
 
-export default SelectInput;
+export default SelectCreatableInput;

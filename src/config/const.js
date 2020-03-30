@@ -1,8 +1,9 @@
 export const LOADING = {
-  PROFILE: 1,
-  TORRENTS: 2,
-  SERVER: 4,
-  // ... :8
+  LOGIN: 1 << 0,
+  TORRENTS: 1 << 1,
+  SERVER: 1 << 2,
+  PROFILE: 1 << 3,
+  FORM_META_SIMPLE: 1 << 4,
 };
 
 export default {

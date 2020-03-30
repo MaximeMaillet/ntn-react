@@ -102,14 +102,6 @@ class StreamVideo extends Component {
     this.setState({playing: false});
   };
 
-  prevSeek = () => {
-    this.addSeek(-10);
-  };
-
-  nextSeek = () => {
-    this.addSeek(10);
-  };
-
   volumeUp = () => {
     this.changeVolume(this.state.volume+0.10);
   };
@@ -144,6 +136,14 @@ class StreamVideo extends Component {
     this.setState({volume});
   };
 
+  prevSeek = () => {
+    this.addSeek(-10);
+  };
+
+  nextSeek = () => {
+    this.addSeek(10);
+  };
+
   addSeek = (value) => {
     if(this.player_audio && this.player_video) {
       this.changeSeek(this.player_video.getCurrentTime()+value);
@@ -151,6 +151,34 @@ class StreamVideo extends Component {
     } else {
       console.log(this.player_audio);
       console.log(this.player_video);
+    }
+  };
+
+  onSliderChange = (value) => {
+    const playedSeconds = (this.state.totalSeconds*value) / 100;
+    if(this.player_video && this.player_audio) {
+      this.player_video.seekTo(playedSeconds, 'seconds');
+      this.player_audio.seekTo(playedSeconds, 'seconds');
+      this.setState({playedSeconds});
+    }
+  };
+
+  onSeek = (seconds) => {
+    if(this.player_audio && this.player_video) {
+      const ref = Math.floor(this.player_video.getCurrentTime());
+      const currentAudio = Math.floor(this.player_audio.getCurrentTime());
+      if(ref !== currentAudio) {
+        this.player_audio.seekTo(ref);
+        this.player_video.seekTo(ref);
+      }
+      clearInterval(this.playerInterval);
+      this.playerInterval = null;
+    } else {
+      if(!this.playerInterval) {
+        this.playerInterval = setInterval(() => {
+          this.onSeek(seconds);
+        }, 10);
+      }
     }
   };
 
@@ -251,15 +279,6 @@ class StreamVideo extends Component {
     this.setState({playedSeconds});
   };
 
-  onSeekChange = (value) => {
-    if(this.player_audio && this.player_video) {
-      const playedSeconds = (this.state.totalSeconds*value) / 100;
-      this.player_video.seekTo(playedSeconds, 'seconds');
-      this.player_audio.seekTo(playedSeconds, 'seconds');
-      this.setState({playedSeconds});
-    }
-  };
-
   onReady = (player) => {
     this.setState({
       ready: this.state.ready|player
@@ -332,6 +351,7 @@ class StreamVideo extends Component {
           onClick={this.playPause}
           onStart={this.onStart}
           onReady={() => this.onReady(1)}
+          onSeek={this.onSeek}
           config={{
             file: {
               tracks: subtitles,
@@ -432,30 +452,34 @@ class StreamVideo extends Component {
               value={(playedSeconds*100)/totalSeconds}
               min={0}
               max={100}
-              onChange={this.onSeekChange}
+              onChange={this.onSliderChange}
             />
             <div className="title-media">{video.name}</div>
           </div>
         </div>
-        <ReactPlayer
-          ref={this.playerAudio}
-          className="d-none"
-          url={[audio]}
-          volume={mute ? 0 : volume}
-          playing={playing}
-          controls={false}
-          onError={this.onError}
-          onStart={this.onStart}
-          onReady={() => this.onReady(2)}
-          config={{
-            file: {
-              attributes: {
-                crossOrigin: "anonymous"
-              },
-            }
-          }}
-          wrapper="span"
-        />
+        {
+          audio &&
+          <ReactPlayer
+            ref={this.playerAudio}
+            className="d-none"
+            url={[audio]}
+            volume={mute ? 0 : volume}
+            playing={playing}
+            controls={false}
+            onError={this.onError}
+            onStart={this.onStart}
+            onReady={() => this.onReady(2)}
+            onSeek={this.onSeek}
+            config={{
+              file: {
+                attributes: {
+                  crossOrigin: "anonymous"
+                },
+              }
+            }}
+            wrapper="span"
+          />
+        }
       </div>
     );
   }

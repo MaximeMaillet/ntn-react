@@ -34,8 +34,26 @@ $secondary-light: lighten($secondary, 10%);
   @return rgba(51,134,100,$alpha);
 }
 
-$green: #9CC5A1;
+$blue: #4F7CAC;
+@function blueAlpha($alpha) {
+  @return rgba(79, 124, 172, $alpha);
+}
 
+$yellow: #F18F01;
+@function yellowAlpha($alpha) {
+  @return rgba(241, 143, 1, $alpha);
+}
+
+$green: #9CC5A1;
+$gray-100: #f8f9fa !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #6c757d !default;
+$gray-700: #495057 !default;
+$gray-800: #343a40 !default;
+$gray-900: #212529 !default;
 
 // Sizes
 $height-header: 60px;
@@ -54,8 +72,8 @@ $width-left-menu: 200px;
 @mixin is-loading() {
   &.is-loading {
     position: relative;
-    width: 100%;
-    height: 100%;
+    overflow: hidden;
+    min-height: 15rem;
 
     &:before {
       content: '';

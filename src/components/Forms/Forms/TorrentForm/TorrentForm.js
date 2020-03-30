@@ -20,12 +20,15 @@ class TorrentForm extends Component {
         return {torrents: <FormattedMessage id="form.input.file.required" />}
       }
       const payload = new FormData();
-      payload.append('server', data.server.value);
+      payload.append('server_id', data.server.value);
       for(let i=0; i<data.torrents.length; i++) {
         payload.append('torrents', data.torrents[i], data.torrents[i].name);
       }
-      await api('POST', `/torrents`, payload, {'Content-Type': ''});
+      const result = await api('POST', `/torrents`, payload, {'Content-Type': ''});
       this.props.launchNotification({message: this.props.intl.messages['form.generic.success']});
+      if(this.props.onSubmitSuccess) {
+        this.props.onSubmitSuccess(result.data);
+      }
     } catch(e) {
       console.warn(e);
       if(e.data) {
@@ -43,9 +46,6 @@ class TorrentForm extends Component {
     return (
       <Form
         onSubmit={this.onSubmit}
-        initialValues={{
-          server: this.props.currentServer ? {value: this.props.currentServer.name, label: this.props.currentServer.name} : null,
-        }}
       >
         {props => (
           <form className={`form-main torrent-form ${this.props.className}`} onSubmit={props.handleSubmit} noValidate>
@@ -64,7 +64,7 @@ class TorrentForm extends Component {
                   required
                   label="Server :"
                   options={this.props.servers.map(s => ({
-                    value: s.name,
+                    value: s.id,
                     label: s.name,
                   }))}
                 />
@@ -83,7 +83,7 @@ TorrentForm.defaultProps = {
 };
 
 TorrentForm.propTypes = {
-  onSubmit: PropTypes.func,
+  onSubmitSuccess: PropTypes.func,
   startLoading: PropTypes.func,
   stopLoading: PropTypes.func,
   fail: PropTypes.func,
@@ -92,9 +92,7 @@ TorrentForm.propTypes = {
 };
 
 export default connect(
-  (state) => ({
-    servers: state.server.servers,
-    currentServer: state.server.current,
+  () => ({
   }),
   (dispatch) => ({
     startLoading: () => dispatch(loadingActions.startLoading()),

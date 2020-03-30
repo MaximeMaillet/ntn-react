@@ -1,25 +1,112 @@
-.content-stream {
-  margin-left: 1em;
-  margin-right: 1em;
+.torrent-one {
+  display: flex;
+  flex-direction: row;
+  padding: 1em;
+  justify-content: space-between;
 
   .block-stream-menu {
-    flex-basis: 40%;
-    flex-shrink: 1;
-    flex-grow: 0 !important;
-    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    max-width: 50%;
+
+    .poster {
+      height: 200px;
+      img {
+        height: 100%;
+        width: auto;
+      }
+    }
+
+    .infos {
+      margin-left: 1em;
+      flex-grow: 1;
+
+      .details {
+        display: flex;
+        flex-direction: column;
+
+        h1 {
+          font-size: 1.5em;
+          margin: 0;
+          font-weight: 600;
+        }
+
+        .release_date, .runtime, .language, .sizes-total, .sizes-upload {
+          display: flex;
+          flex-direction: row;
+          font-size: 0.9em;
+          span.label {
+            flex-basis: 30%;
+          }
+          span:not(.label) {
+            font-weight: 600;
+          }
+        }
+      }
+
+      .links {
+        margin-top: 1em;
+        text-align: center;
+      }
+    }
 
     .medias {
-      a {
+      margin-top: 1em;
+
+      h3 {
+        font-size: 1.1em;
+        font-weight: 600;
+      }
+
+      div.media {
+        width: 100%;
+        padding: 0.5em;
         color: $black;
-        &:hover {
-          color: $secondary;
+        font-weight: 500;
+        font-size: 1em;
+        align-items: center;
+
+        .security {margin-right: 0.5em;}
+
+        span {
+          margin-right: auto;
+        }
+
+        button {
+          margin-right: 0.5em;
+
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+
+        &:nth-of-type(2n) {
+          background-color: primaryAlpha(0.1);
+        }
+
+        &:nth-of-type(2n+1) {
+          background-color: primaryAlpha(0.2);
+        }
+
+        &.active {
+          background-color: $primary;
+          color: $white;
+          button {
+            border-color: $white;
+
+            &:disabled {
+              cursor: auto;
+            }
+          }
         }
       }
     }
   }
 
   .block-stream-video {
-    flex-grow: 1;
-    margin-left: 1em;
+    margin-left: auto;
+    min-width: 40%;
+    min-height: 200px;
   }
 }

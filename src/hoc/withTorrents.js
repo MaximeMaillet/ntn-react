@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {withRouter} from "react-router-dom";
 import {connect} from 'react-redux';
 import loadingActions from "../redux/loading/actions";
 import api from '../libraries/api';
@@ -17,54 +16,30 @@ export default function withTorrents(BaseComponent) {
       };
     }
 
-    componentDidMount() {
-      if(this.props.torrents) {
-        this.setState({torrents: this.props.torrents, loading: false});
-      }
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-      if(!prevProps.torrents && this.props.torrents) {
-        this.setState({torrents: this.props.torrents})
-      }
-    }
-
-    static getDerivedStateFromProps(props, state) {
-      if(!state.torrents && props.torrents) {
-        return {torrents: props.torrents, loading: props.loading};
-      }
-
-      return state;
-    }
-
     loadTorrent = async(id) => {
       try {
-        this.props.startLoading();
+        this.props.startLoading(LOADING.TORRENTS);
         const torrent = (await api('GET', `/torrents/${id}`)).data;
         this.setState({
-          torrent: {
-            ...torrent,
-            total: `${Math.floor(torrent.total/1024/1024)}Mo`
-          }
+          torrent,
+          error: null,
         });
       } catch(e) {
         this.setState({error: e.data});
       } finally {
-        this.props.stopLoading();
-        this.setState({error: null});
+        this.props.stopLoading(LOADING.TORRENTS);
       }
     };
 
     loadTorrents = async() => {
       try {
-        this.props.startLoading();
+        this.props.startLoading(LOADING.TORRENTS);
         const torrents = (await api('GET', `/torrents`)).data;
-        this.setState({torrents});
+        this.setState({torrents, error: null});
       } catch(e) {
         this.setState({error: e.data});
       } finally {
-        this.props.stopLoading();
-        this.setState({error: null});
+        this.props.stopLoading(LOADING.TORRENTS);
       }
     };
 
@@ -155,8 +130,8 @@ export default function withTorrents(BaseComponent) {
   return connect(
     () => ({}),
     (dispatch) => ({
-      startLoading: () => dispatch(loadingActions.startLoading()),
-      stopLoading: () => dispatch(loadingActions.stopLoading()),
+      startLoading: (type) => dispatch(loadingActions.startLoading(type)),
+      stopLoading: (type) => dispatch(loadingActions.stopLoading(type)),
     })
-  )(withRouter(withTorrentsComponent));
+  )(withTorrentsComponent);
 }

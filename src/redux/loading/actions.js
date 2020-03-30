@@ -1,15 +1,16 @@
 export const TYPE = {
-  LOADING: 'loadingReducer::loading',
+  START: 'loadingReducer::start_loading',
+  STOP: 'loadingReducer::stop_loading',
 };
 
-export const startLoading = () => ({
-  type: TYPE.LOADING,
-  loading: true,
+export const startLoading = (loadingType) => ({
+  type: TYPE.START,
+  loading: loadingType,
 });
 
-export const stopLoading = () => ({
-  type: TYPE.LOADING,
-  loading: false,
+export const stopLoading = (loadingType) => ({
+  type: TYPE.STOP,
+  loading: loadingType,
 });
 
 

@@ -1,8 +1,10 @@
 import React, {Component} from "react";
 import PropTypes from 'prop-types';
-import {Route} from "react-router-dom";
+import {Route, withRouter} from "react-router-dom";
 import withTorrents from "../../hoc/withTorrents";
 import TorrentOne from "../../routes/Torrents/One/TorrentOne";
+import {LOADING} from "../../config/const";
+import {connect} from "react-redux";
 
 class TorrentIdContainer extends Component {
   componentDidMount() {
@@ -18,17 +20,19 @@ class TorrentIdContainer extends Component {
   }
 
   render() {
-    const {match, torrent} = this.props;
+    const {match, torrent, loading} = this.props;
     return (
-      <div className={`content`}>
-        {
-          torrent &&
-          <React.Fragment>
-            <Route exact path={`${match.url}`}>
-              <TorrentOne torrent={torrent}/>
-            </Route>
-          </React.Fragment>
-        }
+      <div className="content container-fluid">
+        <section className={`main-block ${(loading & LOADING.TORRENTS) ? 'is-loading' : ''}`}>
+          {
+            torrent &&
+              <React.Fragment>
+                <Route exact path={`${match.url}`}>
+                  <TorrentOne torrent={torrent}/>
+                </Route>
+              </React.Fragment>
+          }
+        </section>
       </div>
     );
   }
@@ -38,4 +42,8 @@ TorrentIdContainer.propTypes = {
   profileNotFound: PropTypes.bool,
 };
 
-export default withTorrents(TorrentIdContainer);
+export default connect(
+  (state) => ({
+    loading: state.loading.loading,
+  })
+)(withRouter(withTorrents(TorrentIdContainer)));
