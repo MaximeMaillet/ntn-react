@@ -1,24 +1,57 @@
 nav.menu-side.profile-menu {
   width: $width-left-menu;
-  background-color: $primary-light;
+  background-color: primaryAlpha(0.2);
   padding-top: 0.5em;
   padding-bottom: 0.5em;
   flex-shrink: 0;
+  border-right: 2px solid $primary-dark;
+  transition: margin-left 1s;
+
+  &.inactive {
+    margin-left: $width-left-menu * -1;
+    .close-link {
+      position: relative;
+      z-index: 99;
+      box-shadow: 2px 2px 2px primaryAlpha(0.2);
+      border: 1px solid $secondary;
+      margin-right: -45px;
+
+      &:after {
+        margin-right: 0.5em;
+        @extend %fa-icon;
+        @extend .fas;
+        content: fa-content($fa-var-angle-double-right);
+      }
+    }
+  }
+
+  .close-link {
+    transition: margin-right 1500ms;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    text-align: left;
+
+    &:after {
+      @extend %fa-icon;
+      @extend .fas;
+      content: fa-content($fa-var-angle-double-left);
+      margin-right: 0.5em;
+    }
+  }
 
   .category {
-    border-radius: 5px;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-    background-color: $white-light;
     padding: 0.5em;
-    margin-left: 0.5em;
-    margin-right: 0.5em;
+    background-color: $primary-dark;
     margin-top: 0.5em;
 
     .title {
       text-indent: 0.2em;
       font-size: 1.2em;
-      border-bottom: 1px dashed $black;
+      border-bottom: 1px dashed $secondary;
       margin-bottom: 0.5em;
+      color: $text-color;
 
       &:before {
         @extend %fa-icon;
@@ -29,17 +62,27 @@ nav.menu-side.profile-menu {
     }
 
     .links {
-      font-size: 1em;
       text-indent: 0.5em;
 
       a {
+        font-size: 0.9em;
         display: block;
-        color: $primary;
-
-        &:hover {
-          color: $secondary;
-        }
       }
+    }
+  }
+
+  @include media-breakpoint-down(md) {
+    position: absolute;
+    top: $height-header + ($padding-header * 2);
+    z-index: 99;
+    background-color: primaryAlpha(0.6);
+
+    .inactive {
+      margin-left: 0;
+    }
+
+    .active {
+      margin-left: $width-left-menu * -1;
     }
   }
 }

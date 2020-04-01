@@ -53,7 +53,7 @@ class List extends Component {
                 </div>
                 <div className="details">
                   <div className="info">
-                    <h3>{torrent.original_title || torrent.name}</h3>
+                    <h3>{torrent.title || torrent.name}</h3>
                     <div className="date">
                       {torrent.release_date ? `${moment(torrent.release_date).format('YYYY')} - ` : ''}
                       {torrent.runtime ? `${torrent.runtime}min` : ''}
@@ -62,13 +62,13 @@ class List extends Component {
                   <div className="overview">
                     {torrent.overview}
                   </div>
-                  <div className="actions">
-                    {
-                      torrent.isStreamable &&
-                      <Link className="btn btn-primary" to={`/torrents/${torrent.id}`}><i className="fa fa-tv" /> Stream</Link>
-                    }
-                  </div>
                   <div className="footer">
+                    <div className="actions">
+                      {
+                        torrent.isStreamable &&
+                        <Link className="btn btn-primary" to={`/torrents/${torrent.id}`}><i className="fa fa-tv" />Stream</Link>
+                      }
+                    </div>
                     <div className="server-name">{torrent.server.name}</div>
                   </div>
                 </div>

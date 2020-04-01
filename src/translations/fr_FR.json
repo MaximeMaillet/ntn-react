@@ -42,15 +42,15 @@
 
   "header.profile.quota": "Quota :",
 
-  "side_menu.title.profile": "Profil",
-  "side_menu.profile.profile": "Mon profil",
-  "side_menu.profile.edit": "Éditer",
-  "side_menu.profile.torrents": "Torrents",
-  "side_menu.title.users": "Utilisateurs",
-  "side_menu.users.list": "Liste",
-  "side_menu.title.torrents": "Torrents",
-  "side_menu.torrents.list": "Liste",
-  "side_menu.torrents.add": "Ajouter",
+  "component.side_menu.title.profile": "Profil",
+  "component.side_menu.profile.profile": "Mon profil",
+  "component.side_menu.profile.edit": "Éditer",
+  "component.side_menu.profile.torrents": "Torrents",
+  "component.side_menu.title.users": "Utilisateurs",
+  "component.side_menu.users.list": "Liste",
+  "component.side_menu.title.torrents": "Torrents",
+  "component.side_menu.torrents.list": "Liste",
+  "component.side_menu.torrents.add": "Ajouter",
 
   "route.profile.create.h1": "Créer un utilisateur",
   "route.profile.edit.h1": "Éditer un utilisateur",
@@ -88,6 +88,8 @@
   "component.torrents.one.button.download": "Télécharger",
   "component.torrents.one.medias": "Fichiers",
   "component.torrents.one.no_medias": "Aucun fichiers",
+  "component.torrents.add.no_server": "Aucun serveur",
+  "component.torrents.add.no_server.text": "Tu as besoin d'un serveur BitTorrent pour pouvoir télécharger",
 
   "component.streamer.no_medias": "Aucun fichiers",
 

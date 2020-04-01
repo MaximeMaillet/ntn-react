@@ -1,31 +1,78 @@
-.list-profile {
-  .item.picture {@include item-size(5%)}
-  .item.id {@include item-size(7%)}
-  .item.email {@include item-size(30%)}
-  .item.roles {@include item-size(20%)}
-  .item.space {@include item-size(10%)}
-  .item.validated {@include item-size(8%)}
-  .item.created {@include item-size(10%)}
-  .item.updated {@include item-size(10%)}
+.table-profiles {
+  .main-table-row:not(.main-table-header) {
+    .main-table-item {
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+    }
 
-  .content-item {
-    .item {
-      padding: 0.5em;
-    }
-    .item.id {
-      justify-content: center;
-      font-weight: 600;
-    }
-    .item.picture {
+    .picture, .id, .validated {
       justify-content: center;
     }
-    .item.created, .item.updated {
-      font-size: 0.7em;
+
+    .picture {
+      .profile-picture {
+        &.is-validated {
+          .indicator-item {
+            color: $green;
+          }
+        }
+        &.is-invalidated {
+          .indicator-item {
+            color: $red;
+          }
+        }
+      }
     }
-    .item.validated {
+
+    .created, .updated {
+      font-size: 0.9em;
       justify-content: center;
-      &.is-invalidated {color: $red;}
-      &.is-validated {color: $green;}
+    }
+
+    .space {
+      justify-content: flex-end;
+
+      span {
+        font-weight: 600;
+      }
+    }
+  }
+
+  .main-table-row {
+    @include media-breakpoint-down(lg) {
+      .updated {
+        display: none !important;
+      }
+    }
+
+    @include media-breakpoint-down(md) {
+      .picture {
+        min-width: 70px;
+      }
+      .id {
+        display: none !important;
+      }
+      .space {
+        max-width: 10%;
+      }
+    }
+
+    @include media-breakpoint-down(xs) {
+      .created {
+        display: none !important;
+      }
+      .space {
+        max-width: 20%;
+      }
+      @media (max-width: 400px) {
+        .space {
+          max-width: 10%;
+        }
+        .roles {
+          max-width: 10%;
+        }
+      }
     }
   }
 }

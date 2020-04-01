@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {FormattedMessage} from "react-intl";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 import ProfilePicture from "../Profile/Picture/ProfilePicture";
@@ -18,15 +17,11 @@ class Header extends Component {
         </div>
         <div className="titles">
           <h2>NTN</h2>
-          <h3>Download & upload</h3>
+          <h3>Download, Upload, Stream</h3>
         </div>
         <div className="profile">
           <Link to={`/profiles/${get(this.props, 'user.id', 0)}`} className="d-flex flex-row align-items-center justify-content-center">
-            <div className="email">
-              {get(this.props, 'user.email', null)}<br />
-              <FormattedMessage id="header.profile.quota" /> <strong>{get(this.props, 'user.space', 0)}</strong> Go
-            </div>
-            <ProfilePicture profile={get(this.props, 'user', null)} />
+            <ProfilePicture className="header-profile" profile={get(this.props, 'user', null)} />
           </Link>
           <button className="ml-2 btn btn-secondary" onClick={this.props.logout}>
             <i className="fas fa-sign-out-alt"/>

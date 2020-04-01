@@ -25,6 +25,7 @@ $sizeFormFile: 120px;
 
      .form-control {
        border-color: $primary;
+       background-color:$white-light;
        width: auto;
      }
    }
@@ -43,14 +44,17 @@ $sizeFormFile: 120px;
 
        .form-select-control__control {
          border-color: $primary;
+         background-color: $white-light;
 
          &:focus, &:hover, &.form-select-control__control--menu-is-open, &.form-select-control__control--is-focused {
            border-color: $secondary;
-           box-shadow: 0 0 0 0.2rem secondaryAlpha(0.2);
          }
 
          .form-select-control__multi-value {
-           background-color: primaryAlpha(0.2);
+           background-color: $secondary;
+           .form-select-control__multi-value__label {
+             color: $white-light;
+           }
          }
 
          .form-select-control__multi-value__remove:hover {
@@ -61,7 +65,8 @@ $sizeFormFile: 120px;
 
        .form-select-control__option {
          &:focus, &:hover, &.form-select-control__option--is-focused {
-           background-color: primaryAlpha(0.2);
+           background-color: secondaryAlpha(0.5);
+           color: $black;
          }
        }
      }

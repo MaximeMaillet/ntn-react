@@ -3,48 +3,11 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 @import "~@fortawesome/fontawesome-free/scss/brands";
 @import "~@fortawesome/fontawesome-free/scss/regular";
 @import "~@fortawesome/fontawesome-free/scss/solid";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
 
-// Color
-$black: #1F2421;
-@function blackAlpha($alpha) {
-  @return rgba(31,36,33,$alpha);
-}
-
-$white: #ffffff;
-$white-light: #DCE1DE;
-@function whiteAlpha($alpha) {
-  @return rgba(255,255,255,$alpha);
-}
-
-$red: #F26659;
-@function redAlpha($alpha) {
-  @return rgba(242,102,89, $alpha);
-}
-$green: #25CA8F;
-
-$primary: #216869;
-$primary-light: lighten($primary, 10%);
-@function primaryAlpha($alpha) {
-  @return rgba(33,104,105, $alpha);
-}
-
-$secondary: #49A078;
-$secondary-light: lighten($secondary, 10%);
-@function secondaryAlpha($alpha) {
-  @return rgba(51,134,100,$alpha);
-}
-
-$blue: #4F7CAC;
-@function blueAlpha($alpha) {
-  @return rgba(79, 124, 172, $alpha);
-}
-
-$yellow: #F18F01;
-@function yellowAlpha($alpha) {
-  @return rgba(241, 143, 1, $alpha);
-}
-
-$green: #9CC5A1;
+// Colors
 $gray-100: #f8f9fa !default;
 $gray-200: #e9ecef !default;
 $gray-300: #dee2e6 !default;
@@ -55,8 +18,66 @@ $gray-700: #495057 !default;
 $gray-800: #343a40 !default;
 $gray-900: #212529 !default;
 
+$black-dark: #000000;
+$black: #1F2421;
+$black-light: lighten($black, 10%);
+@function blackAlpha($alpha) {
+  @return rgba(31,36,33,$alpha);
+}
+
+$white: #ffffff;
+$white-light: #DCE1DE;
+@function whiteAlpha($alpha) {
+  @return rgba(255,255,255,$alpha);
+}
+
+$green: #49A078;
+@function greenAlpha($alpha) {
+  @return rgba(73,160,120, $alpha);
+}
+
+
+$red: #F26659;
+@function redAlpha($alpha) {
+  @return rgba(242,102,89, $alpha);
+}
+
+$blue: #4F7CAC;
+@function blueAlpha($alpha) {
+  @return rgba(79, 124, 172, $alpha);
+}
+
+//$primary: #216869;
+$primary: #18435A;
+$primary-light: lighten($primary, 10%);
+$primary-dark: darken($primary, 10%);
+@function primaryAlpha($alpha) {
+  @return rgba(24, 67, 90, $alpha);
+}
+
+//$secondary: #49A078;
+//$secondary-light: lighten($secondary, 10%);
+$secondary: #3E92CC;
+$secondary-light: lighten($secondary, 10%);
+$secondary-dark: darken($secondary, 10%);
+@function secondaryAlpha($alpha) {
+  @return rgba(62,146,204,$alpha);
+}
+
+$yellow: #F18F01;
+@function yellowAlpha($alpha) {
+  @return rgba(241, 143, 1, $alpha);
+}
+
+
+$text-color: $white-light;
+$link-color: $secondary;
+$link-color-hover: $secondary-light;
+
+
 // Sizes
 $height-header: 60px;
+$padding-header: 5px;
 $height-profile-picture: 40px;
 $height-profile-picture-sm: 80px;
 $height-profile-picture-xl: 150px;
@@ -83,7 +104,7 @@ $width-left-menu: 200px;
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: blackAlpha(0.8);;
+      background-color: primaryAlpha(0.2);
     }
 
     &:after {

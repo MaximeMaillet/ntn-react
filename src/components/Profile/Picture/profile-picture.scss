@@ -8,7 +8,7 @@ div.profile-picture {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  border: $borderSize solid $white-light;
+  border: $borderSize solid $secondary;
 
   &.sm {
     height: $height-profile-picture-sm + ($borderSize * 2);
@@ -18,5 +18,15 @@ div.profile-picture {
   &.xl {
     height: $height-profile-picture-xl + ($borderSize * 2);
     width: $height-profile-picture-xl + ($borderSize * 2);
+  }
+
+  &.indicator {
+    position: relative;
+    overflow: visible !important;
+    .indicator-item {
+      position: absolute;
+      top: -0.5em;
+      right: -0.5em;
+    }
   }
 }

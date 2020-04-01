@@ -20,14 +20,17 @@ class ProfilePicture extends Component {
   }
 
   render() {
-    const {size, className} = this.props;
+    const {size, className, indicator} = this.props;
     return (
       <div
-        className={`profile-picture ${size} ${className}`}
+        className={`profile-picture ${size} ${className} ${indicator ? 'indicator' : ''}`}
         style={{
           backgroundImage: `url("${this.state.picture}")`
         }}
       >
+        {
+          indicator && <div className="indicator-item">{indicator}</div>
+        }
       </div>
     );
   }
@@ -42,6 +45,7 @@ ProfilePicture.propTypes = {
   className: PropTypes.string,
   profile: PropTypes.object,
   size: PropTypes.oneOf(['xs', 'sm', 'xl']),
+  indicator: PropTypes.any,
 };
 
 export default ProfilePicture;

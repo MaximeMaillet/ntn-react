@@ -17,6 +17,7 @@
 .main-list {
   display: flex;
   flex-direction: column;
+  margin-top: 1em;
 
   .main-list-item {
     display: flex;
@@ -35,14 +36,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: primaryAlpha(0.2);
+      background-color: primaryAlpha(0.8);
+      box-shadow: 2px 2px 3px rgba(0,0,0,0.2);
       text-align: center;
       width: 100%;
       height: 150px;
-    }
-
-    &.item-empty, &.item-loading {
-      font-style: italic;
     }
 
     &.item-error {
@@ -92,39 +90,34 @@ table.main-table {
   }
 }
 
+div.main-table-primary {
+  margin-left: 1em;
+  margin-right: 1em;
 
-
-
-
-
-.list-main {
-  display: flex;
-  flex-direction: column;
-  border: 1px solid blackAlpha(0.5);
-  border-radius: 2px;
-  box-shadow: 2px 2px 5px blackAlpha(0.2);
-  max-width: 100%;
-  min-width: 50px;
-  @include is-loading();
-
-  .title-item, .content-item {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    flex-grow: 1;
+  .main-table-header {
+    background-color: $primary;
   }
 
-  .title-item {
-    text-align: center;
-    border-bottom: 1px solid blackAlpha(0.2);
-    background-color: $primary;
+  .main-table-row {
+    border-left: 1px solid $black-dark;
+    border-right: 1px solid $black-dark;
+    border-top: 1px solid $black-dark;
+    &:last-child {
+      border-bottom: 1px solid $black-dark;
+    }
 
-    .item {
-      border-left: 1px solid $white-light;
+    .main-table-item {
       padding: 0.5em;
-      color: $white-light;
-      font-weight: 600;
-      text-align: center;
+      border-left: 1px solid $black-dark;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      & > * {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
 
       &:first-child {
         border-left: none;
@@ -132,15 +125,7 @@ table.main-table {
     }
   }
 
-  .content-item {
-    .item {
-      border-left: 1px solid primaryAlpha(0.5);
-      display: flex;
-      align-items: center;
-      text-align: center;
-      padding: 0.5em;
-    }
-
+  .main-table-row:not(.main-table-header) {
     &:nth-child(2n) {
       background-color: whiteAlpha(0.1);
     }
@@ -149,41 +134,37 @@ table.main-table {
       background-color: secondaryAlpha(0.1);
     }
 
-    &.item-clicked {
+    &.row-clickable {
+      cursor: pointer;
       &:hover {
-        cursor: pointer;
-        background-color: primaryAlpha(0.2);
+        background-color: $primary;
       }
     }
+  }
+}
 
-    &:first-child {
-      border-left: none;
+table.main-table-primary {
+  border: 1px solid $black-dark;
+  overflow-x: auto;
+  thead {
+    background-color: $primary;
+  }
+
+  .main-table-row:not(.main-table-header) {
+    &:nth-child(2n) {
+      background-color: whiteAlpha(0.1);
     }
-  }
 
-  .item {
-    &, & > * {
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-      min-width: 0;
+    &:nth-child(2n+1) {
+      background-color: secondaryAlpha(0.1);
     }
-  }
 
-  .loading-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 150px;
-  }
+    .main-table-item {
+      border-left: 1px solid $black;
 
-  .no-item {
-    font-style: italic;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding:1em;
-    color: blackAlpha(0.5);
+      &:first-child {
+        border-left: none;
+      }
+    }
   }
 }

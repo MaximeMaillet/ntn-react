@@ -13,7 +13,7 @@ class ProfileContainer extends Component {
     return (
       <React.Fragment>
         <Header />
-        <div className="container-main container-side-menu">
+        <div className="content content-side">
           <SideMenu/>
           <Route path={`${match.url}/:userId([0-9]+)`}><ProfileIdContainer /></Route>
           <Route exact path={`${match.url}/create`}><Create /></Route>

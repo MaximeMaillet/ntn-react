@@ -2,15 +2,12 @@ header.global-header {
   background-color: $primary;
   display: flex;
   align-items: center;
-  padding: 0.5em;
+  padding: $padding-header 1em;
   box-shadow: 2px 2px 5px rgba(0,0,0,0.5), -2px 0px 5px rgba(0,0,0,0.5);
   z-index: 2;
 
   .logo {
-    background-color: $white-light;
-    border-radius: 50%;
     height: $height-header;
-    padding: 0.7em;
 
     img {
       height: 100%;
@@ -22,17 +19,18 @@ header.global-header {
     margin-left: 0.5em;
 
     h3, h2 {
-      color: $white-light;
+      color: $text-color;
       margin: 0;
       padding: 0;
     }
 
     h2 {
-      font-size: 1.2em;
+      font-weight: 600;
+      font-size: 1.4em;
     }
 
     h3 {
-      font-size: 0.8em;
+      font-size: 0.7em;
     }
   }
 
@@ -41,19 +39,8 @@ header.global-header {
     display: flex;
     flex-direction: row;
 
-    a, a:hover {
-      text-decoration: none;
-    }
-
-    .email {
-      margin-right: 1em;
-      color: $white-light;
-      font-size: 0.8em;
-
-      &:hover {
-        text-decoration: none;
-        color: $primary-light;
-      }
+    .header-profile {
+      border: 2px solid $secondary;
     }
   }
 }

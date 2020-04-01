@@ -20,7 +20,7 @@ export default function withAdmin(BaseComponent) {
 
   return connect(
     (state) => ({
-      isAdmin: state.user.isAdmin,
+      isAdmin: state.auth.isAdmin,
     })
   )(withAdminComponent);
 }

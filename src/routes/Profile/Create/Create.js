@@ -7,6 +7,7 @@ import notificationActions from '../../../redux/notifications/actions';
 import {LOADING} from "../../../config/const";
 import loadingActions from "../../../redux/loading/actions";
 import withProfiles from "../../../hoc/withProfiles";
+import shouldAuth from "../../../hoc/shouldAuth";
 
 class Create extends Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -49,7 +50,7 @@ Create.propTypes = {
   error: PropTypes.object,
 };
 
-export default connect(
+export default shouldAuth(connect(
   (state) => ({
     loading: state.loading.loading,
   }),
@@ -58,4 +59,4 @@ export default connect(
     startLoading: () => dispatch(loadingActions.startLoading()),
     stopLoading: () => dispatch(loadingActions.stopLoading()),
   })
-)(injectIntl(withProfiles(Create)));
+)(injectIntl(withProfiles(Create))));

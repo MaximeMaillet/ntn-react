@@ -5,15 +5,11 @@ import {Link} from "react-router-dom";
 import withAdmin from "../../../hoc/withAdmin";
 import ProfileList from '../../../components/Profile/List/List';
 import {LOADING} from "../../../config/const";
-import withProfiles from "../../../hoc/withProfiles";
+import shouldAuth from "../../../hoc/shouldAuth";
 
 import './list.scss'
 
 class List extends Component {
-  componentDidMount() {
-    this.props.loadProfiles();
-  }
-
   render() {
     const {loading, profiles} = this.props;
     return (
@@ -35,4 +31,4 @@ List.propTypes = {
   loadProfiles: PropTypes.func,
 };
 
-export default withAdmin(withProfiles(List));
+export default shouldAuth(withAdmin(List));

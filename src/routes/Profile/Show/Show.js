@@ -4,7 +4,7 @@ import {FormattedMessage} from "react-intl";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import ProfilePicture from "../../../components/Profile/Picture/ProfilePicture";
-import TorrentList from '../../../components/Torrents/Table/Table';
+// import TorrentList from '../../../components/Torrents/Table/Table';
 
 import './show.scss'
 
@@ -45,10 +45,10 @@ class Show extends Component {
             </div>
           </div>
           <div className="torrents">
-            <TorrentList
-              loading={loading}
-              torrents={torrents}
-            />
+            {/*<TorrentList*/}
+              {/*loading={loading}*/}
+              {/*torrents={torrents}*/}
+            {/*/>*/}
           </div>
         </div>
 
@@ -67,7 +67,7 @@ Show.propTypes = {
 
 export default connect(
   (state) => ({
-    user: state.user.user,
-    isAdmin: state.user.isAdmin,
+    user: state.auth.user,
+    isAdmin: state.auth.isAdmin,
   })
 )(Show);
