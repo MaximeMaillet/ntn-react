@@ -3,9 +3,10 @@ import {IntlProvider} from "react-intl";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import messages from '../translations';
 import {getLocale, getLanguage} from '../libraries/locale';
+import history from '../history'
 
-import MainContainer from "../containers/MainContainer/MainContainer";
 import Notifications from "../components/Notifications/Notifications";
+import MainRouter from "../routers/Main/MainRouter";
 
 import './app.scss';
 
@@ -15,10 +16,10 @@ class App extends Component {
     const locale = getLocale();
     return (
       <IntlProvider locale={locale} messages={messages[language]}>
-        <Router>
+        <Router history={history}>
           <Notifications/>
           <Switch>
-            <Route path="/"><MainContainer /></Route>
+            <Route component={MainRouter} />
           </Switch>
         </Router>
       </IntlProvider>

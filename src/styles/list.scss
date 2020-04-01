@@ -49,6 +49,72 @@
   }
 }
 
+div.main-table {
+  flex-grow: 1;
+  margin-left: 15px;
+  margin-right: 15px;
+
+  .main-table-row {
+    .main-table-item {
+      padding: 0.5em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      & > * {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  .main-table-row:not(.main-table-header) {
+
+    &.row-clickable {
+      cursor: pointer;
+    }
+  }
+}
+
+div.main-table-primary {
+  .main-table-header {
+    background-color: $primary;
+  }
+
+  .main-table-row {
+    border-left: 1px solid $black-dark;
+    border-right: 1px solid $black-dark;
+    border-top: 1px solid $black-dark;
+    &:last-child {
+      border-bottom: 1px solid $black-dark;
+    }
+
+    .main-table-item {
+      border-left: 1px solid $black-dark;
+      &:first-child {
+        border-left: none;
+      }
+    }
+  }
+
+  .main-table-row:not(.main-table-header) {
+    &:nth-child(2n) {
+      background-color: whiteAlpha(0.1);
+    }
+
+    &:nth-child(2n+1) {
+      background-color: secondaryAlpha(0.1);
+    }
+
+    &.row-clickable {
+      &:hover {
+        background-color: $primary;
+      }
+    }
+  }
+}
+
 table.main-table {
   border: 1px solid blackAlpha(0.5);
 
@@ -86,59 +152,6 @@ table.main-table {
       text-align: center;
       padding: 1em;
       @include content-error();
-    }
-  }
-}
-
-div.main-table-primary {
-  margin-left: 1em;
-  margin-right: 1em;
-
-  .main-table-header {
-    background-color: $primary;
-  }
-
-  .main-table-row {
-    border-left: 1px solid $black-dark;
-    border-right: 1px solid $black-dark;
-    border-top: 1px solid $black-dark;
-    &:last-child {
-      border-bottom: 1px solid $black-dark;
-    }
-
-    .main-table-item {
-      padding: 0.5em;
-      border-left: 1px solid $black-dark;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-
-      & > * {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-
-      &:first-child {
-        border-left: none;
-      }
-    }
-  }
-
-  .main-table-row:not(.main-table-header) {
-    &:nth-child(2n) {
-      background-color: whiteAlpha(0.1);
-    }
-
-    &:nth-child(2n+1) {
-      background-color: secondaryAlpha(0.1);
-    }
-
-    &.row-clickable {
-      cursor: pointer;
-      &:hover {
-        background-color: $primary;
-      }
     }
   }
 }

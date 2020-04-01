@@ -9,18 +9,7 @@
 
 body, html, #root {
   background-color: $black-dark;
-  color: $text-color;
-  font-size: 17px;
   height: 100%;
-  font-family: 'Noto Sans JP', sans-serif;
-}
-
-h1 {
-  font-weight: 500;
-}
-
-h2, h3 {
-  font-weight: 400;
 }
 
 #root {
@@ -34,6 +23,17 @@ h2, h3 {
   flex-grow: 1;
   background-color: $black-dark;
   @include is-loading();
+  color: $text-color;
+  font-size: 17px;
+  font-family: 'Noto Sans JP', sans-serif;
+
+  h1 {
+    font-weight: 500;
+  }
+
+  h2, h3 {
+    font-weight: 400;
+  }
 
   a {
     font-family: 'Noto Sans JP', sans-serif;

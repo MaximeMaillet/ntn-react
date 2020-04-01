@@ -4,6 +4,8 @@ import React from "react";
 export default (accepts, message) => {
   return (data) => {
     if(data) {
+      console.log('hee')
+      console.log(data)
       if(typeof data !== 'string' && accepts.indexOf(data[0].type) === -1) {
         return message ? message : <FormattedMessage id="form.validator.accepts" values={{accepts: accepts.join(', ')}} />
       }

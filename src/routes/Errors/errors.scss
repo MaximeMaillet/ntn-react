@@ -1,39 +1,6 @@
-.errors {
-  margin: 1em;
-  background-color: $white-light;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-  border-radius: 5px;
+.block-errors {
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
   padding: 1em;
-
-  h2 {
-    font-size: 1.5em;
-    color: $red;
-  }
-
-  p {
-    font-style: italic;
-    font-weight: 300;
-  }
-
-  .actions {
-    .btn.btn-error {
-      background-color: $red;
-      color: white;
-
-      &:hover {
-        background-color: redAlpha(0.8);
-      }
-    }
-  }
-
-  &.not-found {
-    h2 {
-      &:before {
-        @extend %fa-icon;
-        @extend .fas;
-        content: fa-content($fa-var-question);
-        margin-right: 0.5em;
-      }
-    }
-  }
 }

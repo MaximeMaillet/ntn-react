@@ -1,29 +1,23 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import LoginForm from "../../components/Forms/Forms/LoginForm";
 import OfflineHeader from "../../components/Header/OfflineHeader";
 import {FormattedMessage} from "react-intl";
 
 import './login.scss'
 
-class Login extends Component {
+class WaitingConnexion extends Component {
   render() {
     return (
-      <React.Fragment>
+      <div className="main-container">
         <OfflineHeader />
         <div className="content content-simple">
           <section className="main-block block-login">
-            <h2><FormattedMessage id="route.login.title" /></h2>
-            <LoginForm />
+            <h1><FormattedMessage id="route.login.waiting_connexion.title"/></h1>
+            <p><FormattedMessage id="route.login.waiting_connexion.text"/></p>
           </section>
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }
 
-export default connect(
-  (state) => ({
-    loading: state.loading.loading,
-  }),
-)(Login);
+export default WaitingConnexion;

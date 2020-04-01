@@ -50,6 +50,7 @@ const login = (token) => {
         dispatch(loaded(decoded.user));
         dispatch(doRoles(decoded.user));
         dispatch(doLogin(true));
+        dispatch(get(decoded.user.id));
       }
     } catch(e) {
       console.warn(e);

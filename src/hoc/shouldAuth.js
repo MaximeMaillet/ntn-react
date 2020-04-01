@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import authActions from "../redux/auth/actions";
 import loadingActions from "../redux/loading/actions";
 import {LOADING} from '../config/const';
+import WaitingConnexion from "../routes/Login/WaitingConnexion";
 
 export default function shouldAuth(BaseComponent) {
   class withAuthComponent extends React.PureComponent {
@@ -13,7 +14,6 @@ export default function shouldAuth(BaseComponent) {
     }
 
     checkLogin = async() => {
-      console.log('Check Login');
       this.props.startLoading(LOADING.LOGIN);
       const token = localStorage.getItem('token');
       if(!token) {
@@ -29,7 +29,7 @@ export default function shouldAuth(BaseComponent) {
     };
 
     render() {
-      const {isLogin} = this.props;
+      const {isLogin, loading} = this.props;
       if(isLogin) {
         return (
           <BaseComponent
@@ -37,6 +37,10 @@ export default function shouldAuth(BaseComponent) {
           />
         );
       } else {
+        if(loading & LOADING.LOGIN) {
+          return <WaitingConnexion />;
+        }
+
         return (
           <Login
             {...this.props}
@@ -59,6 +63,7 @@ export default function shouldAuth(BaseComponent) {
   return connect(
     (state) => ({
       isLogin: state.auth.isLogin,
+      loading: state.loading.loading,
     }),
     (dispatch) => ({
       login: (token) => dispatch(authActions.login(token)),

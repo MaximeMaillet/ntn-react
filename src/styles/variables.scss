@@ -57,6 +57,7 @@ $primary-dark: darken($primary, 10%);
 
 //$secondary: #49A078;
 //$secondary-light: lighten($secondary, 10%);
+
 $secondary: #3E92CC;
 $secondary-light: lighten($secondary, 10%);
 $secondary-dark: darken($secondary, 10%);
@@ -73,6 +74,13 @@ $yellow: #F18F01;
 $text-color: $white-light;
 $link-color: $secondary;
 $link-color-hover: $secondary-light;
+
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "sucess": $green,
+  "danger": $red,
+);
 
 
 // Sizes

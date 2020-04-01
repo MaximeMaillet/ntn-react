@@ -4,7 +4,6 @@ import {Link} from "react-router-dom";
 import ProfilePicture from "../Profile/Picture/ProfilePicture";
 import get from 'lodash.get';
 import authActions from "../../redux/auth/actions";
-
 import logo from '../../styles/medias/logo.svg'
 import './header.scss';
 

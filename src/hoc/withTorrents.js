@@ -43,16 +43,15 @@ export default function withTorrents(BaseComponent) {
       }
     };
 
-    loadTorrentUser = async(user) => {
+    loadTorrentUser = async(user_id) => {
       try {
-        this.props.startLoading();
-        const torrents = (await api('GET', `/users/${user.id}/torrents`)).data;
+        this.props.startLoading(LOADING.TORRENTS);
+        const torrents = (await api('GET', `/users/${user_id}/torrents`)).data;
         this.setState({torrents});
       } catch(e) {
         this.setState({error: e.data});
       } finally {
-        this.props.stopLoading();
-        this.setState({error: null});
+        this.props.stopLoading(LOADING.TORRENTS);
       }
     };
 

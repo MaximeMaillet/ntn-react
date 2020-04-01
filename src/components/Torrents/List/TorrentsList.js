@@ -1,45 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import withTorrents from "../../../hoc/withTorrents";
-import {LOADING} from "../../../config/const";
-import {connect} from "react-redux";
 import moment from 'moment';
+import {Link} from "react-router-dom";
 
 import './torrents-list.scss';
-import {Link} from "react-router-dom";
-import {FormattedMessage} from "react-intl";
 
 class TorrentsList extends Component {
-  componentDidMount() {
-    this.props.loadTorrents();
-  }
-
-  render() {
-    const {torrents, torrentError, loading, className} = this.props;
-    return (
-      <div className={`main-list torrents-list ${className}`}>
-        {
-          (loading & LOADING.TORRENTS) ?
-            <LoadingList />
-          :
-            (torrentError) ?
-              <ErrorList torrentError={torrentError} />
-            :
-              (!this.props.torrents || this.props.torrents.length === 0) ?
-                <EmptyList />
-              :
-                <List torrents={torrents} />
-        }
-      </div>
-    );
-  }
-}
-
-class List extends Component {
-  static propsTypes = {
-    torrents: PropTypes.array.isRequired,
-  };
-
   render() {
     const {torrents, className} = this.props;
     return (
@@ -81,54 +47,13 @@ class List extends Component {
   }
 }
 
-class EmptyList extends Component {
-  render() {
-    return (
-      <div className="main-list-item item-empty">
-        <div className="details">
-          <FormattedMessage id="component.torrents.list.empty" />
-        </div>
-      </div>
-    );
-  }
-}
-
-class LoadingList extends Component {
-  render() {
-    return (
-      <div className="main-list-item item-loading">
-        <div className="details">
-          <FormattedMessage id="component.torrents.list.loading" />
-        </div>
-      </div>
-    );
-  }
-}
-
-class ErrorList extends Component {
-  render() {
-    return (
-      <div className="main-list-item item-error">
-        <div className="error">
-          <h3><FormattedMessage id="component.torrents.error_happened" /></h3>
-          <p>{this.props.torrentError.message}</p>
-        </div>
-      </div>
-    );
-  }
-}
-
 TorrentsList.defaultProps = {
   className: '',
 };
 
 TorrentsList.propTypes = {
-  torrents: PropTypes.array,
+  torrents: PropTypes.array.isRequired,
   className: PropTypes.string,
 };
 
-export default connect(
-  (state) => ({
-    loading: state.loading.loading,
-  })
-)(withTorrents(TorrentsList));
+export default TorrentsList;

@@ -1,30 +1,15 @@
-table.torrents-table {
-  thead.main-table-header {
-    background-color: $primary;
-    color: $white;
-  }
-
+div.table-torrents {
   .main-table-row:not(.main-table-header) {
-    &:nth-child(2n) {
-      background-color: whiteAlpha(0.1);
-    }
-
-    &:nth-child(2n+1) {
-      background-color: secondaryAlpha(0.1);
-    }
-
-    a {
-      color: $black;
-      &:hover {color: $primary;}
-    }
-
     .main-table-item {
       &.state {
         text-align: center;
       }
 
       &.octet, &.ratio {
-        font-size: 0.7em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.8em;
         text-align: right;
         font-weight: 400;
         span {

@@ -53,7 +53,7 @@ $sizeFormFile: 120px;
          .form-select-control__multi-value {
            background-color: $secondary;
            .form-select-control__multi-value__label {
-             color: $white-light;
+             color: $black;
            }
          }
 
@@ -64,6 +64,7 @@ $sizeFormFile: 120px;
        }
 
        .form-select-control__option {
+         color: $black;
          &:focus, &:hover, &.form-select-control__option--is-focused {
            background-color: secondaryAlpha(0.5);
            color: $black;

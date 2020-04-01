@@ -12,7 +12,7 @@ import withProfiles from "../../../hoc/withProfiles";
 import './list.scss';
 import Octet from "../../Octet/Octet";
 
-class ProfileList extends Component {
+class ProfileTable extends Component {
   componentDidMount() {
     this.props.loadProfiles();
   }
@@ -28,9 +28,9 @@ class ProfileList extends Component {
   };
 
   render() {
-    const {loading, profiles} = this.props;
+    const {loading, profiles, className} = this.props;
     return (
-      <div className={`main-table main-table-primary table-profiles ${(loading & LOADING.PROFILE) ? 'is-loading': ''}`}>
+      <div className={`main-table main-table-primary table-profiles ${(loading & LOADING.PROFILE) ? 'is-loading': ''} ${className}`}>
         <div className="row main-table-row main-table-header">
           <div className="col-1 col-sm-1 col-lg-1 col-xl-1 main-table-item picture"><FormattedMessage id="profile.list.item.title.picture" /></div>
           <div className="col-0 col-sm-0 col-lg-1 col-xl-1 main-table-item id"><FormattedMessage id="profile.list.item.title.id" /></div>
@@ -71,7 +71,13 @@ class ProfileList extends Component {
   }
 }
 
-ProfileList.propTypes = {
+ProfileTable.defaultProps = {
+  className: '',
+};
+
+
+ProfileTable.propTypes = {
+  className: PropTypes.string,
   startToaster: PropTypes.func,
   profiles: PropTypes.array,
   loading: PropTypes.number,
@@ -85,4 +91,4 @@ export default connect(
   (dispatch) => ({
     startToaster: (data) => dispatch(notificationsActions.start(data)),
   })
-)(withRouter(withProfiles(ProfileList)));
+)(withRouter(withProfiles(ProfileTable)));

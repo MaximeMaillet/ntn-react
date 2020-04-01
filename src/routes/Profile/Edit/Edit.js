@@ -5,6 +5,7 @@ import {FormattedMessage, injectIntl} from "react-intl";
 import ProfileDetailForm from "../../../components/Forms/Forms/ProfileForm/ProfileDetailForm";
 import ProfilePictureForm from "../../../components/Forms/Forms/ProfileForm/ProfilePictureForm";
 import notificationActions from '../../../redux/notifications/actions';
+import shouldAuth from "../../../hoc/shouldAuth";
 
 class Edit extends Component {
   componentDidUpdate(prevProps, prevState, snapshot) {

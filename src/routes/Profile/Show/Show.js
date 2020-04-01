@@ -4,54 +4,51 @@ import {FormattedMessage} from "react-intl";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import ProfilePicture from "../../../components/Profile/Picture/ProfilePicture";
-// import TorrentList from '../../../components/Torrents/Table/Table';
+import TorrentsTable from '../../../components/Torrents/Table/TorrentsTable';
+import TorrentContainer, {TYPE} from "../../../containers/torrents/TorrentContainer";
 
 import './show.scss'
 
 class Show extends Component {
-  componentDidMount() {
-    this.props.loadTorrents();
-  }
-
   render() {
-    const {profile, loading, torrents, isAdmin, user} = this.props;
+    const {profile, isAdmin, user} = this.props;
     return (
-      <section className="main-block block-content block-profile-show">
-        <h1><FormattedMessage id="route.profile.show.h1" /></h1>
-        <div className="d-flex flex-row profile-content">
-          <div className="d-flex flex-column picture-details">
-            <div className="d-flex flex-row">
-              <div className="picture">
+      <section className="main-block block-side block-content block-profile-show">
+        <div className="d-flex flex-row">
+          <h1><FormattedMessage id="route.profile.show.h1" /></h1>
+          {
+            (isAdmin || user.id === profile.id) ?
+              <Link className="btn btn-primary ml-auto" to={`/profiles/${profile.id}/edit`}>
+                <i className="fa fa-edit" />
+                <FormattedMessage id="route.profile.show.edit_button" />
+              </Link>
+              :
+              ''
+          }
+        </div>
+
+        <div className="profile-content">
+          <div className="picture-details">
+            <div className="picture">
               <ProfilePicture
                 size="sm"
                 profile={profile}
               />
-              </div>
-              <div className="details">
-                {profile.email}<br />
-                {profile.roles_str}<br />
-                <strong>{profile.space} Go</strong>
-              </div>
             </div>
-            <div className="d-flex align-items-center justify-content-center flex-grow-1">
-              {
-                (isAdmin || user.id === profile.id) ?
-                  <Link className="btn btn-primary" to={`/profiles/${profile.id}/edit`}>
-                    <FormattedMessage id="route.profile.show.edit_button" />
-                  </Link>
-                  :
-                  ''
-              }
+            <div className="details">
+              {profile.email}<br />
+              {profile.roles_str}<br />
+              <strong>{profile.space} Go</strong>
             </div>
           </div>
           <div className="torrents">
-            {/*<TorrentList*/}
-              {/*loading={loading}*/}
-              {/*torrents={torrents}*/}
-            {/*/>*/}
+            <TorrentContainer
+              type={TYPE.USER}
+              profile_id={parseInt(profile.id)}
+              component={TorrentsTable}
+            />
           </div>
         </div>
-
       </section>
     );
   }

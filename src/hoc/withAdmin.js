@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Login from "../routes/Login/Login";
 import {connect} from 'react-redux';
+import Forbidden from "../components/Errors/Forbidden/Forbidden";
 
 export default function withAdmin(BaseComponent) {
   class withAdminComponent extends React.PureComponent {
@@ -9,7 +10,7 @@ export default function withAdmin(BaseComponent) {
       if(this.props.isAdmin) {
         return (<BaseComponent {...this.props} />);
       } else {
-        return <Login/>;
+        return <Forbidden />;
       }
     }
   }

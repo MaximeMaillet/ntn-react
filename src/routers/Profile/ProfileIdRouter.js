@@ -1,14 +1,14 @@
 import React, {Component} from "react";
 import PropTypes from 'prop-types';
-import withProfiles from "../../hoc/withProfiles";
+import {injectIntl} from "react-intl";
 import {Route, withRouter} from "react-router-dom";
+import {LOADING} from '../../config/const';
 import ProfileEdit from '../../routes/Profile/Edit/Edit';
 import ProfileShow from '../../routes/Profile/Show/Show';
-import NotFound from "../../routes/Errors/NotFound/NotFound";
-import {injectIntl} from "react-intl";
-import {LOADING} from '../../config/const';
+import withProfiles from "../../hoc/withProfiles";
+import {RedirectAs404} from '../Main/RedirectAs404';
 
-class ProfileIdContainerComponent extends Component {
+class ProfileIdRouter extends Component {
   componentDidMount() {
     if(this.props.match.params && this.props.match.params.userId) {
       this.props.loadProfile(this.props.match.params.userId);
@@ -24,14 +24,10 @@ class ProfileIdContainerComponent extends Component {
   render() {
     const {match, loading, profile, profileTorrents, profileNotFound} = this.props;
     if(profileNotFound) {
-      return (
-        <div className={`content ${loading !== 0 ? 'is-loading' : ''}`}>
-          <NotFound
-            title={this.props.intl.messages['profile.errors.not_found.title']}
-            message={this.props.intl.messages['profile.errors.not_found.message']}
-          />
-        </div>
-      );
+      return <RedirectAs404
+        title={this.props.intl.messages['route.errors.profile.not_found.title']}
+        text={this.props.intl.messages['route.errors.profile.not_found.text']}
+      />;
     }
 
     return (
@@ -54,7 +50,6 @@ class ProfileIdContainerComponent extends Component {
                 profile={profile}
                 torrents={profileTorrents}
                 loading={loading}
-                loadTorrents={this.props.loadProfileTorrents}
               />
             </Route>
           </React.Fragment>
@@ -64,8 +59,8 @@ class ProfileIdContainerComponent extends Component {
   }
 }
 
-ProfileIdContainerComponent.propTypes = {
+ProfileIdRouter.propTypes = {
   profileNotFound: PropTypes.bool,
 };
 
-export default withRouter(withProfiles(injectIntl(ProfileIdContainerComponent)));
+export default withRouter(withProfiles(injectIntl(ProfileIdRouter)));
