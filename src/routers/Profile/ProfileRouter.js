@@ -16,8 +16,8 @@ class ProfileRouter extends Component {
         <Header />
         <div className="content content-side">
           <SideMenu/>
-          <Route path={`${match.url}/:userId([0-9]+)`}><ProfileIdRouter /></Route>
-          <Route exact path={`${match.url}/create`}><Create /></Route>
+          <Route path={`${match.url}/:profileId([0-9]+)`}><ProfileIdRouter /></Route>
+          <Route exact path={`${match.url}/add`}><Create /></Route>
           <Route exact path={`${match.url}`}><ProfileList /></Route>
         </div>
       </React.Fragment>

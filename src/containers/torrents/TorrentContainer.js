@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import withTorrents from "../../hoc/withTorrents";
 import {connect} from "react-redux";
 import {LOADING} from "../../config/const";
-import TorrentLoading from "../../components/Torrents/Loading/TorrentLoading";
-import TorrentError from "../../components/Torrents/Errors/TorrentError";
-import TorrentEmpty from "../../components/Torrents/Empty/TorrentEmpty";
+import ResourceLoading from "../../components/Resources/ResourceLoading/ResourceLoading";
+import {injectIntl} from "react-intl";
+import ResourceError from "../../components/Resources/ResourceError/ResourceError";
+import ResourceEmpty from "../../components/Resources/ResourceEmpty/ResourceEmpty";
 
 export const TYPE = {
   ALL: 1,
@@ -32,21 +33,33 @@ class TorrentContainer extends Component {
   }
 
   render() {
-    const {torrent, type, torrents, torrentError, loading, component, className} = this.props;
+    const {torrent, type, torrents, torrentError, torrentNotFound, loading, component, className} = this.props;
 
     if(loading & LOADING.TORRENTS) {
-      return <TorrentLoading className={className} />;
+      return <ResourceLoading
+        className={className}
+        title={this.props.intl.messages['container.torrent.loading.title']}
+        text={this.props.intl.messages['container.torrent.loading.text']}
+      />;
     }
 
-    if(torrentError) {
-      return <TorrentError className={className} message={torrentError.message} />;
+    if(torrentError || torrentNotFound) {
+      return <ResourceError
+        className={className}
+        title={this.props.intl.messages['container.torrent.error.title']}
+        text={torrentError.message}
+      />;
     }
 
     if(
       (type === TYPE.ALL || type === TYPE.USER) && (!torrents || torrents.length === 0) ||
       (type === TYPE.ONE && !torrent)
     ) {
-      return <TorrentEmpty className={className} />;
+      return <ResourceEmpty
+        className={className}
+        title={this.props.intl.messages['container.torrent.empty.title']}
+        text={this.props.intl.messages['container.torrent.empty.text']}
+      />;
     }
 
     return React.createElement(
@@ -75,6 +88,7 @@ TorrentContainer.propTypes = {
   torrents: PropTypes.array,
   torrent: PropTypes.object,
   torrentError: PropTypes.object,
+  torrentNotFound: PropTypes.bool,
   loading: PropTypes.number,
   className: PropTypes.string,
 };
@@ -83,4 +97,4 @@ export default connect(
   (state) => ({
     loading: state.loading.loading,
   })
-)(withTorrents(TorrentContainer));
+)(withTorrents(injectIntl(TorrentContainer)));

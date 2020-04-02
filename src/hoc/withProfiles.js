@@ -1,7 +1,9 @@
 import React from 'react';
 import {withRouter} from "react-router-dom";
+import {connect} from "react-redux";
 import api from '../libraries/api';
 import {LOADING} from '../config/const';
+import loadingActions from "../redux/loading/actions";
 
 export default function withProfiles(BaseComponent) {
   class withProfilesComponent extends React.PureComponent {
@@ -10,20 +12,10 @@ export default function withProfiles(BaseComponent) {
       this.state = {
         error: null,
         isNotFound:false,
-        loading: 0,
         profile: null,
         profiles: null,
-        torrents: null,
       };
     }
-
-    startLoading = (type) => {
-      this.setState({loading: this.state.loading | type});
-    };
-
-    stopLoading = (type) => {
-      this.setState({loading: this.state.loading & ~type, error: null});
-    };
 
     handleError = (e) => {
       this.setState({isNotFound: e.status === 404});
@@ -37,37 +29,25 @@ export default function withProfiles(BaseComponent) {
 
     loadProfiles = async() => {
       try {
-        this.startLoading(LOADING.PROFILE);
+        this.props.startLoading(LOADING.PROFILE);
         const profiles = (await api('GET', `/users`)).data;
         this.setState({profiles});
       } catch(e) {
         this.handleError(e);
       } finally {
-        this.stopLoading(LOADING.PROFILE);
+        this.props.stopLoading(LOADING.PROFILE);
       }
     };
 
     loadProfile = async(id) => {
       try {
-        this.startLoading(LOADING.PROFILE);
+        this.props.startLoading(LOADING.PROFILE);
         const profile = (await api('GET', `/users/${id}`)).data;
         this.setState({profile});
       } catch(e) {
         this.handleError(e);
       } finally {
-        this.stopLoading(LOADING.PROFILE);
-      }
-    };
-
-    loadProfileTorrents = async() => {
-      try {
-        this.startLoading(LOADING.TORRENTS);
-        const torrents = (await api('GET', `/users/${this.state.profile.id}/torrents`)).data;
-        this.setState({torrents});
-      } catch(e) {
-        this.handleError(e);
-      } finally {
-        this.stopLoading(LOADING.TORRENTS);
+        this.props.stopLoading(LOADING.PROFILE);
       }
     };
 
@@ -80,20 +60,20 @@ export default function withProfiles(BaseComponent) {
         {...this.props}
         profiles={this.state.profiles}
         profile={this.state.profile}
-        profileTorrents={this.state.torrents}
-        loading={this.state.loading}
         profileError={this.state.error}
         profileNotFound={this.state.isNotFound}
         loadProfiles={this.loadProfiles}
         loadProfile={this.loadProfile}
-        loadProfileTorrents={this.loadProfileTorrents}
-        startLoading={this.startLoading}
-        stopLoading={this.stopLoading}
         refresh={this.refresh}
-        handleError={this.handleError}
       />
     }
   }
 
-  return withRouter(withProfilesComponent);
+  return connect(
+    () => ({}),
+    (dispatch) => ({
+      startLoading: (type) => dispatch(loadingActions.startLoading(type)),
+      stopLoading: (type) => dispatch(loadingActions.stopLoading(type)),
+    })
+  )(withRouter(withProfilesComponent));
 }

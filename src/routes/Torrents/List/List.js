@@ -4,6 +4,7 @@ import TorrentsTable from "../../../components/Torrents/Table/TorrentsTable";
 import {FormattedMessage} from "react-intl";
 import withAdmin from "../../../hoc/withAdmin";
 import {Link} from "react-router-dom";
+import shouldAuth from "../../../hoc/shouldAuth";
 
 class List extends Component {
   render() {
@@ -28,4 +29,4 @@ class List extends Component {
   }
 }
 
-export default withAdmin(List);
+export default shouldAuth(withAdmin(List));

@@ -1,0 +1,23 @@
+.resource-empty-background {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  background-color: primaryAlpha(0.1);
+  $size: 2px;
+  $over: 2px;
+  box-shadow: $size $size $over primaryAlpha(0.5),
+  $size * -1 $size * -1 $over primaryAlpha(0.5),
+  $size * -1 $size $over primaryAlpha(0.5),
+  $size $size * -1 $over primaryAlpha(0.5);
+
+  .title {
+    font-weight: 600;
+    font-size: 1.2em;
+  }
+
+  .text {
+    font-size: 0.8em;
+  }
+}

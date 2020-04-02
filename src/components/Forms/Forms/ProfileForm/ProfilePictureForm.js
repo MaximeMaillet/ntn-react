@@ -7,11 +7,14 @@ import get from 'lodash.get';
 import ImageInput from "../../Inputs/ImageInput";
 
 import '../../forms.scss';
+import {LOADING} from "../../../../config/const";
+import {connect} from "react-redux";
+import loadingActions from "../../../../redux/loading/actions";
 
 class ProfilePictureForm extends Component {
   onSubmit = async(data) => {
     try {
-      this.props.startLoading();
+      this.props.startLoading(LOADING.FORM_PROFILE);
       if(!data || !data.picture || !data.picture[0]) {
         return {picture: <FormattedMessage id="form.input.file.required" />}
       }
@@ -19,16 +22,14 @@ class ProfilePictureForm extends Component {
       const payload = new FormData();
       payload.append('picture', data.picture[0], data.picture[0].name);
       const user = (await api('PATCH', `/users/${this.props.profile.id}/picture`, payload, {'Content-Type': ''})).data;
-      this.props.onSubmit(user);
+      this.props.onSubmitSuccess(user);
     } catch(e) {
-      if(this.props.onError) {
-        this.props.onError(e);
-      }
+      this.props.onSubmitError(e);
       if(e.data && e.data.fields) {
         return e.data.fields;
       }
     } finally {
-      this.props.stopLoading();
+      this.props.stopLoading(LOADING.FORM_PROFILE);
     }
   };
 
@@ -60,15 +61,23 @@ class ProfilePictureForm extends Component {
 ProfilePictureForm.defaultProps = {
   className: '',
   profile: null,
+  onSubmitError: (e) => console.warn(e),
+  onSubmitSuccess: (data) => console.log(data),
 };
 
 ProfilePictureForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
+  onSubmitSuccess: PropTypes.func,
+  onSubmitError: PropTypes.func,
   startLoading: PropTypes.func.isRequired,
   stopLoading: PropTypes.func.isRequired,
-  onError: PropTypes.func,
-  profile: PropTypes.object,
+  profile: PropTypes.object.isRequired,
   className: PropTypes.string,
 };
 
-export default injectIntl(ProfilePictureForm);
+export default connect(
+  () => ({}),
+  (dispatch) => ({
+    startLoading: (type) => dispatch(loadingActions.startLoading(type)),
+    stopLoading: (type) => dispatch(loadingActions.stopLoading(type)),
+  })
+)(injectIntl(ProfilePictureForm));

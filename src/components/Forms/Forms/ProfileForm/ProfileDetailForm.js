@@ -8,11 +8,11 @@ import NumberInput from "../../Inputs/NumberInput";
 import api from "../../../../libraries/api";
 import get from 'lodash.get';
 import PasswordInput from "../../Inputs/PasswordInput";
-import {ROLES} from '../../../../libraries/roles';
-
+import {LOADING, ROLES} from "../../../../config/const";
 import '../../forms.scss';
 import SelectInput from "../../Inputs/SelectInput";
 import CheckBoxInput from "../../Inputs/CheckBoxInput";
+import loadingActions from "../../../../redux/loading/actions";
 
 const bitwiseOptions = [
   {value: ROLES.USER, label: <FormattedMessage id="roles.user"/>},
@@ -23,23 +23,21 @@ const bitwiseOptions = [
 class ProfileDetailForm extends Component {
   onSubmit = async(data) => {
     try {
-      this.props.startLoading();
+      this.props.startLoading(LOADING.FORM_PROFILE);
       let profile = null;
       if(this.props.profile) {
         profile = (await api('PATCH', `/users/${this.props.profile.id}`, data)).data;
       } else {
         profile = (await api('POST', `/users`, data)).data;
       }
-      this.props.onSubmit(profile);
+      this.props.onSubmitSuccess(profile);
     } catch(e) {
-      if(this.props.onError) {
-        this.props.onError(e);
-      }
+      this.props.onSubmitError(e);
       if(e.data && e.data.fields) {
         return e.data.fields;
       }
     } finally {
-      this.props.stopLoading();
+      this.props.stopLoading(LOADING.FORM_PROFILE);
     }
   };
 
@@ -72,7 +70,7 @@ class ProfileDetailForm extends Component {
   };
 
   render() {
-    const {create, isAdmin} = this.props;
+    const {create, isAdmin, className} = this.props;
     return (
       <Form
         onSubmit={this.onSubmit}
@@ -87,7 +85,7 @@ class ProfileDetailForm extends Component {
       >
         {props =>
           <form
-            className="form-main"
+            className={`form-main ${className}`}
             onSubmit={props.handleSubmit}
             noValidate
           >
@@ -117,6 +115,8 @@ class ProfileDetailForm extends Component {
               <NumberInput
                 className="form-input-align"
                 name="space"
+                transformInput={(value) => Math.floor(value/(1024*1024*1024))}
+                transformOutput={(value) => value*1024*1024*1024}
                 label={this.props.intl.messages['form.input.space.label']}
                 placeholder={this.props.intl.messages['form.input.space.placeholder']}
                 required
@@ -155,26 +155,32 @@ class ProfileDetailForm extends Component {
 }
 
 ProfileDetailForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
+  onSubmitSuccess: PropTypes.func.isRequired,
+  onSubmitError: PropTypes.func.isRequired,
   startLoading: PropTypes.func.isRequired,
   stopLoading: PropTypes.func.isRequired,
+  isAdmin: PropTypes.bool.isRequired,
   profile: PropTypes.object,
-  initialValues: PropTypes.object,
-  isAdmin: PropTypes.bool,
   create: PropTypes.bool,
-  onError: PropTypes.func,
+  className: PropTypes.string,
 };
 
 ProfileDetailForm.defaultProps = {
-  profile: null,
   initialValues: {},
+  onSubmitError: (e) => console.warn(e),
+  profile: null,
   create: false,
   isAdmin: false,
+  className: '',
 };
 
 export default connect(
   (state) => ({
     isAdmin: state.auth.isAdmin,
   }),
+  (dispatch) => ({
+    startLoading: (type) => dispatch(loadingActions.startLoading(type)),
+    stopLoading: (type) => dispatch(loadingActions.stopLoading(type)),
+  })
 )
 (injectIntl(ProfileDetailForm));

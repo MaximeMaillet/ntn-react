@@ -8,8 +8,24 @@ import Label from "../Utils/Label";
 import Errors from "../Utils/Errors";
 
 class NumberInput extends Component {
+  transformInput = (value) => {
+    if(this.props.transformInput) {
+      return this.props.transformInput(value);
+    }
+
+    return value;
+  };
+
+  transformOutput = (event) => {
+    if(this.props.transformOutput) {
+      return this.props.transformOutput(event.target.value);
+    }
+
+    return event.target.value;
+  };
+
   render() {
-    const {name, label, required, className, placeholder} = this.props;
+    const {name, label, required, className, step, placeholder} = this.props;
     return (
       <Field
         name={name}
@@ -25,6 +41,9 @@ class NumberInput extends Component {
                   {label && <Label label={label} name={name} required={required} />}
                   <input
                     {...input}
+                    value={this.transformInput(input.value)}
+                    onChange={(v) => input.onChange(this.transformOutput(v))}
+                    step={step}
                     id={name}
                     placeholder={placeholder}
                     className={`form-control ${meta.touched && (meta.valid ? 'is-valid' : 'is-invalid')}`}
@@ -44,6 +63,7 @@ NumberInput.defaultProps = {
   placeholder: 'Number',
   required: false,
   className: '',
+  step: 1,
 };
 
 NumberInput.propTypes = {
@@ -52,6 +72,9 @@ NumberInput.propTypes = {
   placeholder: PropTypes.string,
   required: PropTypes.bool,
   className: PropTypes.string,
+  transformInput: PropTypes.func,
+  transformOutput: PropTypes.func,
+  step: PropTypes.number,
 };
 
 export default injectIntl(NumberInput);

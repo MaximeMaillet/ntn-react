@@ -4,6 +4,7 @@ const initialState = {
   loading: false,
   apiFail: false,
   errors: null,
+  active: false,
 };
 
 export default function(state = initialState, actions) {
@@ -11,12 +12,15 @@ export default function(state = initialState, actions) {
     case TYPE.START:
       return {
         ...state,
-        notification: actions.notification,
+        active: true,
+        formatted: actions.formatted,
+        style: actions.style,
       };
     case TYPE.STOP:
       return {
         ...state,
-        notification: null,
+        active: false,
+        formatted: null,
       };
     default:
       return state;

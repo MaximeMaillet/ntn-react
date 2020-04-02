@@ -1,0 +1,42 @@
+@function box-shadow($size: 2px, $over: 5px) {
+  @return $size $size $over primaryAlpha(0.5),
+    $size * -1 $size * -1 $over primaryAlpha(0.5),
+    $size * -1 $size $over primaryAlpha(0.5),
+    $size $size * -1 $over primaryAlpha(0.5);
+}
+
+.resource-loading-background {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  background-color: primaryAlpha(0.1);
+  -webkit-animation: blink 1.0s linear infinite;
+  -moz-animation: blink 1.0s linear infinite;
+  -ms-animation: blink 1.0s linear infinite;
+  -o-animation: blink 1.0s linear infinite;
+  animation: blink 1700ms linear infinite;
+
+  @keyframes blink {
+    0% { box-shadow: box-shadow() }
+    50% { box-shadow: none; }
+    100% { box-shadow: box-shadow() }
+  }
+
+  @-webkit-keyframes blink {
+    0% { box-shadow: box-shadow() }
+    50% { box-shadow: none; }
+    100% { box-shadow: box-shadow() }
+  }
+
+  .title {
+    font-weight: 600;
+    font-size: 1.2em;
+  }
+
+  .text {
+    font-size: 0.8em;
+    font-style: italic;
+  }
+}

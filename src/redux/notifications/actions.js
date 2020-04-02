@@ -3,9 +3,10 @@ export const TYPE = {
   STOP: 'notificationReducer::stop',
 };
 
-export const start = (notification) => ({
+export const start = (style, formatted) => ({
   type: TYPE.START,
-  notification,
+  style,
+  formatted,
 });
 
 export const stop = () => ({

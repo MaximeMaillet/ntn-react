@@ -8,6 +8,8 @@ import MultipleMetaForm from "../../../components/Forms/Forms/MetaForm/MultipleM
 import loadingActions from "../../../redux/loading/actions";
 
 import './torrent-add.scss'
+import withAdmin from "../../../hoc/withAdmin";
+import shouldAuth from "../../../hoc/shouldAuth";
 
 class TorrentsAdd extends Component {
   constructor(props) {
@@ -89,7 +91,7 @@ class TorrentsAdd extends Component {
   }
 }
 
-export default connect(
+export default shouldAuth(withAdmin(connect(
   (state) => ({
     user: state.auth.user,
     loading: state.loading.loading,
@@ -98,4 +100,4 @@ export default connect(
     startLoading: (type) => dispatch(loadingActions.startLoading(type)),
     stopLoading: (type) => dispatch(loadingActions.stopLoading(type)),
   })
-)(injectIntl(TorrentsAdd));
+)(injectIntl(TorrentsAdd))));

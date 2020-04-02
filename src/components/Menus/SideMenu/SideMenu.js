@@ -38,6 +38,7 @@ class SideMenu extends Component {
           <div className="category">
             <div className="title"><FormattedMessage id="component.side_menu.title.users" /></div>
             <div className="links">
+              <Link to="/profiles/add"><FormattedMessage id="component.side_menu.users.add" /></Link>
               <Link to="/profiles"><FormattedMessage id="component.side_menu.users.list" /></Link>
             </div>
           </div>

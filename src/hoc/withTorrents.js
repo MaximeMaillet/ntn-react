@@ -13,8 +13,19 @@ export default function withTorrents(BaseComponent) {
         error: null,
         torrents: null,
         torrent: null,
+        isNotFound: false,
       };
     }
+
+    handleErrors = (e) => {
+      this.setState({isNotFound: e.status === 404});
+      if(e.data && e.data.message) {
+        this.setState({error: {message: e.data.message}});
+      } else {
+        this.setState({error: {message: 'Unexpected errors'}});
+        console.error(e);
+      }
+    };
 
     loadTorrent = async(id) => {
       try {
@@ -25,7 +36,7 @@ export default function withTorrents(BaseComponent) {
           error: null,
         });
       } catch(e) {
-        this.setState({error: e.data});
+        this.handleErrors(e);
       } finally {
         this.props.stopLoading(LOADING.TORRENTS);
       }
@@ -37,7 +48,7 @@ export default function withTorrents(BaseComponent) {
         const torrents = (await api('GET', `/torrents`)).data;
         this.setState({torrents, error: null});
       } catch(e) {
-        this.setState({error: e.data});
+        this.handleErrors(e);
       } finally {
         this.props.stopLoading(LOADING.TORRENTS);
       }
@@ -49,7 +60,7 @@ export default function withTorrents(BaseComponent) {
         const torrents = (await api('GET', `/users/${user_id}/torrents`)).data;
         this.setState({torrents});
       } catch(e) {
-        this.setState({error: e.data});
+        this.handleErrors(e);
       } finally {
         this.props.stopLoading(LOADING.TORRENTS);
       }
@@ -110,6 +121,7 @@ export default function withTorrents(BaseComponent) {
         torrents={this.state.torrents}
         torrent={this.state.torrent}
         torrentError={this.state.error}
+        torrentNotFound={this.state.isNotFound}
         loadTorrents={this.loadTorrents}
         loadTorrent={this.loadTorrent}
         loadTorrentUser={this.loadTorrentUser}

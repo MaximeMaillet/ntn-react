@@ -27,8 +27,6 @@ class SelectInput extends Component {
       return this.props.transformValue(value);
     }
 
-    console.log('trans value');
-    console.log(value);
     return value;
   };
 
@@ -37,8 +35,6 @@ class SelectInput extends Component {
       return this.props.transformSelected(selected);
     }
 
-    console.log('transform');
-    console.log(selected);
     return selected;
   };
 

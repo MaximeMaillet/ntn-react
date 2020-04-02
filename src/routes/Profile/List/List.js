@@ -5,21 +5,27 @@ import {Link} from "react-router-dom";
 import withAdmin from "../../../hoc/withAdmin";
 import ProfileTable from '../../../components/Profile/Table/ProfileTable';
 import {LOADING} from "../../../config/const";
+import ProfileContainer, {TYPE} from "../../../containers/profile/ProfileContainer";
+
+import './list.scss';
+import shouldAuth from "../../../hoc/shouldAuth";
 
 class List extends Component {
   render() {
-    const {loading, profiles} = this.props;
+    const {loading} = this.props;
     return (
-      <section className={`main-block block-side block-content ${(loading & LOADING.PROFILE) !== 0 ? 'is-loading' : ''}`}>
+      <section className={`main-block block-side block-content block-profile-list ${(loading & LOADING.PROFILE) !== 0 ? 'is-loading' : ''}`}>
         <div className="d-flex flex-row">
-          <h1><FormattedMessage id="route.profile.create.h1" /></h1>
-          <Link className="btn btn-primary ml-auto" to="/profiles/create">
-            <FormattedMessage id="route.profile.section_link.create" />
+          <h1><FormattedMessage id="route.profile.list.h1" /></h1>
+          <Link className="btn btn-primary ml-auto" to="/profiles/add">
+            <i className="fa fa-plus" />
+            <FormattedMessage id="route.profile.list.button.create" />
           </Link>
         </div>
-        <ProfileTable
-          className="mt-3" profiles={profiles}
-        />
+        <ProfileContainer
+          className="profile-container"
+          type={TYPE.ALL}
+          component={ProfileTable} />
       </section>
     );
   }
@@ -30,4 +36,4 @@ List.propTypes = {
   loadProfiles: PropTypes.func,
 };
 
-export default withAdmin(List);
+export default shouldAuth(withAdmin(List));

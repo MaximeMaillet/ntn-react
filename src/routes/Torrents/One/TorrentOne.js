@@ -8,6 +8,7 @@ import ReleaseDate from "../../../components/Torrents/ReleaseDate/ReleaseDate";
 import Octet from "../../../components/Octet/Octet";
 
 import './torrent-one.scss'
+import shouldAuth from "../../../hoc/shouldAuth";
 
 class TorrentOne extends Component {
   constructor(props) {
@@ -115,4 +116,4 @@ class TorrentOne extends Component {
   }
 }
 
-export default TorrentOne
+export default shouldAuth(TorrentOne);

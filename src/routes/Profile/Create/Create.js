@@ -1,40 +1,23 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {FormattedMessage, injectIntl} from "react-intl";
-import ProfileDetailForm from "../../../components/Forms/Forms/ProfileForm/ProfileDetailForm";
-import notificationActions from '../../../redux/notifications/actions';
-import {LOADING} from "../../../config/const";
-import loadingActions from "../../../redux/loading/actions";
-import withProfiles from "../../../hoc/withProfiles";
+import {connect} from "react-redux";
+import {FormattedMessage} from "react-intl";
 import shouldAuth from "../../../hoc/shouldAuth";
 import withAdmin from "../../../hoc/withAdmin";
+import {LOADING} from "../../../config/const";
+import ProfileContainer, {TYPE} from "../../../containers/profile/ProfileContainer";
+import ProfileCreate from "../../../components/Profile/Create/ProfileCreate";
 
 class Create extends Component {
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if(!prevProps.error && this.props.error) {
-      this.props.startToaster(this.props.error);
-    }
-  }
-
-  onSubmit = (profile) => {
-    this.props.refresh(profile);
-    this.props.startToaster({message: this.props.intl.messages['form.generic.update.success']})
-  };
-
   render() {
-    const {profile, loading} = this.props;
+    const {loading} = this.props;
     return (
-      <div className={`content ${(loading & LOADING.PROFILE) !== 0 ? 'is-loading' : ''}`}>
+      <div className={`content ${(loading & LOADING.FORM_PROFILE) !== 0 ? 'is-loading' : ''}`}>
         <section className="main-block block-content block-profile-create">
-          <h1><FormattedMessage id="route.profile.edit.h1" /></h1>
-          <ProfileDetailForm
-            className="form-input-align"
-            startLoading={this.props.startLoading}
-            stopLoading={this.props.stopLoading}
-            profile={profile}
-            onSubmit={this.onSubmit}
-            onError={this.props.handleError}
+          <h1><FormattedMessage id="route.profile.create.h1" /></h1>
+          <ProfileContainer
+            type={TYPE.NONE}
+            component={ProfileCreate}
           />
         </section>
       </div>
@@ -43,21 +26,11 @@ class Create extends Component {
 }
 
 Create.propTypes = {
-  startLoading: PropTypes.func.isRequired,
-  stopLoading: PropTypes.func.isRequired,
-  refresh: PropTypes.func.isRequired,
-  handleError: PropTypes.func.isRequired,
-  profile: PropTypes.object,
-  error: PropTypes.object,
+  loading: PropTypes.number,
 };
 
-export default withAdmin(connect(
+export default shouldAuth(withAdmin(connect(
   (state) => ({
-    loading: state.loading.loading,
-  }),
-  (dispatch) => ({
-    startToaster: (message) => dispatch(notificationActions.start(message)),
-    startLoading: () => dispatch(loadingActions.startLoading()),
-    stopLoading: () => dispatch(loadingActions.stopLoading()),
+    loading: state.loading.loading
   })
-)(injectIntl(withProfiles(Create))));
+)(Create)));
