@@ -20,7 +20,7 @@ class TorrentRouter extends Component {
             <Route exact path={`${match.url}`} component={TorrentList} />
           </div>
         </Route>
-        <Route exact path={`${match.url}/:torrentId([0-9]+)`} component={TorrentIdRouter} />
+        <Route path={`${match.url}/:torrentId([0-9]+)`} component={TorrentIdRouter} />
       </React.Fragment>
     );
   }

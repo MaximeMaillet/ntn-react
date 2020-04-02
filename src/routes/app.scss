@@ -90,17 +90,25 @@ body, html, #root {
 
   .btn {
     font-family: 'Noto Sans JP', sans-serif;
-  }
 
-  .btn-primary {
-    color: $white-light;
-
-    &:hover {
-      color: $secondary;
+    &.btn-icon {
+      i {
+        margin-right: 0.5em;
+      }
     }
 
-    i {
-      margin-right: 0.5em;
+    &.btn-primary {
+      color: $white-light;
+      &:hover {
+        color: $secondary;
+      }
+    }
+
+    & .btn-secondary {
+      color: $black;
+      &:hover {
+        color: $primary;
+      }
     }
   }
 
@@ -129,10 +137,13 @@ body, html, #root {
       display: flex;
       flex-direction: column;
       @include is-loading();
-      overflow-x: hidden;
 
       h1 {
         font-size: 1.5em;
+      }
+
+      h2 {
+        font-size: 1.2em;
       }
 
       &.block-content {

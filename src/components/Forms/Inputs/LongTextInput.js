@@ -6,27 +6,27 @@ import {required as requiredValidator} from '../Validators/index';
 import {validate} from '../utils';
 import Errors from "../Utils/Errors";
 import Label from "../Utils/Label";
-import DatePicker from "react-datepicker";
 
-class DateInput extends Component {
+class LongTextInput extends Component {
   render() {
-    const {className, format, name, required, label} = this.props;
+    const {className, placeholder, name, required, label} = this.props;
     return (
       <Field
         name={name}
+        component="textarea"
         validate={validate(required ? requiredValidator() : null)}
       >
         {
           ({ input, meta }) => {
             return (
-              <div className={`form-input input-date ${className}`}>
+              <div className={`form-input input-textarea ${className}`}>
                 <div className={`form-group ${meta.touched && (meta.valid ? 'is-valid' : 'is-invalid')}`}>
                   {label && <Label name={name} label={label} required={required} />}
-                  <DatePicker
-                    className="form-control"
-                    onChange={input.onChange}
-                    selected={input.value ? new Date(input.value) : new Date()}
-                    dateFormat={format ? format : 'yyyy'}
+                  <textarea
+                    {...input}
+                    id={name}
+                    placeholder={placeholder}
+                    className={`form-control ${meta.touched && (meta.valid ? 'is-valid' : 'is-invalid')}`}
                   />
                 </div>
                 <Errors meta={meta} />
@@ -39,16 +39,17 @@ class DateInput extends Component {
   }
 }
 
-DateInput.defaultProps = {
+LongTextInput.defaultProps = {
   className: '',
   required: false,
 };
 
-DateInput.propTypes = {
+LongTextInput.propTypes = {
+  label: PropTypes.string,
   name: PropTypes.string.isRequired,
   className: PropTypes.string,
   placeholder: PropTypes.string,
   required: PropTypes.bool,
 };
 
-export default injectIntl(DateInput);
+export default injectIntl(LongTextInput);

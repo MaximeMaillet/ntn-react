@@ -1,0 +1,64 @@
+.block-torrent-edit {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  .torrent-edit-content {
+    display: flex;
+    flex-direction: row;
+
+    .torrent-edit-form {
+      display: flex;
+      flex-direction: row;
+      flex-basis: 40%;
+
+      form.form-torrent-edit {
+        display: flex;
+        flex-direction: column;
+
+        .part-left {
+          display: flex;
+          flex-direction: column;
+          flex-basis: 30%;
+          max-width: 30%;
+          margin-right: 1em;
+
+          img {
+            height: 250px;
+            width: auto;
+            max-width: 200px;
+          }
+
+          .input-poster-url {
+            margin-top: 1em;
+          }
+
+          .form-control {
+            width: inherit;
+          }
+        }
+
+        .part-right {
+          display: flex;
+          flex-direction: column;
+          flex-grow: 1;
+
+          .form-group {
+            flex-grow: 1;
+          }
+
+          .input-textarea {
+            flex-grow: 1;
+            .form-control {
+              flex-grow: 1;
+            }
+          }
+        }
+      }
+    }
+
+    .torrent-edit-search {
+      flex-grow: 1;
+    }
+  }
+}

@@ -22,7 +22,7 @@ class Notifications extends Component {
         ),
         {
           position: "top-right",
-          duration: 5000,
+          duration: 3000,
           type: 'success',
         }
       );

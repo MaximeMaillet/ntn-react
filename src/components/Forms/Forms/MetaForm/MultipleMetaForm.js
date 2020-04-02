@@ -32,9 +32,6 @@ class MultipleMetaForm extends Component {
   onSubmit = async(data) => {
     try {
       this.props.startLoading();
-      console.log('--- ON SUBMIT');
-      console.log(data);
-      console.log(this.props);
       if(data.selected !== null) {
         data = data.meta[data.selected];
         const newData = {};
@@ -52,7 +49,6 @@ class MultipleMetaForm extends Component {
       }
     } catch(e) {
       console.warn(e);
-      // this.props.launchNotification({message: e.message});
     } finally {
       this.props.stopLoading();
       this.props.onSubmitSuccess(this.props.name);

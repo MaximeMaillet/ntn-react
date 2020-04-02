@@ -65,7 +65,7 @@ $sizeFormFile: 120px;
 
        .form-select-control__option {
          color: $black;
-         &:focus, &:hover, &.form-select-control__option--is-focused {
+         &:focus, &:hover {
            background-color: secondaryAlpha(0.5);
            color: $black;
          }
@@ -278,6 +278,12 @@ $sizeFormFile: 120px;
        &.item-edit {
          padding: 0.5em;
        }
+     }
+   }
+
+   &.input-textarea {
+     textarea {
+       min-height: 150px;
      }
    }
 

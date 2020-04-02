@@ -7,6 +7,7 @@ import ResourceLoading from "../../components/Resources/ResourceLoading/Resource
 import {injectIntl} from "react-intl";
 import ResourceError from "../../components/Resources/ResourceError/ResourceError";
 import ResourceEmpty from "../../components/Resources/ResourceEmpty/ResourceEmpty";
+import * as notificationsAction from "../../redux/notifications/actions";
 
 export const TYPE = {
   ALL: 1,
@@ -31,6 +32,32 @@ class TorrentContainer extends Component {
       this.props.loadTorrent(this.props.torrent_id);
     }
   }
+
+  onSubmitSuccess = (torrent) => {
+    if(this.props.torrent) {
+      this.props.startToaster('success', {
+        title: this.props.intl.messages['form.torrent.update.success']
+      });
+    } else {
+      this.props.startToaster('success', {
+        title: this.props.intl.messages['form.torrent.create.success']
+      });
+    }
+  };
+
+  onSubmitError = (error) => {
+    if(this.props.torrent) {
+      this.props.startToaster('danger', {
+        title: this.props.intl.messages['form.torrent.update.error'],
+        message: error.data.message,
+      });
+    } else {
+      this.props.startToaster('danger', {
+        title: this.props.intl.messages['form.torrent.create.error'],
+        message: error.data.message,
+      });
+    }
+  };
 
   render() {
     const {torrent, type, torrents, torrentError, torrentNotFound, loading, component, className} = this.props;
@@ -71,6 +98,8 @@ class TorrentContainer extends Component {
         pauseTorrent: this.props.pauseTorrent,
         resumeTorrent: this.props.resumeTorrent,
         removeTorrent: this.props.removeTorrent,
+        onSubmitSuccess: this.onSubmitSuccess,
+        onSubmitError: this.onSubmitError,
       }
     );
   }
@@ -96,5 +125,8 @@ TorrentContainer.propTypes = {
 export default connect(
   (state) => ({
     loading: state.loading.loading,
+  }),
+  (dispatch) => ({
+    startToaster: (type, formatted) => dispatch(notificationsAction.start(type, formatted))
   })
 )(withTorrents(injectIntl(TorrentContainer)));

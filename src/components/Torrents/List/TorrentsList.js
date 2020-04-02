@@ -4,10 +4,12 @@ import moment from 'moment';
 import {Link} from "react-router-dom";
 
 import './torrents-list.scss';
+import {connect} from "react-redux";
+import {FormattedMessage} from "react-intl";
 
 class TorrentsList extends Component {
   render() {
-    const {torrents, className} = this.props;
+    const {torrents, isAdmin, className} = this.props;
     return (
       <div className={`main-list torrents-list ${className}`}>
         {
@@ -34,6 +36,13 @@ class TorrentsList extends Component {
                         torrent.isStreamable &&
                         <Link className="btn btn-primary" to={`/torrents/${torrent.id}`}><i className="fa fa-tv" />Stream</Link>
                       }
+                      {
+                        isAdmin &&
+                          <Link className="btn btn-secondary ml-2" to={`/torrents/${torrent.id}/edit`}>
+                            <i className="fa fa-edit" />
+                            <FormattedMessage id="component.torrents.list.edit.cta" />
+                          </Link>
+                      }
                     </div>
                     <div className="server-name">{torrent.server.name}</div>
                   </div>
@@ -56,4 +65,8 @@ TorrentsList.propTypes = {
   className: PropTypes.string,
 };
 
-export default TorrentsList;
+export default connect(
+  (state) => ({
+    isAdmin: state.auth.isAdmin,
+  })
+)(TorrentsList);
