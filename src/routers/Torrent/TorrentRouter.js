@@ -13,7 +13,7 @@ class TorrentRouter extends Component {
     return (
       <React.Fragment>
         <Header />
-        <Route exact path={`${match.url}(\/?[a-z]*)`}>
+        <Route exact path={`${match.url}(/?[a-z]*)`}>
           <div className="content content-side">
             <SideMenu/>
             <Route exact path={`${match.url}/add`} component={TorrentsAdd} />

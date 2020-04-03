@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {connect} from "react-redux";
 import PropTypes from 'prop-types';
 import {FormattedMessage} from "react-intl";
 import {withRouter} from "react-router-dom";

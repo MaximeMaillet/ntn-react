@@ -75,7 +75,7 @@ class MetaItem extends Component {
   };
 
   render() {
-    const {input, meta} = this.props;
+    const {input} = this.props;
     if(this.state.display === MetaItem.DISPLAY.THUMBNAIL) {
       return <MetaThumbnailInput
         {...this.props}

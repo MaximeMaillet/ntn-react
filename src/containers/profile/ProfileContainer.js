@@ -76,7 +76,7 @@ class ProfileContainer extends Component {
       }
 
       if(
-        (type === TYPE.ALL || type === TYPE.USER) && (!profiles || profiles.length === 0) ||
+        ((type === TYPE.ALL || type === TYPE.USER) && (!profiles || profiles.length === 0)) ||
         (type === TYPE.ONE && !profile)
       ) {
         return <ResourceEmpty

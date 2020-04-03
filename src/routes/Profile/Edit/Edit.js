@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {FormattedMessage, injectIntl} from "react-intl";
+import {FormattedMessage} from "react-intl";
 import shouldAuth from "../../../hoc/shouldAuth";
 import ProfileContainer, {TYPE} from "../../../containers/profile/ProfileContainer";
 import ProfileEdit from "../../../components/Profile/Edit/ProfileEdit";

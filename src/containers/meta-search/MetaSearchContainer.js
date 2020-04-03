@@ -35,8 +35,6 @@ class MetaSearchContainer extends Component {
   };
 
   onSelectItem = (item) => {
-    console.log('ON SELECT ITEM');
-    console.log(item);
     if(this.props.onSelectItem) {
       this.props.onSelectItem(item);
     }

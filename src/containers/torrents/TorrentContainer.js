@@ -79,7 +79,7 @@ class TorrentContainer extends Component {
     }
 
     if(
-      (type === TYPE.ALL || type === TYPE.USER) && (!torrents || torrents.length === 0) ||
+      ((type === TYPE.ALL || type === TYPE.USER) && (!torrents || torrents.length === 0)) ||
       (type === TYPE.ONE && !torrent)
     ) {
       return <ResourceEmpty

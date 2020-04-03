@@ -6,7 +6,7 @@ import * as loadingActions from "../../../../redux/loading/actions";
 import Octet from "../../../Octet/Octet";
 import notificationActions from "../../../../redux/notifications/actions";
 import MetaSelect from "../../Inputs/MetaInput";
-import {Field, Form} from "react-final-form";
+import {Form} from "react-final-form";
 import '../../forms.scss';
 import './meta-form.scss'
 import api from "../../../../libraries/api";
@@ -20,14 +20,6 @@ class MultipleMetaForm extends Component {
       done: null,
     }
   }
-
-  onChange = (data) => {
-    if(this.state.data && this.state.data.imdb_id === data.imdb_id) {
-      this.setState({data:null});
-    } else {
-      this.setState({data});
-    }
-  };
 
   onSubmit = async(data) => {
     try {
@@ -55,31 +47,12 @@ class MultipleMetaForm extends Component {
     }
   };
 
-  getDefaultInitialValues = () => {
-    let initValues = {};
-    if(this.props.meta && this.props.meta.length > 0) {
-      initValues = this.props.meta[0];
-    }
-
-    const valuesFormated = {};
-    for(let i=0; i<fieldsCatched.length; i++) {
-      if(initValues[fieldsCatched[i]]) {
-        valuesFormated[fieldsCatched[i]] = initValues[fieldsCatched[i]];
-      } else {
-        valuesFormated[fieldsCatched[i]] = null;
-      }
-    }
-
-    return valuesFormated;
-  };
-
   select = (data) => {
     this.setState({initialValues: data});
   };
 
   render() {
     const {name, length, meta} = this.props;
-    console.log(`MetaFormRender ${this.props.torrent_id}`);
     return (
       <Form
         onSubmit={this.onSubmit}
