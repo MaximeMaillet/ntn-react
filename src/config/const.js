@@ -6,6 +6,7 @@ export const LOADING = {
   FORM_META_SIMPLE: 1 << 4,
   FORM_PROFILE:     1 << 5,
   FORM_TORRENT:     1 << 6,
+  META_SEARCH:      1 << 7,
 };
 
 export const ROLES = {

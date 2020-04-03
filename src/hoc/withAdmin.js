@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Login from "../routes/Login/Login";
 import {connect} from 'react-redux';
 import Forbidden from "../components/Errors/Forbidden/Forbidden";
 

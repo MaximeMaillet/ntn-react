@@ -104,7 +104,7 @@ body, html, #root {
       }
     }
 
-    & .btn-secondary {
+    &.btn-secondary {
       color: $black;
       &:hover {
         color: $primary;

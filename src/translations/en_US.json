@@ -78,17 +78,6 @@
   "container.torrent.empty.title": "No torrents",
   "container.torrent.empty.text": "Don't be sad, they're coming...",
 
-  "component.side_menu.title.profile": "Profile",
-  "component.side_menu.profile.profile": "My profile",
-  "component.side_menu.profile.edit": "Edit",
-  "component.side_menu.profile.torrents": "Torrents",
-  "component.side_menu.title.users": "Users",
-  "component.side_menu.users.add": "Add",
-  "component.side_menu.users.list": "List",
-  "component.side_menu.title.torrents": "Torrents",
-  "component.side_menu.torrents.list": "List",
-  "component.side_menu.torrents.add": "Add",
-
   "route.profile.create.h1": "Create user",
   "route.profile.edit.h1": "Edit user",
   "route.profile.show.h1": "Profile",
@@ -113,6 +102,16 @@
   "route.errors.profile.not_found.title": "This profile does not exists",
   "route.errors.profile.not_found.text": "Maybe in jail, bro...",
 
+  "component.side_menu.title.profile": "Profile",
+  "component.side_menu.profile.profile": "My profile",
+  "component.side_menu.profile.edit": "Edit",
+  "component.side_menu.profile.torrents": "Torrents",
+  "component.side_menu.title.users": "Users",
+  "component.side_menu.users.add": "Add",
+  "component.side_menu.users.list": "List",
+  "component.side_menu.title.torrents": "Torrents",
+  "component.side_menu.torrents.list": "List",
+  "component.side_menu.torrents.add": "Add",
   "component.torrents.table.item.title.state": "State",
   "component.torrents.table.item.title.name": "Name",
   "component.torrents.table.item.title.download": "Download",
@@ -143,7 +142,11 @@
   "component.torrents.one.no_medias": "No medias",
   "component.torrents.add.no_server": "No server",
   "component.torrents.add.no_server.text": "You need BitTorrent server for download",
-
+  "component.torrents.media_type.movie": "Movie",
+  "component.torrents.media_type.tv_show": "TV Show",
+  "component.torrents.media_type.unknown": "Unknown",
+  "component.meta.search_bar.label": "Search :",
+  "component.meta.results.select.cta": "Select",
   "component.streamer.no_medias": "No medias",
 
 

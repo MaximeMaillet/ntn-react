@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
+import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {connect} from "react-redux";
 import {LOADING} from "../../config/const";
 import ProfileRouter from "../Profile/ProfileRouter";

@@ -13,7 +13,7 @@ class List extends Component {
         <div className="d-flex flex-row">
           <h1><FormattedMessage id="route.torrent.list.h1" /></h1>
           <div className="d-flex ml-auto mb-1">
-            <Link to="/torrents/add" className="btn btn-primary">
+            <Link to="/torrents/add" className="btn btn-icon btn-primary">
               <i className="fa fa-plus" />
               <FormattedMessage id="route.torrents.add" />
             </Link>

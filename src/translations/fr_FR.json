@@ -79,17 +79,6 @@
   "container.torrent.empty.title": "Pas de torrent",
   "container.torrent.empty.text": "Ne sois pas triste, ils arrivent...",
 
-  "component.side_menu.title.profile": "Profil",
-  "component.side_menu.profile.profile": "Mon profil",
-  "component.side_menu.profile.edit": "Éditer",
-  "component.side_menu.profile.torrents": "Torrents",
-  "component.side_menu.title.users": "Utilisateurs",
-  "component.side_menu.users.add": "Ajouter",
-  "component.side_menu.users.list": "Liste",
-  "component.side_menu.title.torrents": "Torrents",
-  "component.side_menu.torrents.list": "Liste",
-  "component.side_menu.torrents.add": "Ajouter",
-
   "route.profile.create.h1": "Créer un utilisateur",
   "route.profile.edit.h1": "Éditer un utilisateur",
   "route.profile.show.h1": "Profil",
@@ -113,6 +102,16 @@
   "route.errors.profile.not_found.title": "Ce profil n'existe pas",
   "route.errors.profile.not_found.text": "Il est peut-etre en taule, frère ...",
 
+  "component.side_menu.title.profile": "Profil",
+  "component.side_menu.profile.profile": "Mon profil",
+  "component.side_menu.profile.edit": "Éditer",
+  "component.side_menu.profile.torrents": "Torrents",
+  "component.side_menu.title.users": "Utilisateurs",
+  "component.side_menu.users.add": "Ajouter",
+  "component.side_menu.users.list": "Liste",
+  "component.side_menu.title.torrents": "Torrents",
+  "component.side_menu.torrents.list": "Liste",
+  "component.side_menu.torrents.add": "Ajouter",
   "component.torrents.table.item.title.state": "État",
   "component.torrents.table.item.title.name": "Nom",
   "component.torrents.table.item.title.download": "Download",
@@ -143,7 +142,11 @@
   "component.torrents.one.no_medias": "Aucun fichiers",
   "component.torrents.add.no_server": "Aucun serveur",
   "component.torrents.add.no_server.text": "Tu as besoin d'un serveur BitTorrent pour pouvoir télécharger",
-
+  "component.torrents.media_type.movie": "Film",
+  "component.torrents.media_type.tv_show": "Série",
+  "component.torrents.media_type.unknown": "Inconnu",
+  "component.meta.search_bar.label": "Recherche :",
+  "component.meta.results.select.cta": "Sélectionner",
   "component.streamer.no_medias": "Aucun fichiers",
 
 

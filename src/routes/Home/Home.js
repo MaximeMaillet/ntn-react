@@ -23,7 +23,7 @@ class Home extends Component {
                 {
                   isAdmin &&
                   <div className="d-flex ml-auto mb-1">
-                    <Link to="/torrents/add" className="btn btn-primary">
+                    <Link to="/torrents/add" className="btn btn-icon btn-primary">
                       <i className="fa fa-plus" />
                       <FormattedMessage id="route.home.torrents.add" />
                     </Link>
