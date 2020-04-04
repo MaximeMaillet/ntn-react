@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {Route, Switch} from "react-router-dom";
 import {connect} from "react-redux";
 import {LOADING} from "../../config/const";
 import ProfileRouter from "../Profile/ProfileRouter";
@@ -13,8 +13,8 @@ class MainRouter extends Component {
   render() {
     const {loading} = this.props;
     return (
-      <BrowserRouter>
-        <div className={`main-container ${loading & LOADING.LOGIN ? 'is-loading': ''}`}>
+      <React.Fragment>
+        <div className={`main-container ${loading & LOADING.FULL ? 'is-loading': ''}`}>
           <Switch>
             <Route path="/profiles" component={ProfileRouter}/>
             <Route path="/torrents" component={TorrentRouter} />
@@ -24,7 +24,7 @@ class MainRouter extends Component {
             <Route component={RedirectAs404} />
           </Switch>
         </div>
-      </BrowserRouter>
+      </React.Fragment>
     );
   }
 }

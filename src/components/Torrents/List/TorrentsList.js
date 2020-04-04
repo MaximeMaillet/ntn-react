@@ -2,12 +2,16 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 import {FormattedMessage} from "react-intl";
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import MetaDetail from "../../Meta/Detail/MetaDetail";
 
 import './torrents-list.scss';
 
 class TorrentsList extends Component {
+  goToStream = (torrentId) => {
+    this.props.history.push(`/torrents/${torrentId}`);
+  };
+
   render() {
     const {torrents, isAdmin, className} = this.props;
     return (
@@ -19,6 +23,7 @@ class TorrentsList extends Component {
                 <MetaDetail
                   className="torrents-list-item-meta"
                   {...torrent}
+                  onPosterClick={() => this.goToStream(torrent.id)}
                 />
                 <div className="footer">
                   <div className="actions">
@@ -58,4 +63,4 @@ export default connect(
   (state) => ({
     isAdmin: state.auth.isAdmin,
   })
-)(TorrentsList);
+)(withRouter(TorrentsList));

@@ -14,18 +14,18 @@ export default function shouldAuth(BaseComponent) {
     }
 
     checkLogin = async() => {
-      this.props.startLoading(LOADING.LOGIN);
+      this.props.startLoading(LOADING.FULL);
       const token = localStorage.getItem('token');
       if(!token) {
         this.props.logout();
-        this.props.stopLoading(LOADING.LOGIN);
+        this.props.stopLoading(LOADING.FULL);
         return;
       }
 
       if(!this.props.isLogin) {
         this.props.login(token);
       }
-      this.props.stopLoading(LOADING.LOGIN);
+      this.props.stopLoading(LOADING.FULL);
     };
 
     render() {
@@ -37,7 +37,7 @@ export default function shouldAuth(BaseComponent) {
           />
         );
       } else {
-        if(loading & LOADING.LOGIN) {
+        if(loading & LOADING.FULL) {
           return <WaitingConnexion />;
         }
 

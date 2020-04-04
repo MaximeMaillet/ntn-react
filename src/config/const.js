@@ -1,5 +1,5 @@
 export const LOADING = {
-  LOGIN:            1 << 0,
+  FULL:             1 << 0,
   TORRENTS:         1 << 1,
   SERVER:           1 << 2,
   PROFILE:          1 << 3,
@@ -7,6 +7,7 @@ export const LOADING = {
   FORM_PROFILE:     1 << 5,
   FORM_TORRENT:     1 << 6,
   META_SEARCH:      1 << 7,
+  STREAM:           1 << 8,
 };
 
 export const ROLES = {

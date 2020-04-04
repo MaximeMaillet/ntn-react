@@ -1,4 +1,9 @@
 .streamer {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  height: 100%;
+
   &.streamer-empty {
     width: 100%;
     height: 100%;

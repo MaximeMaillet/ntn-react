@@ -62,13 +62,13 @@ const login = (token) => {
 const get = (userId) => {
   return async(dispatch) => {
     try {
-      dispatch(loadingActions.startLoading(LOADING.LOGIN));
+      dispatch(loadingActions.startLoading(LOADING.FULL));
       const user = (await api('GET', `/users/${userId}`)).data;
       await dispatch(loaded(user));
     } catch(e) {
       await dispatch(fail(e));
     } finally {
-      dispatch(loadingActions.stopLoading(LOADING.LOGIN));
+      dispatch(loadingActions.stopLoading(LOADING.FULL));
     }
   };
 };

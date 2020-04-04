@@ -16,6 +16,24 @@
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+    <script>
+      function generateScript(path) {
+        return new Promise((resolve, reject) => {
+          const s = document.createElement('script');
+          s.src = path;
+          s.onload = resolve;
+          s.onerror = reject;
+          document.head.appendChild(s);
+        });
+      }
+
+      generateScript('https://static.bocoup.com/js/popcorn.min.js')
+              .then(() => {
+                console.log(Popcorn);
+                window.Popcorn = Popcorn;
+                console.log(window.Popcorn);
+              });
+    </script>
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.

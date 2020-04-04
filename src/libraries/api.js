@@ -1,4 +1,5 @@
 import {getLanguage} from './locale';
+import download from 'downloadjs';
 
 export default async(method, endpoint, parameters, headers, response) => {
   const params = new URLSearchParams();
@@ -48,13 +49,8 @@ export default async(method, endpoint, parameters, headers, response) => {
       result.data = await result.blob();
     } else if(result.headers.get('content-type').match(/^video/i)) {
       const blob = await result.blob();
-      const url = window.URL.createObjectURL(new Blob([blob]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', `${response.name}${response.extension}`);
-      document.body.appendChild(link);
-      link.click();
-      link.parentNode.removeChild(link);
+      const name = encodeURIComponent(response.name.replace(/\s/g, '.'));
+      download(blob, name, result.headers.get('content-type'));
 
     } else {
       result.data = await result.text();

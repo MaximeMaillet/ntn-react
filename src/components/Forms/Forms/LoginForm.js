@@ -17,7 +17,7 @@ class LoginForm extends Component {
 
   onSubmit = async(data) => {
     try {
-      this.props.startLoading(LOADING.LOGIN);
+      this.props.startLoading(LOADING.FULL);
       const result = (await api('POST', `/authentication/login`, {
         email: data.email,
         password: data.password
@@ -25,12 +25,12 @@ class LoginForm extends Component {
 
       this.props.login(result.token);
     } catch(e) {
-      this.props.startToaster({message: e.data.message});
+      this.props.startToaster('danger', {message: e.data.message});
       if(e.data && e.data.fields) {
         return e.data.fields;
       }
     } finally {
-      this.props.stopLoading(LOADING.LOGIN);
+      this.props.stopLoading(LOADING.FULL);
     }
   };
 
@@ -77,7 +77,7 @@ export default connect(
     login: (token) => dispatch(authActions.login(token)),
     startLoading: (type) => dispatch(loadingActions.startLoading(type)),
     stopLoading: (type) => dispatch(loadingActions.stopLoading(type)),
-    startToaster: (data) => dispatch(notificationsActions.start(data))
+    startToaster: (type, data) => dispatch(notificationsActions.start(type, data))
   })
 )
 (injectIntl(LoginForm));

@@ -25,14 +25,14 @@ class TorrentForm extends Component {
         payload.append('torrents', data.torrents[i], data.torrents[i].name);
       }
       const result = await api('POST', `/torrents`, payload, {'Content-Type': ''});
-      this.props.launchNotification({message: this.props.intl.messages['form.generic.success']});
+      this.props.startToaster('success', {title: this.props.intl.messages['form.generic.success']});
       if(this.props.onSubmitSuccess) {
         this.props.onSubmitSuccess(result.data);
       }
     } catch(e) {
       console.warn(e);
       if(e.data) {
-        this.props.launchNotification(e.data);
+        this.props.startToaster('danger', {title: 'Erruer', message: e.data.message});
         if(e.data.fields) {
           return e.data.fields;
         }
@@ -97,7 +97,7 @@ export default connect(
   (dispatch) => ({
     startLoading: () => dispatch(loadingActions.startLoading()),
     stopLoading: () => dispatch(loadingActions.stopLoading()),
-    launchNotification: (message) => dispatch(notificationActions.start(message))
+    startToaster: (type, message) => dispatch(notificationActions.start(type, message))
   })
 )
 (injectIntl(TorrentForm));

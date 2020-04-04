@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 class Overview extends Component {
   render() {
     const {text, length} = this.props;
-    if(text.length > length) {
+    if(text && text.length > length) {
       return <div className="overview">{`${text.substring(0, length)}...`}</div>
     } else {
       return <div className="overview">

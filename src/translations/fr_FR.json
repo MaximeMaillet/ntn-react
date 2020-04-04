@@ -78,6 +78,11 @@
   "container.torrent.error.title": "Une erreur est survenue",
   "container.torrent.empty.title": "Pas de torrent",
   "container.torrent.empty.text": "Ne sois pas triste, ils arrivent...",
+  "container.stream.loading.title": "Chargement",
+  "container.stream.loading.text": "On cherche les streams...",
+  "container.stream.error.title": "Une erreur est survenue",
+  "container.stream.empty.title": "Stream inexistant",
+  "container.stream.empty.text": "Ce média ne peut être streamé",
 
   "route.profile.create.h1": "Créer un utilisateur",
   "route.profile.edit.h1": "Éditer un utilisateur",

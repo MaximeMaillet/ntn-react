@@ -14,7 +14,7 @@ class MetaDetail extends Component {
     return (
       <div className={`meta-detail ${className}`}>
         <div className="poster">
-          <img src={poster} alt="poster" />
+          <img src={poster} alt="poster" onClick={this.props.onPosterClick} />
         </div>
         <div className="details">
           <div className="title">
@@ -36,6 +36,7 @@ class MetaDetail extends Component {
 
 MetaDetail.defaultProps = {
   className: '',
+  onPosterClick: () => null,
 };
 
 MetaDetail.propTypes = {
@@ -45,6 +46,7 @@ MetaDetail.propTypes = {
   overview: PropTypes.string,
   release_date: PropTypes.string,
   runtime: PropTypes.number,
+  onPosterClick: PropTypes.func,
 };
 
 export default MetaDetail;

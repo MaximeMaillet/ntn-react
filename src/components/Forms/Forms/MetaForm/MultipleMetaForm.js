@@ -4,7 +4,6 @@ import {connect} from "react-redux";
 import {FormattedMessage, injectIntl} from "react-intl";
 import * as loadingActions from "../../../../redux/loading/actions";
 import Octet from "../../../Octet/Octet";
-import notificationActions from "../../../../redux/notifications/actions";
 import MetaSelect from "../../Inputs/MetaInput";
 import {Form} from "react-final-form";
 import '../../forms.scss';
@@ -90,7 +89,6 @@ class MultipleMetaForm extends Component {
 MultipleMetaForm.propTypes = {
   startLoading: PropTypes.func,
   stopLoading: PropTypes.func,
-  launchNotification: PropTypes.func,
   torrent_id: PropTypes.number,
 };
 
@@ -99,7 +97,6 @@ export default connect(
   (dispatch) => ({
     startLoading: () => dispatch(loadingActions.startLoading()),
     stopLoading: () => dispatch(loadingActions.stopLoading()),
-    launchNotification: (message) => dispatch(notificationActions.start(message))
   })
 )
 (injectIntl(MultipleMetaForm));

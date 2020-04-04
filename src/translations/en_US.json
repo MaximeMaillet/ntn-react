@@ -77,6 +77,11 @@
   "container.torrent.error.title": "An error happened",
   "container.torrent.empty.title": "No torrents",
   "container.torrent.empty.text": "Don't be sad, they're coming...",
+  "container.stream.loading.title": "Loading",
+  "container.stream.loading.text": "We are looking for medias...",
+  "container.stream.error.title": "An error is happened",
+  "container.stream.empty.title": "Stream not found",
+  "container.stream.empty.text": "This media can't played",
 
   "route.profile.create.h1": "Create user",
   "route.profile.edit.h1": "Edit user",
