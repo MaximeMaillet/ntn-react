@@ -9,6 +9,7 @@ import ResourceEmpty from "../../components/Resources/ResourceEmpty/ResourceEmpt
 import * as notificationsAction from "../../redux/notifications/actions";
 import {getLanguage} from "../../libraries/locale";
 import * as loadingActions from "../../redux/loading/actions";
+import {stream as apiStream} from "../../libraries/api";
 
 class StreamContainer extends Component {
   constructor(props) {
@@ -39,37 +40,10 @@ class StreamContainer extends Component {
   load = async(url) => {
     try {
       this.props.startLoading(LOADING.STREAM);
-      const token = localStorage.getItem('token');
-      const result = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Accept-Language': getLanguage(),
-        }
-      });
-      const data = await result.json();
-      this.setState({
-        videos: [data.video],
-        audios:data.audios.map((a) => {
-          return {
-            src: a.src,
-            type: 'audio/mpeg',
-            srcLang: a.lang,
-            default: a.default,
-          }
-        }),
-        subtitles: data.subtitles.map((s) => {
-          return {
-            kind: 'subtitles',
-            srcLang: s.lang,
-            src: s.src,
-            default: !!s.default,
-            active: s.default ? 1 : 0
-          }
-        })
-      });
+      const {videos, audios, subtitles} = await apiStream(url);
+      this.setState({videos, audios, subtitles});
     } catch(e) {
-      this.setState({error: e.data});
+      this.setState({error: e.message});
     } finally {
       this.props.stopLoading(LOADING.STREAM);
     }
@@ -105,6 +79,8 @@ class StreamContainer extends Component {
         text={this.props.intl.messages['container.stream.loading.text']}
       />;
     }
+
+    console.log(error)
 
     if(error) {
       return <ResourceError

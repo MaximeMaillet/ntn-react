@@ -1,6 +1,92 @@
 import {getLanguage} from './locale';
 import download from 'downloadjs';
 
+/**
+ * @param url
+ * @returns {Promise<{audios: (Array|null|*), videos: *[]}>}
+ */
+export const stream = async(url) => {
+  const token = localStorage.getItem('token');
+  const response = await fetch(
+    url,
+    {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept-Language': getLanguage(),
+      }
+    }
+  );
+
+  let data=null;
+  if (response.headers.has('content-type')) {
+    if(response.headers.get('content-type').match(/^application\/json/i)) {
+      data = await response.json();
+    }
+  }
+
+  if (response.status.toString().substr(0,1) !== '2') {
+    throw data || response;
+  }
+
+  if(!data) {
+    throw new Error('No data provided');
+  }
+
+  if(!data.video) {
+    throw new Error('No video track');
+  }
+
+  if(!data.video.src) {
+    throw new Error('Stream malformed (video)')
+  }
+
+  if(!data.audios || data.audios.length === 0) {
+    throw new Error('No audio tracks');
+  }
+
+  if(data.audios.filter((a) => !a.src || a.default === null).length > 0) {
+    throw new Error('Stream malformed (audio)');
+  }
+
+  if(data.audios.filter((a) => a.default).length === 0) {
+    data.audios = data.audios.map((a, key) => {
+      return {
+        ...a,
+        default: key === 0,
+      }
+    });
+  }
+
+
+  const dataReturn = {
+    videos: [data.video],
+    audios: data.audios,
+    subtitles: [],
+  };
+
+  if(data.subtitles && data.subtitles.length > 0) {
+    dataReturn.subtitles = data.subtitles.map((s) => {
+      return {
+        srcLang: s.lang,
+        src: s.src,
+        default: !!s.default,
+        active: s.default ? 1 : 0
+      }
+    })
+  }
+
+  return dataReturn;
+};
+
+/**
+ * @param method
+ * @param endpoint
+ * @param parameters
+ * @param headers
+ * @param response
+ * @returns {Promise<Response>}
+ */
 export default async(method, endpoint, parameters, headers, response) => {
   const params = new URLSearchParams();
 

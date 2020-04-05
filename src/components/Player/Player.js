@@ -21,8 +21,6 @@ class Player extends Component {
       muted: false,
       totalSeconds: 0,
       playedSeconds: 0,
-      videoDuration: 0,
-      audioDuration: 0,
       videoReady: false,
       audioReady: false,
     };
@@ -38,7 +36,7 @@ class Player extends Component {
       this.handleListener();
     }
 
-    this.startAnimating(4);
+    this.startAnimating(2);
 
     this.interval['ready'] = setInterval(() => {
       if(!this.state.ready) {
@@ -55,19 +53,7 @@ class Player extends Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if(!this.state.ready) {
-      console.log('No ready');
-      // this.pause();
       this.handleReady();
-      if(this.state.playing) {
-        // this.pause();
-        // this.handleLoaded();
-      }
-    } else {
-      if(!this.state.playing) {
-        console.log('Should play');
-        // this.play();
-      }
-      // this.handlePlaying(true);
     }
 
     if(prevState.muted !== this.state.muted) {
@@ -98,12 +84,9 @@ class Player extends Component {
   componentWillUnmount() {
     cancelAnimationFrame(this.sync);
     document.removeEventListener('keydown', this.handleShortcut);
-    this.videoRef.current.removeEventListener('durationchange', this.onVideoDurationChange());
-    this.audioRef.current.removeEventListener('durationchange', this.onAudioDurationChange());
-    this.videoRef.current.removeEventListener('canplaythrough', this.onVideoLoaded());
-    this.audioRef.current.removeEventListener('canplaythrough', this.onAudioLoaded());
+    this.videoRef.current.removeEventListener('canplaythrough', this.onVideoLoaded);
+    this.audioRef.current.removeEventListener('canplaythrough', this.onAudioLoaded);
     this.videoRef.current.removeEventListener('timeupdate', this.onTimeUpdate());
-    this.videoRef.current.removeEventListener('seeking', this.onSeeking());
     this.wrapperRef.current.removeEventListener('mousemove', this.onMouseMove);
   }
 
@@ -151,25 +134,10 @@ class Player extends Component {
     screenfull.on('change', () => {
       this.setState({fullscreen: screenfull.isFullscreen});
     });
-    this.videoRef.current.addEventListener('durationchange', this.onVideoDurationChange());
-    this.audioRef.current.addEventListener('durationchange', this.onAudioDurationChange());
-    this.videoRef.current.addEventListener('canplaythrough', this.onVideoLoaded());
-    this.audioRef.current.addEventListener('canplaythrough', this.onAudioLoaded());
-    this.videoRef.current.addEventListener('timeupdate', this.onTimeUpdate());
-    this.videoRef.current.addEventListener('seeking', this.onSeeking());
+    this.videoRef.current.addEventListener('timeupdate', this.onTimeUpdate);
     this.wrapperRef.current.addEventListener('mousemove', this.onMouseMove);
-  };
-
-  onAudioDurationChange = () => {
-    if(this.audioRef.current) {
-      this.setState({audioDuration: this.audioRef.current.duration});
-    }
-  };
-
-  onVideoDurationChange = () => {
-    if(this.videoRef.current) {
-      this.setState({videoDuration: this.videoRef.current.duration});
-    }
+    this.videoRef.current.addEventListener('canplaythrough', this.onVideoLoaded);
+    this.audioRef.current.addEventListener('canplaythrough', this.onAudioLoaded);
   };
 
   onAudioLoaded = () => {
@@ -190,10 +158,6 @@ class Player extends Component {
     }
   };
 
-  onSeeking = () =>  {
-    this.audioRef.current.currentTime = this.videoRef.current.currentTime;
-  };
-
   onMouseMove = () => {
     if(!this.state.active) {
       this.setState({active: true});
@@ -207,12 +171,6 @@ class Player extends Component {
     if(this.state.totalSeconds && this.state.videoReady && this.state.audioReady) {
       console.log(`#### All Ready : ${this.state.totalSeconds} seconds`);
       this.setState({ready: true});
-    }
-  };
-
-  handleDuration = () => {
-    if(this.state.audioDuration && this.state.videoDuration) {
-      this.setState({totalSeconds: this.state.videoDuration});
     }
   };
 
@@ -259,12 +217,10 @@ class Player extends Component {
   };
 
   play = () => {
-    console.log('-- PLAY --');
     this.setState({playing: true});
   };
 
   pause = () => {
-    console.log('-- PAUSE --');
     this.setState({playing: false});
   };
 
@@ -407,8 +363,6 @@ class Player extends Component {
           ref={this.audioRef}
           crossOrigin="anonymous"
           src={audios.filter((a) => a.default)[0].src}
-          onPlay={() => console.log('Audio on play')}
-          onPause={() => console.log('Audio on pause')}
         >
         </audio>
         <video
