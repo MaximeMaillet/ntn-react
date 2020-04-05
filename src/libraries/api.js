@@ -70,6 +70,8 @@ export const stream = async(url) => {
       return {
         lang: s.lang,
         name: s.name,
+        label: s.name,
+        index: parseInt(s.index),
         src: s.src,
         default: !!s.default,
         active: s.default ? 1 : 0

@@ -17,12 +17,11 @@
       padding: 0.5em;
       border-bottom: 1px solid $black;
 
-      .security {
-
-      }
-
       span {
         flex-grow: 1;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
         margin-left: 0.5em;
         margin-right: 0.5em;
       }

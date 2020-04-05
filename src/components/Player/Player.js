@@ -316,7 +316,7 @@ class Player extends Component {
     const stateTracks = this.state.subtitles;
     const tracks = vid.textTracks;
     for(let i = 0; i<tracks.length; i++) {
-      if (tracks[i].language === lang) {
+      if (parseInt(tracks[i].language) === lang) {
         stateTracks[i].active = 1;
         tracks[i].mode = 'showing';
       } else {
@@ -397,9 +397,9 @@ class Player extends Component {
             subtitles.map((subtitle, key)=> {
                 return <track
                   key={key}
-                  label={subtitle.name}
+                  label={subtitle.label}
                   kind="subtitles"
-                  srcLang={subtitle.lang}
+                  srcLang={subtitle.index}
                   src={subtitle.src}
                   default={subtitle.default}
                 />
@@ -437,7 +437,7 @@ class Player extends Component {
                         return <div
                           key={key}
                           className={`wrapper-line ${track.active ? 'enabled': ''}`}
-                          onClick={() => this.tracksChange(track.lang)}
+                          onClick={() => this.tracksChange(track.index)}
                         >
                           {track.name}
                         </div>
@@ -458,7 +458,7 @@ class Player extends Component {
                           className={`wrapper-line ${track.default ? 'enabled': ''}`}
                           onClick={() => this.audioChange(track.index)}
                         >
-                          {track.name}
+                          {track.lang}
                         </div>
                       })
                     }
