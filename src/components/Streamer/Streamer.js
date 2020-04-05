@@ -6,11 +6,12 @@ import './streamer.scss'
 
 class Streamer extends Component {
   render() {
-    const {className, subtitles, videos, audios} = this.props;
+    const {className, name, subtitles, videos, audios} = this.props;
     return (
       <div className={`streamer ${className}`}>
         <Player
           controlsFixed={false}
+          name={name}
           videos={videos}
           audios={audios}
           subtitles={subtitles}

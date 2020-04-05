@@ -45,10 +45,6 @@ class TorrentOne extends Component {
                 forceIndex={streamIndex}
                 component={Streamer}
               />
-              {/*<Streamer*/}
-                {/*medias={torrent.medias}*/}
-                {/*index={streamIndex}*/}
-              {/*/>*/}
             </div>
           </div>
 

@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import {FormattedMessage} from "react-intl";
 import api from "../../../libraries/api";
 import path from 'path';
-
-import './torrent-media.scss'
 import {connect} from "react-redux";
 import loadingActions from "../../../redux/loading/actions";
 import {LOADING} from "../../../config/const";
+
+import './torrent-media.scss'
 
 class TorrentMedias extends Component {
   download = async(media) => {
@@ -25,6 +25,9 @@ class TorrentMedias extends Component {
 
   render() {
     const {torrent, className, indexStreamed} = this.props;
+    torrent.medias.sort((a, b) => {
+      return a.stream ? -1 : 1;
+    });
     return (
       <div className={`torrent-medias ${className}`}>
         <h3><FormattedMessage id="component.torrents.one.medias" /></h3>

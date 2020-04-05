@@ -68,7 +68,8 @@ export const stream = async(url) => {
   if(data.subtitles && data.subtitles.length > 0) {
     dataReturn.subtitles = data.subtitles.map((s) => {
       return {
-        srcLang: s.lang,
+        lang: s.lang,
+        name: s.name,
         src: s.src,
         default: !!s.default,
         active: s.default ? 1 : 0

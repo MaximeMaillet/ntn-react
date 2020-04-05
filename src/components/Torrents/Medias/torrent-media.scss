@@ -15,6 +15,7 @@
       align-items: center;
       background-color: primaryAlpha(0.5);
       padding: 0.5em;
+      border-bottom: 1px solid $black;
 
       .security {
 
@@ -22,10 +23,14 @@
 
       span {
         flex-grow: 1;
+        margin-left: 0.5em;
+        margin-right: 0.5em;
       }
 
       .actions {
         margin-left: auto;
+        flex-wrap: nowrap;
+        flex-shrink: 0;
         button {
           margin-right: 0.5em;
           &:disabled {
@@ -41,46 +46,4 @@
       }
     }
   }
-
-  //.medias {
-  //  margin-top: 1em;
-  //
-  //
-  //  div.media {
-
-  //
-  //    .security {margin-right: 0.5em;}
-  //
-  //    span {
-  //      margin-right: auto;
-  //    }
-  //
-  //    button {
-  //      margin-right: 0.5em;
-  //
-  //      &:last-child {
-  //        margin-right: 0;
-  //      }
-  //    }
-  //
-  //    &:nth-of-type(2n) {
-  //      background-color: primaryAlpha(0.1);
-  //    }
-  //
-  //    &:nth-of-type(2n+1) {
-  //      background-color: primaryAlpha(0.2);
-  //    }
-  //
-  //    &.active {
-  //      background-color: $primary;
-  //      color: $white;
-  //      button {
-  //        border-color: $white;
-  //
-  //        &:disabled {
-  //          cursor: auto;
-  //        }
-  //      }
-  //    }
-  //  }
 }

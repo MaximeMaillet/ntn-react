@@ -7,7 +7,6 @@ import {injectIntl} from "react-intl";
 import ResourceError from "../../components/Resources/ResourceError/ResourceError";
 import ResourceEmpty from "../../components/Resources/ResourceEmpty/ResourceEmpty";
 import * as notificationsAction from "../../redux/notifications/actions";
-import {getLanguage} from "../../libraries/locale";
 import * as loadingActions from "../../redux/loading/actions";
 import {stream as apiStream} from "../../libraries/api";
 
@@ -28,11 +27,16 @@ class StreamContainer extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
+    console.log('DIDI UDAT');
+    console.log(prevProps);
+    console.log(this.props);
     if(prevProps.forceIndex !== this.props.forceIndex) {
       this.setState({streamIndex: this.props.forceIndex});
     }
 
     if(prevState.streamIndex !== this.state.streamIndex) {
+      console.log('LOAD');
+      console.log(this.props.medias[this.state.streamIndex].stream);
       this.load(this.props.medias[this.state.streamIndex].stream);
     }
   }
@@ -69,8 +73,8 @@ class StreamContainer extends Component {
 
 
   render() {
-    const {className, loading, component} = this.props;
-    const {audios, videos, subtitles, error} = this.state;
+    const {className, loading, medias, component} = this.props;
+    const {audios, videos, subtitles, error, streamIndex} = this.state;
 
     if(loading & LOADING.STREAM) {
       return <ResourceLoading
@@ -79,8 +83,6 @@ class StreamContainer extends Component {
         text={this.props.intl.messages['container.stream.loading.text']}
       />;
     }
-
-    console.log(error)
 
     if(error) {
       return <ResourceError
@@ -98,11 +100,6 @@ class StreamContainer extends Component {
       />;
     }
 
-
-    console.log('-- CONTAINER --')
-    console.log(audios);
-    console.log(videos);
-
     return React.createElement(
       component,
       {
@@ -110,6 +107,7 @@ class StreamContainer extends Component {
         videos,
         audios,
         subtitles,
+        name:medias[streamIndex].name,
         next: this.next,
         previous: this.previous,
       }

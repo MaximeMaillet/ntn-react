@@ -8,8 +8,6 @@ class MediaType extends Component {
   render() {
     const {media_type, className} = this.props;
     let strMediaType, icon;
-    console.log('---')
-    console.log(media_type);
     switch(media_type) {
       case 'tv':
         icon = <i className="fa fa-tv" />;

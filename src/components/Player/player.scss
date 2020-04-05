@@ -22,19 +22,13 @@
   &.fullscreen.active {
     cursor: auto;
     .controls {
-      bottom: 20px;
+      bottom: 15px;
     }
   }
 
-  &:hover {
+  &:hover , &.controls-fixed {
     .controls {
-      bottom: 20px;
-    }
-  }
-
-  &.controls-fixed {
-    .controls {
-      bottom: 20px;
+      bottom: 15px;
     }
   }
 
@@ -51,7 +45,7 @@
     z-index: 9;
     transition: bottom 500ms;
     position: absolute;
-    bottom: -60px;
+    bottom: -80px;
     left: 0;
     right: 0;
     display: flex;
@@ -158,36 +152,6 @@
       .fullscreen {
         margin-right: 0.5em;
       }
-
-      //.volume {
-      //  margin-left: 0.5em;
-      //
-      //  .btn-volume {
-      //    position: absolute;
-      //    bottom: 0;
-      //    z-index: 6;
-      //  }
-      //
-      //  .wrapper-volume {
-      //    z-index: 0;
-      //    transition: opacity 500ms;
-      //    position: absolute;
-      //    opacity: 0;
-      //    left: 0;
-      //    right: 0;
-      //    bottom: 50px;
-      //    height: 50px;
-      //    display: flex;
-      //    justify-content: center;
-      //    align-items: center;
-      //  }
-      //
-      //  &:hover {
-      //    .wrapper-volume {
-      //      opacity: 1;
-      //    }
-      //  }
-      //}
     }
 
     .progress-media {

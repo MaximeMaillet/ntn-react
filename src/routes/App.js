@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {IntlProvider} from "react-intl";
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {Router, Route, Switch} from "react-router-dom";
 import messages from '../translations';
 import {getLocale, getLanguage} from '../libraries/locale';
 import history from '../history'

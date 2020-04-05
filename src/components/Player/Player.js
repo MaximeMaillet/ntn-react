@@ -13,6 +13,7 @@ class Player extends Component {
     this.state = {
       subtitles: props.subtitles,
       audios: props.audios,
+      videos: props.videos,
       playing: false,
       ready: false,
       fullscreen: false,
@@ -36,11 +37,11 @@ class Player extends Component {
       this.handleListener();
     }
 
-    this.startAnimating(2);
+    this.startAnimating(1);
 
     this.interval['ready'] = setInterval(() => {
       if(!this.state.ready) {
-        if(!this.state.totalSeconds && this.videoRef.current.duration) {
+        if(!this.state.totalSeconds && this.videoRef.current && this.videoRef.current.duration) {
           this.setState({totalSeconds: this.videoRef.current.duration});
         }
         this.handleReady();
@@ -68,16 +69,16 @@ class Player extends Component {
       this.handleVolume(this.state.volume);
     }
 
-    if(prevState.audioDuration !== this.state.audioDuration) {
-      this.handleDuration();
-    }
-
-    if(prevState.audioDuration !== this.state.audioDuration) {
-      this.handleDuration();
-    }
-
     if(prevState.audios !== this.state.audios) {
       this.audioRef.current.play();
+    }
+
+    if(prevProps.videos !== this.props.videos) {
+      this.setState({
+        videos: this.props.videos,
+        audios: this.props.audios,
+        subtitles: this.props.subtitles,
+      })
     }
   }
 
@@ -138,6 +139,25 @@ class Player extends Component {
     this.wrapperRef.current.addEventListener('mousemove', this.onMouseMove);
     this.videoRef.current.addEventListener('canplaythrough', this.onVideoLoaded);
     this.audioRef.current.addEventListener('canplaythrough', this.onAudioLoaded);
+    this.audioRef.current.addEventListener('error', (event) => this.onError('audio', event));
+    this.videoRef.current.addEventListener('error', (event) => this.onError('video', event));
+  };
+
+  onError = (player, event) => {
+    let error = event;
+
+    // Chrome v60
+    if (event.path && event.path[0]) {
+      error = event.path[0].error;
+    }
+
+    // Firefox v55
+    if (event.originalTarget) {
+      error = error.originalTarget.error;
+    }
+
+    console.log(player);
+    console.log(error);
   };
 
   onAudioLoaded = () => {
@@ -291,13 +311,12 @@ class Player extends Component {
     }
   };
 
-
-  tracksChange = (srcLang) => {
+  tracksChange = (lang) => {
     const vid = this.videoRef.current;
     const stateTracks = this.state.subtitles;
     const tracks = vid.textTracks;
     for(let i = 0; i<tracks.length; i++) {
-      if (tracks[i].language === srcLang) {
+      if (tracks[i].language === lang) {
         stateTracks[i].active = 1;
         tracks[i].mode = 'showing';
       } else {
@@ -305,6 +324,9 @@ class Player extends Component {
         tracks[i].mode = 'disabled';
       }
     }
+
+    console.log(tracks);
+    console.log(stateTracks);
 
     this.setState({subtitles: stateTracks});
   };
@@ -332,10 +354,10 @@ class Player extends Component {
     return `${minute < 10 ? `0${minute}` : minute}:${second < 10 ? `0${second}` : second}`;
   };
 
-  audioChange = (srcLang) => {
+  audioChange = (index) => {
     const audios = [];
     for(let i=0; i<this.state.audios.length; i++) {
-      if(this.state.audios[i].srcLang === srcLang) {
+      if(this.state.audios[i].index === index) {
         audios.push({
           ...this.state.audios[i],
           default: true,
@@ -352,8 +374,8 @@ class Player extends Component {
   };
 
   render() {
-    const {className, videos, controlsFixed} = this.props;
-    const {subtitles, audios, active, ready, playing, volume, muted, fullscreen, totalSeconds, playedSeconds} = this.state;
+    const {name, className, controlsFixed} = this.props;
+    const {subtitles, audios, videos, active, ready, playing, volume, muted, fullscreen, totalSeconds, playedSeconds} = this.state;
     return (
       <div
         ref={this.wrapperRef}
@@ -369,20 +391,15 @@ class Player extends Component {
           onClick={this.playPause}
           ref={this.videoRef}
           crossOrigin="anonymous"
+          src={videos.filter((a) => a.default)[0].src}
         >
-          {
-            videos.map((video, key) => {
-              return <source key={key} src={video.src} />;
-            })
-          }
-
           {
             subtitles.map((subtitle, key)=> {
                 return <track
                   key={key}
-                  label={subtitle.label || subtitle.srcLang}
+                  label={subtitle.name}
                   kind="subtitles"
-                  srcLang={subtitle.srcLang}
+                  srcLang={subtitle.lang}
                   src={subtitle.src}
                   default={subtitle.default}
                 />
@@ -420,9 +437,9 @@ class Player extends Component {
                         return <div
                           key={key}
                           className={`wrapper-line ${track.active ? 'enabled': ''}`}
-                          onClick={() => this.tracksChange(track.srcLang)}
+                          onClick={() => this.tracksChange(track.lang)}
                         >
-                          {track.srcLang}
+                          {track.name}
                         </div>
                       })
                     }
@@ -439,9 +456,9 @@ class Player extends Component {
                         return <div
                           key={key}
                           className={`wrapper-line ${track.default ? 'enabled': ''}`}
-                          onClick={() => this.audioChange(track.srcLang)}
+                          onClick={() => this.audioChange(track.index)}
                         >
-                          {track.srcLang}
+                          {track.name}
                         </div>
                       })
                     }
@@ -486,6 +503,7 @@ class Player extends Component {
               onChange={this.onSliderChange}
               tipFormatter={value => `${value}`}
             />
+            <span className="title-media">{name}</span>
           </div>
         </div>
         {
@@ -499,6 +517,7 @@ class Player extends Component {
 Player.defaultProps = {
   className: '',
   volume: 1,
+  name: '',
 };
 
 Player.propTypes = {
@@ -509,6 +528,7 @@ Player.propTypes = {
   previous: PropTypes.func,
   next: PropTypes.func,
   volume: PropTypes.number,
+  name: PropTypes.string,
 };
 
 export default Player
